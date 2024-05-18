@@ -1,31 +1,32 @@
 import './Gate.css';
 import React from 'react';
+import Draggable from 'react-draggable';
 
 function gate(props, geometrySource) {
-    const p = Object.create(props);
-    p.background = props.background || "white";
-    p.border = props.border || "black";
-    p.x = (props.x || 0) + (props.dragging?.delta.dx || 0);
-    p.y = (props.y || 0) + (props.dragging?.delta.dy || 0);
-    p.scale = props.scale || 1.0;
-
-    let className = "Gate";
-    if (props.dragging)
-        className += " dragging";
-    p.className = className;
+    const p = {
+        ...props,
+        background: props.background || "white",
+        border: props.border || "black",
+        x: (props.x || 0) + (props.dragging?.delta.dx || 0),
+        y: (props.y || 0) + (props.dragging?.delta.dy || 0),
+        scale: props.scale || 1.0,
+        className: props.dragging ? "Gate dragging" : "Gate",
+    };
 
     return (
-        <g
-            className={className}
-            transform={"translate(" + p.x + ", " + p.y + ") scale(" + p.scale + ")"}
-            onPointerDown={props.handlePointerDown}
-            onPointerMove={props.handlePointerMove}
-            onPointerUp={props.handlePointerUp}
-            data-key={p.key}
-            key={p.key}
-        >
-            {geometrySource(p)}
-        </g>
+        <Draggable>
+            <g
+                className={p.className}
+                transform={`translate(${p.x}, ${p.y}) scale(${p.scale})`}
+                onPointerDown={props.handlePointerDown}
+                onPointerMove={props.handlePointerMove}
+                onPointerUp={props.handlePointerUp}
+                data-key={p.key}
+                key={p.key}
+            >
+                {geometrySource(p)}
+            </g>
+        </Draggable>
     );
 }
 
