@@ -6,8 +6,13 @@ import Canvas from './Canvas';
 const App = () => {
   return (
       <div>
-        <h1>Test</h1>
-        <Canvas />
+          <div className="menuBar">
+              <h1>Menu bar stuff goes here</h1>
+          </div>
+          <div className="buildArea">
+          <Canvas />
+          <h1 className="toolbox">Toolbox here?</h1>
+        </div>
       </div>
   );
 };
