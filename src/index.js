@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
-import Toolbox from './Toolbox';
+import Toolbox from './toolbox/Toolbox';
+import Menubar from './menubar/Menubar';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Menubar />
     <Toolbox />
   </React.StrictMode>
 );

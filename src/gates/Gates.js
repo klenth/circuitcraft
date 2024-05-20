@@ -2,7 +2,7 @@ import './Gate.css';
 import React from 'react';
 
 function gate(props, geometrySource) {
-    const p = Object.create(props);
+    const p = { ...props };
     p.background = props.background || "white";
     p.border = props.border || "black";
     p.x = (props.x || 0) + (props.dragging?.delta.dx || 0);
@@ -116,7 +116,7 @@ function NandGate(props) {
                 cx={87}
                 cy={32}
                 r={8}
-                fill="none"
+                fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
                 key={p.key + "_circle"}
@@ -146,7 +146,7 @@ function NorGate(props) {
                 cx={88}
                 cy={32}
                 r={8}
-                fill="none"
+                fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
             />
@@ -214,7 +214,7 @@ function NotGate(props) {
             <circle
                 cx={74} cy={32}
                 r={8}
-                fill="none"
+                fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
                 key={p.key + "_circle"}
