@@ -4,6 +4,7 @@ import './index.css';
 import Toolbox from './toolbox/Toolbox';
 import Menubar from './menubar/Menubar';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

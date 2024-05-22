@@ -20,23 +20,25 @@ export default function Toolbox() {
   }
     return (
       <div className='toolbox_container'>
-        <h1 className='toolbox'>TOOLBOX</h1>
+        {/* <h1 className='toolbox'>TOOLBOX</h1> */}
         <svg className='svg_container'>
           {/* Keeping the exported gates in individual svgs is the only way I could figure out
               for the onClick property to work as needed */}
-          <svg onClick={() => handle_gate_click('AND')} 
+          { /* viewBox = "min-x min-y width height" and its opposites */}
+          <svg viewBox="-80 70 300 300"
+            //in order to make this responsive, could store the viewBox values in an object or array and change states of screen
+            onClick={() => handle_gate_click('AND')} 
             onMouseEnter={() => handle_mouse_hover('AND')} 
             onMouseLeave={ handle_mouse_leave}>
             <AndGate key="and" 
-                x={hovered_gate === 'AND' ? 120 : 90}
-                y={hovered_gate === 'AND' ? 151 : 100}
+                x={hovered_gate === 'AND' ? 25 : 5}
+                y={hovered_gate === 'AND' ? 25 : 5}
                 text="AND"
                 scale={hovered_gate === 'AND' ? 1.15 : 1} 
                 border={hovered_gate === 'AND' ? '#595959' : 'black'}
               />
-            {/* perhaps use state to see if its being hovered over -
-                if it is, then add the scale props and do sthn like x=x-20 y=y-30 so the gate svg stays in the same place*/}
           </svg>
+          {/* ------------------------------------------------------------------------ */}
           <svg onClick={() => handle_gate_click('OR')}
             onMouseEnter={() => handle_mouse_hover('OR')} 
             onMouseLeave={ handle_mouse_leave}>
@@ -97,7 +99,7 @@ export default function Toolbox() {
                 text="XNOR"
                 scale={hovered_gate === 'XNOR' ? 1.15 : 1} 
                 border={hovered_gate === 'XNOR' ? '#595959' : 'black'} />
-          </svg> 
+          </svg>
         </svg>
       
       </div>

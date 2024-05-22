@@ -14,6 +14,7 @@ function gate(props, geometrySource) {
         className += " dragging";
     p.className = className;
 
+
     return (
         <g
             className={className}
