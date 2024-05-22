@@ -1,32 +1,31 @@
 import './Gate.css';
 import React from 'react';
-import Draggable from 'react-draggable';
 
 function gate(props, geometrySource) {
-    const p = {
-        ...props,
-        background: props.background || "white",
-        border: props.border || "black",
-        x: (props.x || 0) + (props.dragging?.delta.dx || 0),
-        y: (props.y || 0) + (props.dragging?.delta.dy || 0),
-        scale: props.scale || 1.0,
-        className: props.dragging ? "Gate dragging" : "Gate",
-    };
+    const p = Object.create(props);
+    p.background = props.background || "white";
+    p.border = props.border || "black";
+    p.x = (props.x || 0) + (props.dragging?.delta.dx || 0);
+    p.y = (props.y || 0) + (props.dragging?.delta.dy || 0);
+    p.scale = props.scale || 1.0;
+
+    let className = "Gate";
+    if (props.dragging)
+        className += " dragging";
+    p.className = className;
 
     return (
-        <Draggable>
-            <g
-                className={p.className}
-                transform={`translate(${p.x}, ${p.y}) scale(${p.scale})`}
-                onPointerDown={props.handlePointerDown}
-                onPointerMove={props.handlePointerMove}
-                onPointerUp={props.handlePointerUp}
-                data-key={p.key}
-                key={p.key}
-            >
-                {geometrySource(p)}
-            </g>
-        </Draggable>
+        <g
+            className={className}
+            transform={"translate(" + p.x + ", " + p.y + ") scale(" + p.scale + ")"}
+            onPointerDown={props.handlePointerDown}
+            onPointerMove={props.handlePointerMove}
+            onPointerUp={props.handlePointerUp}
+            data-key={p.key}
+            key={p.key}
+        >
+            {geometrySource(p)}
+        </g>
     );
 }
 
@@ -54,7 +53,7 @@ function AndGate(props) {
 
 function OrGate(props) {
     return gate(props, p => (
-        <>
+        <g transform={"translate(100,100)"}>
             <path
                 d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 16.5,43 0,64 z"
                 fill={p.background}
@@ -70,7 +69,7 @@ function OrGate(props) {
                 dominantBaseline="middle"
                 key={p.key + "_text"}
             >{p.text}</text>
-        </>
+        </g>
     ));
 }
 
