@@ -4,15 +4,16 @@ import './index.css';
 import Toolbox from './toolbox/Toolbox';
 import Menubar from './menubar/Menubar';
 import App from './App';
+import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <Menubar />
-    <Toolbox /> */}
-    <App />
+    <Menubar />
+    <Toolbox />
+    <Canvas />
   </React.StrictMode>
 );
 

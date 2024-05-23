@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
-import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from './gates/Gates';
-import './App.css'
+import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from '../gates/Gates';
+import './Canvas.css'
 
 
 const handleStyle = { left: 10 };

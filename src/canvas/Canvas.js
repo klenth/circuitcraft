@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import './App.css';
+import './Canvas.css';
 
 import React, { useCallback, useState } from 'react';
 import ReactFlow, {
@@ -15,10 +14,10 @@ import ReactFlow, {
 } from 'reactflow';
  
 import 'reactflow/dist/style.css';
-import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './canvas/GateNode';
+import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
 
 const rfStyle = {
-  backgroundColor: '#B8CEFF',
+  backgroundColor: '#00b5e25e',
 };
  
 const initialNodes = [
@@ -80,7 +79,7 @@ const edgeTypes = { customEdge: CustomEdge }; // Register the custom edge
 
 
 
-function App() {
+function Canvas() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState([]);
 
@@ -101,7 +100,7 @@ function App() {
   );
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '75vw', height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -115,7 +114,7 @@ function App() {
       >
         <Background
           id="1"
-          gap={10}
+          gap={30}
           color="#f1f1f1"
           variant={BackgroundVariant.Lines}
         />
@@ -125,5 +124,4 @@ function App() {
 }
 
 
-
-export default App;
+export default Canvas;
