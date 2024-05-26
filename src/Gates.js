@@ -2,7 +2,7 @@ import './Gate.css';
 import React from 'react';
 
 function gate(props, geometrySource) {
-    const p = Object.create(props);
+    const p = {...props};
     p.background = props.background || "white";
     p.border = props.border || "black";
     p.x = (props.x || 0) + (props.dragging?.delta.dx || 0);
