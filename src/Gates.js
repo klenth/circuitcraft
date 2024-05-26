@@ -2,7 +2,7 @@ import './Gate.css';
 import React from 'react';
 
 function gate(props, geometrySource) {
-    const p = {...props};
+    const p = { ...props };
     p.background = props.background || "white";
     p.border = props.border || "black";
     p.x = (props.x || 0) + (props.dragging?.delta.dx || 0);
@@ -53,7 +53,7 @@ function AndGate(props) {
 
 function OrGate(props) {
     return gate(props, p => (
-        <g transform={"translate(100,100)"}>
+        <>
             <path
                 d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 16.5,43 0,64 z"
                 fill={p.background}
@@ -69,7 +69,7 @@ function OrGate(props) {
                 dominantBaseline="middle"
                 key={p.key + "_text"}
             >{p.text}</text>
-        </g>
+        </>
     ));
 }
 
@@ -116,7 +116,7 @@ function NandGate(props) {
                 cx={87}
                 cy={32}
                 r={8}
-                fill="none"
+                fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
                 key={p.key + "_circle"}
@@ -146,7 +146,7 @@ function NorGate(props) {
                 cx={88}
                 cy={32}
                 r={8}
-                fill="none"
+                fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
             />
@@ -214,7 +214,7 @@ function NotGate(props) {
             <circle
                 cx={74} cy={32}
                 r={8}
-                fill="none"
+                fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
                 key={p.key + "_circle"}

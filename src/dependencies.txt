@@ -1,0 +1,11 @@
+npm install
+npm start
+
+Dependencies needed for Menubar:
+
+Dependencies needed for React Flow:
+    npm install reactflow
+    npm run dev
+
+    import ReactFlow from 'reactflow';
+    import 'reactflow/dist/style.css';
