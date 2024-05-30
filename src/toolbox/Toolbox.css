@@ -21,7 +21,7 @@ h1.toolbox {
 
 .svg_container {
     width: 90%;
-    height: 88%;
+    height: 100%;
     background-color: var(--birch);
     border-radius: 3px;
 }

@@ -1,4 +1,8 @@
-  
+.Canvas-Container {
+  width: 75%;
+  background-color: grey;
+}
+
   .gate_svg {
     width: 110px;
     height: 80px;

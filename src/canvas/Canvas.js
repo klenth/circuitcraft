@@ -1,127 +1,57 @@
 import './Canvas.css';
+import '../gates/Gate.css';
+import './GateNodes.css'
 
-import React, { useCallback, useState } from 'react';
-import ReactFlow, {
-  Background,
-  BackgroundVariant,
-  useNodesState,
-  useEdgesState,
-  addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
-  Position, 
-  getSmoothStepPath
-} from 'reactflow';
+import React, { useCallback } from 'react';
+import ReactFlow, { useNodesState, useEdgesState, addEdge } from 'reactflow';
  
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
+import { NotGateNode, TwoOne, ThreeOne } from './GateNodes.js';
 
-const rfStyle = {
-  backgroundColor: '#00b5e25e',
-};
- 
+const nodeTypes = { NotGateNode, TwoOne, ThreeOne };
+
 const initialNodes = [
-  { id: 'node-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
-  { id: 'node-2', type: 'ORGateNode', position: { x: -50, y: 100 } },
-  { id: 'node-3', type: 'XORGateNode', position: { x: 100, y: 100 } },
-  { id: 'node-4', type: 'NORGateNode', position: { x: -200, y: 100 } },
-  { id: 'node-5', type: 'NANDGateNode', position: { x: -150, y: -40 } },
-  { id: 'node-6', type: 'NOTGateNode', position: { x: 150, y: -40 } },
-  { id: 'node-7', type: 'XNORGateNode', position: { x: 250, y: 100 } },
-
+  { id: '1', position: { x: 200, y: 200 }, data: { label: <svg width="100" height="100"><ANDGateNode x={42} y={53} text="AND" /></svg> }, type: 'TwoOne' },
+  { id: '2', position: { x: 200, y: 400 }, data: { label: <svg width="100" height="100"><ORGateNode x={18} y={8} text="OR" /></svg> }, type: 'TwoOne' },
+  { id: '3', position: { x: 200, y: 600 }, data: { label: <svg width="100" height="100"><XORGateNode x={20} y={8} text="XOR" /></svg> }, type: 'ThreeOne' },
+  { id: '4', position: { x: 200, y: 800 }, data: { label: <svg width="100" height="100"><NORGateNode x={8} y={8} text="NAND" /></svg> }, type: 'TwoOne' },
+  { id: '5', position: { x: 600, y: 200 }, data: { label: <svg width="100" height="100"><NANDGateNode x={10} y={8} text="NOR" /></svg> }, type: 'TwoOne' },
+  { id: '6', position: { x: 600, y: 400 }, data: { label: <svg width="100" height="100"><NOTGateNode x={18} y={8} text="XNOR" /></svg> }, type: 'ThreeOne' },
+  { id: '7', position: { x: 600, y: 600 }, data: { label: <svg width="100" height="100"><XNORGateNode x={12} y={8} text="NOT" /></svg> }, type: 'NotGateNode' },
 ];
 
-const initialEdges = [
-  { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'customEdge' }
-];
+const initialEdges = [];
 
-//defining customized node types
-const nodeTypes = { ANDGateNode: ANDGateNode, 
-                    ORGateNode: ORGateNode,
-                    XORGateNode: XORGateNode,
-                    NORGateNode: NORGateNode,
-                    NANDGateNode: NANDGateNode,
-                    NOTGateNode: NOTGateNode,
-                    XNORGateNode: XNORGateNode, };
-
-const source = { x: 0, y: 20 };
-const target = { x: 150, y: 100 };
-
-// Custom Edge Component
-const CustomEdge = ({
-  id,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  style = {},
-  markerEnd,
-}) => {
-  const [path, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
-    sourceX: source.x,
-    sourceY: source.y,
-    sourcePosition: Position.Right,
-    targetX: target.x,
-    targetY: target.y,
-    targetPosition: Position.Left,
-  });
-
-  return (
-    <>
-      <path id={id} d={path} />
-    </>
-  );
+const edgeOptions = {
+  style: {
+    strokeWidth: 4,
+    stroke: 'black',
+  },
 };
 
-const edgeTypes = { customEdge: CustomEdge }; // Register the custom edge
+const Canvas = () => {
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
-
-
-function Canvas() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState([]);
-
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [setNodes]
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [setEdges]
-  );
   const onConnect = useCallback(
-    (connection) => {
-      const edge = { ...connection, type: 'custom-edge' };
-      setEdges((eds) => addEdge(edge, eds));
-    },
-    [setEdges],
+      (params) => setEdges((eds) => addEdge(params, eds)),
+      [setEdges],
   );
 
   return (
-    <div style={{ width: '75vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        fitView
-        style={rfStyle}  
-      >
-        <Background
-          id="1"
-          gap={30}
-          color="#f1f1f1"
-          variant={BackgroundVariant.Lines}
+      <div className="Canvas-Container" style={{ width: '75vw', height: '100vh' }} >
+        <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            edgeOptions={edgeOptions}
         />
-      </ReactFlow>
-    </div>
+      </div>
   );
-}
-
+};
 
 export default Canvas;
