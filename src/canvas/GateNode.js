@@ -76,8 +76,8 @@ export function NANDGateNode ({ isConnectable }) {
 
     return (
         <div>
-            <Handle type="target" position="left" id="a" style={{top: '30%'}} isConnectable={isConnectable}/>
-            <Handle type="target" position="left" id="b" style={{top: '70%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="a" style={{top: '25%', left: '2%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="b" style={{top: '64%', left: '2%'}} isConnectable={isConnectable}/>
 
             <div>
             <svg className='gate_svg'>
@@ -89,7 +89,7 @@ export function NANDGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" position="right" id="c" isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '99%', top: '44%'}} isConnectable={isConnectable} />
         </div>
     )
 }
@@ -98,8 +98,8 @@ export function NORGateNode ({ isConnectable }) {
 
     return (
         <div>
-            <Handle type="target" position="left" id="a" style={{top: '30%'}} isConnectable={isConnectable}/>
-            <Handle type="target" position="left" id="b" style={{top: '70%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="a" style={{top: '25%', left: '12%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="b" style={{top: '64%', left: '11%'}} isConnectable={isConnectable}/>
 
             <div>
             <svg className='gate_svg'>
@@ -111,7 +111,7 @@ export function NORGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" position="right" id="c" isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '102%', top: '43%'}} isConnectable={isConnectable} />
         </div>
     )
 }
@@ -120,8 +120,8 @@ export function NOTGateNode ({ isConnectable }) {
 
     return (
         <div>
-            <Handle type="target" position="left" id="a" style={{top: '30%'}} isConnectable={isConnectable}/>
-            <Handle type="target" position="left" id="b" style={{top: '70%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="a" style={{top: '25%', left: '11%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="b" style={{top: '64%', left: '11%'}} isConnectable={isConnectable}/>
 
             <div>
             <svg className='gate_svg'>
@@ -133,7 +133,7 @@ export function NOTGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" position="right" id="c" isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '97%', top: '43%'}} isConnectable={isConnectable} />
         </div>
     )
 }
@@ -142,8 +142,8 @@ export function XNORGateNode ({ isConnectable }) {
 
     return (
         <div>
-            <Handle type="target" position="left" id="a" style={{top: '30%'}} isConnectable={isConnectable}/>
-            <Handle type="target" position="left" id="b" style={{top: '70%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="a" style={{top: '25%', left: '4%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="b" style={{top: '63%', left: '4%'}} isConnectable={isConnectable}/>
 
             <div>
             <svg className='gate_svg'>
@@ -155,7 +155,7 @@ export function XNORGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" position="right" id="c" isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '104%', top: '43%'}} isConnectable={isConnectable} />
         </div>
     )
 }
