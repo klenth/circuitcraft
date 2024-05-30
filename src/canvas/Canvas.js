@@ -15,6 +15,7 @@ import ReactFlow, {
  
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
+import CustomStepEdge from './CustomEdge';
 
 const rfStyle = {
   backgroundColor: '#00b5e25e',
@@ -32,8 +33,9 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-  { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'customEdge' }
-];
+    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'customStepEdge' }, // Set custom edge type
+    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'step', style: { stroke: 'red'} }
+  ];
 
 //defining customized node types
 const nodeTypes = { ANDGateNode: ANDGateNode, 
@@ -48,40 +50,14 @@ const source = { x: 0, y: 20 };
 const target = { x: 150, y: 100 };
 
 // Custom Edge Component
-const CustomEdge = ({
-  id,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  style = {},
-  markerEnd,
-}) => {
-  const [path, labelX, labelY, offsetX, offsetY] = getSmoothStepPath({
-    sourceX: source.x,
-    sourceY: source.y,
-    sourcePosition: Position.Right,
-    targetX: target.x,
-    targetY: target.y,
-    targetPosition: Position.Left,
-  });
 
-  return (
-    <>
-      <path id={id} d={path} />
-    </>
-  );
-};
-
-const edgeTypes = { customEdge: CustomEdge }; // Register the custom edge
+const edgeTypes = { customStepEdge: CustomStepEdge }; //Register the custom edge
 
 
 
 function Canvas() {
   const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState([]);
+  const [edges, setEdges] = useState(initialEdges);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -92,13 +68,9 @@ function Canvas() {
     [setEdges]
   );
   const onConnect = useCallback(
-    (connection) => {
-      const edge = { ...connection, type: 'custom-edge' };
-      setEdges((eds) => addEdge(edge, eds));
-    },
-    [setEdges],
+    (connection) => setEdges((eds) => addEdge({ ...connection, type: 'customStepEdge' }, eds)),
+    [setEdges]
   );
-
   return (
     <div style={{ width: '75vw', height: '100vh' }}>
       <ReactFlow
@@ -112,12 +84,12 @@ function Canvas() {
         fitView
         style={rfStyle}  
       >
-        <Background
+        {/* <Background
           id="1"
           gap={30}
           color="#f1f1f1"
           variant={BackgroundVariant.Lines}
-        />
+        /> */}
       </ReactFlow>
     </div>
   );
