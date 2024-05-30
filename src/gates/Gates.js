@@ -55,7 +55,7 @@ function OrGate(props) {
     return gate(props, p => (
         <>
             <path
-                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 16.5,43 0,64 z"
+                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 17,43 0,64 z"
                 fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
@@ -77,14 +77,14 @@ function XorGate(props) {
     return gate(props, p => (
         <>
             <path
-                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 16.5,43 0,64 z"
+                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 17,43 0,64 z"
                 fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
                 key={p.key + "_path1"}
             />
             <path
-                d="M -10,0 c 17,21.5 16.5,43 0,64"
+                d="M -10,0 c 17,21.5 17,43 0,64"
                 fill="none"
                 stroke={p.border}
                 strokeWidth={4}
@@ -137,7 +137,7 @@ function NorGate(props) {
     return gate(props, p => (
         <>
             <path
-                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 16.5,43 0,64 z"
+                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 17,43 0,64 z"
                 fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
@@ -166,7 +166,7 @@ function XnorGate(props) {
     return gate(props, p => (
         <>
             <path
-                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 16.5,43 0,64 z"
+                d="M 0,64 h 18.5 c 24,0.5 40,-12 60,-32 c -20,-20 -36,-32.5 -60,-32 h -18.5 c 17,21.5 17,43 0,64 z"
                 fill={p.background}
                 stroke={p.border}
                 strokeWidth={4}
@@ -174,7 +174,7 @@ function XnorGate(props) {
 
             />
             <path
-                d="M -10,0 c 17,21.5 16.5,43 0,64"
+                d="M -10,0 c 17,21.5 17,43 0,64"
                 fill="none"
                 stroke={p.border}
                 strokeWidth={4}
