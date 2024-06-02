@@ -33,8 +33,8 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'customStepEdge' }, // Set custom edge type
-    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'step', style: { stroke: 'red'} }
+    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'customStepEdge', style: { stroke: 'red'} }, // Set custom edge type
+    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'customStepEdge', style: { stroke: 'red'} }
   ];
 
 //defining customized node types
