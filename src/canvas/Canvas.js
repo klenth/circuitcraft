@@ -72,7 +72,7 @@ function Canvas() {
     [setEdges]
   );
   return (
-    <div style={{ width: '75vw', height: '100vh' }}>
+    <div style={{ width: '75vw', height: '90vh', borderRadius: '3px' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}

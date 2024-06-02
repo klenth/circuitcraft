@@ -1,7 +1,7 @@
 .toolbox_container {
     background-color: var(--night);
     width: 25%;
-    height: 95.5vh;
+    height: 90vh;
     margin: 0;
     padding: 0;
     float: right;
@@ -21,7 +21,7 @@ h1.toolbox {
 
 .svg_container {
     width: 90%;
-    height: 88%;
+    height: 100%;
     background-color: var(--birch);
     border-radius: 3px;
 }
