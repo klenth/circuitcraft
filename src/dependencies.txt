@@ -9,3 +9,7 @@ Dependencies needed for React Flow:
 
     import ReactFlow from 'reactflow';
     import 'reactflow/dist/style.css';
+
+Dependencies needed for React Flow Smart Edge:
+(for better collision control of nodes and edges)
+    npm install @tisoap/react-flow-smart-edge

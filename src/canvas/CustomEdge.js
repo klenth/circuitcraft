@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BaseEdge, EdgeLabelRenderer, useReactFlow, Position, getSmoothStepPath, useStore } from "reactflow";
+import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore } from "reactflow";
 import { drag } from "d3-drag";
 import { select } from "d3-selection";
 
@@ -16,6 +16,7 @@ const CustomStepEdge = ({
 }) => {
   const [labelPointX, setLabelPointX] = useState(0);
   const [labelPointY, setLabelPointY] = useState(0);
+  const [path, setPath] = useState('');
 
   const { getZoom } = useReactFlow();
   const zoom = getZoom();
@@ -28,47 +29,58 @@ const CustomStepEdge = ({
       const d3Selection = select(edgeRef.current);
       d3Selection.call(
         drag().on("drag", (e) => {
-          setLabelPointX((prev) => prev + e.dx / zoom);
-          setLabelPointY((prev) => prev + e.dy / zoom);
+          setLabelPointX((prev) => {
+            const newValue = prev + e.dx / zoom;
+            updateEdgePath(sourceX + newValue, sourceY + labelPointY, targetX, targetY);
+            return newValue;
+          });
+          setLabelPointY((prev) => {
+            const newValue = prev + e.dy / zoom;
+            updateEdgePath(sourceX + labelPointX, sourceY + newValue, targetX, targetY);
+            return newValue;
+          });
         })
       );
     }
-  }, [zoom]);
+  }, [zoom, labelPointX, labelPointY, sourceX, sourceY, targetX, targetY]);
 
-  /*const [path] = getSmoothStepPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-    borderRadius: 0, // Customize border radius for smooth steps
-    offsetX: labelPointX,
-    offsetY: labelPointY,
-  });*/
+  function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 5, offsetY = 2) {
+    return {
+      sourceX: sourceX + offsetX,
+      sourceY: sourceY + offsetY,
+      targetX: targetX - offsetX,
+      targetY: targetY + offsetY,
+    };
+  }
+
+  
+  const updateEdgePath = (newSourceX, newSourceY, newTargetX, newTargetY) => {
+    const newPath = calculateEdgePath(newSourceX, newSourceY, newTargetX, newTargetY, nodes);
+    setPath(newPath);
+  };
 
   const calculateEdgePath = (sourceX, sourceY, targetX, targetY, nodes) => {
-    const midX = (sourceX + targetX) / 2;
-    //const midY = (sourceY + targetY) / 2;
-    let path = `M${sourceX},${sourceY} L${midX},${sourceY} L${midX},${targetY} L${targetX},${targetY}`;
+    const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+      getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+
+    const midX = (newSourceX + newTargetX) / 2;
+    let path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${newTargetY} L${newTargetX},${newTargetY}`;
 
     if (nodes && nodes.length > 0) {
       nodes.forEach(node => {
-        const {position, width, height} = node;
+        const { position, width, height } = node;
         const nodeLeft = position.x;
         const nodeRight = position.x + width;
         const nodeTop = position.y;
         const nodeBottom = position.y + height;
 
-        // Check if the vertical line segment intersects with the node's bounding box
         if (midX > nodeLeft && midX < nodeRight) {
-          if ((sourceY < nodeTop && targetY > nodeBottom) || (sourceY > nodeBottom && targetY < nodeTop)) {
-              // Adjust the path to avoid the node by creating an additional segment
-            const offset = 20; // Offset to avoid collision
-            if (sourceY < targetY) {
-              path = `M${sourceX},${sourceY} L${midX},${sourceY} L${midX},${nodeTop - offset} L${targetX},${nodeTop - offset} L${targetX},${targetY}`;
+          if ((newSourceY < nodeTop && newTargetY > nodeBottom) || (newSourceY > nodeBottom && newTargetY < nodeTop)) {
+            const offset = 20;
+            if (newSourceY < newTargetY) {
+              path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${nodeTop - offset} L${newTargetX},${nodeTop - offset} L${newTargetX},${newTargetY}`;
             } else {
-              path = `M${sourceX},${sourceY} L${midX},${sourceY} L${midX},${nodeBottom + offset} L${targetX},${nodeBottom + offset} L${targetX},${targetY}`;
+              path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${nodeBottom + offset} L${newTargetX},${nodeBottom + offset} L${newTargetX},${newTargetY}`;
             }
           }
         }
@@ -78,11 +90,13 @@ const CustomStepEdge = ({
     return path;
   };
 
-  const path = calculateEdgePath(sourceX, sourceY, targetX, targetY, nodes);
+  useEffect(() => {
+    updateEdgePath(sourceX, sourceY, targetX, targetY);
+  }, [sourceX, sourceY, targetX, targetY, nodes]);
 
   return (
     <>
-      <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 4 }} />
+      <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 2 }} />
       <EdgeLabelRenderer>
         <div
           ref={edgeRef}
