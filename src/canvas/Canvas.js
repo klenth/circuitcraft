@@ -16,6 +16,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
 import CustomStepEdge from './CustomEdge';
+import { SmartStepEdge } from '@tisoap/react-flow-smart-edge'
 
 const rfStyle = {
   backgroundColor: '#00b5e25e',
@@ -34,7 +35,7 @@ const initialNodes = [
 
 const initialEdges = [
     { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'customStepEdge' }, // Set custom edge type
-    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'step', style: { stroke: 'red'} }
+    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'smartStep', style: { stroke: 'red'} }
   ];
 
 //defining customized node types
@@ -50,8 +51,7 @@ const source = { x: 0, y: 20 };
 const target = { x: 150, y: 100 };
 
 // Custom Edge Component
-
-const edgeTypes = { customStepEdge: CustomStepEdge }; //Register the custom edge
+const edgeTypes = { customStepEdge: CustomStepEdge, smartStep : SmartStepEdge }; //Register the custom edge
 
 
 

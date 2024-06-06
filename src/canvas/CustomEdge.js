@@ -2,7 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore } from "reactflow";
 import { drag } from "d3-drag";
 import { select } from "d3-selection";
+//use this and its options as props
+import { getSmartEdge } from '@tisoap/react-flow-smart-edge'
 
+
+//This component receives props
 const CustomStepEdge = ({
   id,
   sourceX,
@@ -14,16 +18,19 @@ const CustomStepEdge = ({
   markerEnd,
   style = {},
 }) => {
+  //State and References
   const [labelPointX, setLabelPointX] = useState(0);
   const [labelPointY, setLabelPointY] = useState(0);
+  //store svg path data
   const [path, setPath] = useState('');
 
   const { getZoom } = useReactFlow();
   const zoom = getZoom();
   const edgeRef = useRef(null);
-
+  //Hook to get the list of nodes from the React Flow store
   const nodes = useStore((state) => state.nodes);
 
+  //drag effect - NEEDS FIX
   useEffect(() => {
     if (edgeRef.current) {
       const d3Selection = select(edgeRef.current);
@@ -44,7 +51,8 @@ const CustomStepEdge = ({
     }
   }, [zoom, labelPointX, labelPointY, sourceX, sourceY, targetX, targetY]);
 
-  function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 5, offsetY = 2) {
+  //Calculates the connection points for handles and edges so it is better
+  function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 5, offsetY = 1) {
     return {
       sourceX: sourceX + offsetX,
       sourceY: sourceY + offsetY,
@@ -52,13 +60,14 @@ const CustomStepEdge = ({
       targetY: targetY + offsetY,
     };
   }
-
   
+  //Updates the path state with the new source and target x&y
   const updateEdgePath = (newSourceX, newSourceY, newTargetX, newTargetY) => {
     const newPath = calculateEdgePath(newSourceX, newSourceY, newTargetX, newTargetY, nodes);
     setPath(newPath);
   };
 
+  //Main custom calculations for path finding
   const calculateEdgePath = (sourceX, sourceY, targetX, targetY, nodes) => {
     const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
       getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
@@ -90,6 +99,7 @@ const CustomStepEdge = ({
     return path;
   };
 
+  //useEffect ensures the edge path is updated whenever the source or target coordinates or nodes change.
   useEffect(() => {
     updateEdgePath(sourceX, sourceY, targetX, targetY);
   }, [sourceX, sourceY, targetX, targetY, nodes]);

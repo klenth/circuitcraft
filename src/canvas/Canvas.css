@@ -6,12 +6,12 @@
 
   .react-flow .react-flow__handle {
     width: 10px;
-    height: 3px;
+    height: 2px;
     border-radius: 0px;
     background-color: #000;
     border: none;
   }
 
   .react-flow__handle {
-    min-height: 3px!important;
+    min-height: 2px!important;
   }
