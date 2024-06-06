@@ -18,6 +18,9 @@ const CustomStepEdge = ({
   markerEnd,
   style = {},
 }) => {
+
+  
+
   //State and References
   const [labelPointX, setLabelPointX] = useState(0);
   const [labelPointY, setLabelPointY] = useState(0);
@@ -29,6 +32,19 @@ const CustomStepEdge = ({
   const edgeRef = useRef(null);
   //Hook to get the list of nodes from the React Flow store
   const nodes = useStore((state) => state.nodes);
+
+  //Need to be able to use this for custom edge and utilize the node padding
+  // && they also have a generatePath where we can customize the path finding and bring in drag and stuff
+  const getSmartEdgeResponse = getSmartEdge({
+    sourcePosition,
+    targetPosition,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    nodes,
+    options: {nodePadding: 20}
+  })
 
   //drag effect - NEEDS FIX
   useEffect(() => {
@@ -72,9 +88,19 @@ const CustomStepEdge = ({
     const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
       getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
-    const midX = (newSourceX + newTargetX) / 2;
-    let path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${newTargetY} L${newTargetX},${newTargetY}`;
 
+
+
+    //Calculate Midpoint: Compute the horizontal midpoint (midX) between the source and target points.
+    const midX = (newSourceX + newTargetX) / 2;
+    // Initial Path: Create a path with a vertical segment connecting the midpoints:
+    let path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${newTargetY} L${newTargetX},${newTargetY}`;
+      // M${newSourceX},${newSourceY}: Move to the source point.
+      // L${midX},${newSourceY}: Draw a line to the midpoint horizontally.
+      // L${midX},${newTargetY}: Draw a vertical line to the target's y-coordinate.
+      // L${newTargetX},${newTargetY}: Draw a line to the target point.
+
+    // Collision Detection and Adjustment: Iterate through all nodes to check if the vertical segment intersects any node's bounding box:
     if (nodes && nodes.length > 0) {
       nodes.forEach(node => {
         const { position, width, height } = node;
@@ -83,6 +109,8 @@ const CustomStepEdge = ({
         const nodeTop = position.y;
         const nodeBottom = position.y + height;
 
+        // If there's an intersection, adjust the path to avoid the node by creating an additional segment.
+        // Offset: An offset of 20 pixels is used to avoid collision.
         if (midX > nodeLeft && midX < nodeRight) {
           if ((newSourceY < nodeTop && newTargetY > nodeBottom) || (newSourceY > nodeBottom && newTargetY < nodeTop)) {
             const offset = 20;
