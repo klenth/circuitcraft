@@ -23,7 +23,7 @@ export function ANDGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" id="c" style={{left: '93%', top: '45%'}} isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '93%', top: '46%'}} isConnectable={isConnectable} />
         </div>
     )
 }
@@ -44,7 +44,7 @@ export function ORGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" id="c" style={{left: '94%', top: '47%'}} isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '93%', top: '46%'}} isConnectable={isConnectable} />
 
         </div>
     )
@@ -67,7 +67,7 @@ export function XORGateNode ({ isConnectable }) {
             </svg>
             </div>
             
-            <Handle type="source" id="c" style={{left: '96%', top: '47%'}} isConnectable={isConnectable} />
+            <Handle type="source" id="c" style={{left: '95%', top: '46%'}} isConnectable={isConnectable} />
         </div>
     )
 }

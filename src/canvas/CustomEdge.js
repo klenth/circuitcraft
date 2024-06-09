@@ -68,7 +68,7 @@ const CustomStepEdge = ({
   }, [zoom, labelPointX, labelPointY, sourceX, sourceY, targetX, targetY]);
 
   //Calculates the connection points for handles and edges so it is better
-  function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 5, offsetY = 1) {
+  function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 4, offsetY = 1.6) {
     return {
       sourceX: sourceX + offsetX,
       sourceY: sourceY + offsetY,
@@ -134,7 +134,7 @@ const CustomStepEdge = ({
 
   return (
     <>
-      <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 2 }} />
+      <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 3, stroke: 'black' }} />
       <EdgeLabelRenderer>
         <div
           ref={edgeRef}
