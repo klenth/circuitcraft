@@ -8,14 +8,14 @@ import ReactFlow, {
     addEdge,
     applyEdgeChanges,
     applyNodeChanges,
-    Position,
-    getSmoothStepPath
+    Position
 } from 'reactflow';
 
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
 import CustomStepEdge from './CustomEdge';
 import CustomSmartEdge from './CustomSmartEdge';
+import GridSmartEdge from './GridSmartEdge';
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -32,8 +32,9 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'CustomStepEdge', style: { stroke: 'red'} },
-    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'CustomSmartEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } }
+    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'GridSmartEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
+    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'GridSmartEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
+    { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'GridSmartEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
 ];
 
 const nodeTypes = {
@@ -46,7 +47,7 @@ const nodeTypes = {
     XNORGateNode,
 };
 
-const edgeTypes = { CustomStepEdge, CustomSmartEdge };
+const edgeTypes = { /*CustomSmartEdge, CustomStepEdge,*/ GridSmartEdge };
 
 function Canvas() {
     const [nodes, setNodes] = useState(initialNodes);

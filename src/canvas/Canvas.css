@@ -1,5 +1,16 @@
-  
-  .gate_svg {
-    width: 110px;
-    height: 80px;
-  }
+.gate_svg {
+  width: 110px;
+  height: 80px;
+}
+
+.react-flow .react-flow__handle {
+  width: 10px;
+  height: 3px;
+  border-radius: 0px;
+  background-color: #000;
+  border: none;
+}
+
+.react-flow__handle {
+  min-height: 2px!important;
+}
