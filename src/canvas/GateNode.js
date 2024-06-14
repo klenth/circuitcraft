@@ -1,10 +1,11 @@
-import { useCallback } from 'react';
-import { Handle, Position } from 'reactflow';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { Handle, Position, useUpdateNodeInternals, NodeResizer } from 'reactflow';
 import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from '../gates/Gates';
 import './Canvas.css'
 
-
-const handleStyle = { left: 3, top: 20 };
 
 export function ANDGateNode ({ isConnectable }) {
 
