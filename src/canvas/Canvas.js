@@ -13,8 +13,6 @@ import ReactFlow, {
 
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
-import CustomStepEdge from './CustomEdge';
-import CustomSmartEdge from './CustomSmartEdge';
 import GridSmartEdge from './GridSmartEdge';
 
 const rfStyle = {
@@ -22,13 +20,13 @@ const rfStyle = {
 };
 
 const initialNodes = [
-    { id: 'node-1', type: 'ANDGateNode', position: { x: 0, y: -40 }, width: 110, height: 80 },
-    { id: 'node-2', type: 'ORGateNode', position: { x: -50, y: 100 }, width: 110, height: 80 },
-    { id: 'node-3', type: 'XORGateNode', position: { x: 100, y: 100 }, width: 110, height: 80 },
-    { id: 'node-4', type: 'NORGateNode', position: { x: -200, y: 100 }, width: 110, height: 80 },
-    { id: 'node-5', type: 'NANDGateNode', position: { x: -150, y: -40 }, width: 110, height: 80 },
-    { id: 'node-6', type: 'NOTGateNode', position: { x: 150, y: -40 }, width: 110, height: 80 },
-    { id: 'node-7', type: 'XNORGateNode', position: { x: 250, y: 100 }, width: 110, height: 80 },
+    { id: 'node-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
+    { id: 'node-2', type: 'ORGateNode', position: { x: -50, y: 100 } },
+    { id: 'node-3', type: 'XORGateNode', position: { x: 100, y: 100 } },
+    { id: 'node-4', type: 'NORGateNode', position: { x: -200, y: 100 } },
+    { id: 'node-5', type: 'NANDGateNode', position: { x: -150, y: -40 } },
+    { id: 'node-6', type: 'NOTGateNode', position: { x: 150, y: -40 } },
+    { id: 'node-7', type: 'XNORGateNode', position: { x: 250, y: 100 } },
 ];
 
 const initialEdges = [
@@ -47,7 +45,7 @@ const nodeTypes = {
     XNORGateNode,
 };
 
-const edgeTypes = { /*CustomSmartEdge, CustomStepEdge,*/ GridSmartEdge };
+const edgeTypes = { GridSmartEdge };
 
 function Canvas() {
     const [nodes, setNodes] = useState(initialNodes);
@@ -62,7 +60,7 @@ function Canvas() {
         [setEdges]
     );
     const onConnect = useCallback(
-        (connection) => setEdges((eds) => addEdge({ ...connection, type: 'CustomSmartEdge', data: { nodes } }, eds)),
+        (connection) => setEdges((eds) => addEdge({ ...connection, type: 'GridSmartEdge', data: { nodes } }, eds)),
         [setEdges, nodes]
     );
 

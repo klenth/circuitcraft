@@ -48,7 +48,7 @@ const GridSmartEdge = ({
 
     return (
         <>
-            <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 3, stroke: 'black' }} />
+            <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 3 }} />
             <EdgeLabelRenderer>
                 <div
                     ref={useRef(null)}
