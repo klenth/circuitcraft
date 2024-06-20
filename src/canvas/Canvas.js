@@ -13,7 +13,8 @@ import ReactFlow, {
 
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
-import GridSmartEdge from './GridSmartEdge';
+//import GridSmartEdge from './GridSmartEdge';
+import KathyEdge from './KathyEdge';
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -30,9 +31,9 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'GridSmartEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
-    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'GridSmartEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
-    { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'GridSmartEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
+    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'KathyEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
+    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'KathyEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
+    { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'KathyEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
 ];
 
 const nodeTypes = {
@@ -45,7 +46,7 @@ const nodeTypes = {
     XNORGateNode,
 };
 
-const edgeTypes = { GridSmartEdge };
+const edgeTypes = { KathyEdge };
 
 function Canvas() {
     const [nodes, setNodes] = useState(initialNodes);
