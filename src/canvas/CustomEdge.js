@@ -6,7 +6,7 @@ import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "r
 // import { drag } from "d3-drag";
 // import { select } from "d3-selection";
 import { getSmartEdge, svgDrawStraightLinePath, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
-
+import Canvas from "./Canvas";
 
 //This component receives props
 const CustomStepEdge = ({
@@ -28,6 +28,8 @@ const CustomStepEdge = ({
   //This hook returns an array of the current nodes
   const nodes = useNodes();
 
+  //!! need updateEdgePath to get the new dimensions of nodes to be passed for handle connection !!
+
   //Calculates the connection points for handles and edges so it is better
   //Change offsetX and offsetY for adjusting the edge connection point better
   function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
@@ -40,7 +42,7 @@ const CustomStepEdge = ({
   }
   
   //Updates the path state with the new source and target x&y
-  const updateEdgePath = (newSourceX, newSourceY, newTargetX, newTargetY) => {
+  const updateEdgePath = (newSourceX, newSourceY, newTargetX, newTargetY, nodes) => {
     const newPath = calculateEdgePath(newSourceX, newSourceY, newTargetX, newTargetY, nodes);
     setPath(newPath);
   };
@@ -145,7 +147,7 @@ const CustomStepEdge = ({
 
   //useEffect ensures the edge path is updated whenever the source or target coordinates or nodes change.
   useEffect(() => {
-    updateEdgePath(sourceX, sourceY, targetX, targetY);
+    updateEdgePath(sourceX, sourceY, targetX, targetY, nodes);
   }, [sourceX, sourceY, targetX, targetY, nodes]);
 
 
