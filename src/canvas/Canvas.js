@@ -31,9 +31,9 @@ const initialNodes = [
 ];
 
 const initialEdges = [
-    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'KathyEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
-    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'KathyEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
-    { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'KathyEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
+    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'CircuitEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
+    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'CircuitEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
+    { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'CircuitEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
 ];
 
 const nodeTypes = {
@@ -46,7 +46,7 @@ const nodeTypes = {
     XNORGateNode,
 };
 
-const edgeTypes = { KathyEdge: CircuitEdge };
+const edgeTypes = { CircuitEdge: CircuitEdge };
 
 function Canvas() {
     const [nodes, setNodes] = useState(initialNodes);
