@@ -14,7 +14,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
 //import GridSmartEdge from './GridSmartEdge';
-import KathyEdge from './KathyEdge';
+import CircuitEdge from './CircuitEdge';
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -46,7 +46,7 @@ const nodeTypes = {
     XNORGateNode,
 };
 
-const edgeTypes = { KathyEdge };
+const edgeTypes = { KathyEdge: CircuitEdge };
 
 function Canvas() {
     const [nodes, setNodes] = useState(initialNodes);

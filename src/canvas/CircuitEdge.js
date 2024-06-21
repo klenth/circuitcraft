@@ -4,7 +4,7 @@ import { drag } from "d3-drag";
 import { select } from "d3-selection";
 import { getSmartEdge, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
 
-const KathyEdge = ({
+const CircuitEdge = ({
                            id,
                            sourceX,
                            sourceY,
@@ -163,4 +163,4 @@ const PlusI = new Vector(1, 0),
       PlusJ = new Vector(0, 1),
       MinusJ = new Vector(0, -1);
 
-export default KathyEdge;
+export default CircuitEdge;
