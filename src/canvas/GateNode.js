@@ -1,15 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 
-import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { Handle, Position, useUpdateNodeInternals } from 'reactflow';
+import { useState, useEffect, useCallback } from 'react';
+import { Handle, Position, useUpdateNodeInternals, useReactFlow } from 'reactflow';
 import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from '../gates/Gates';
 import './Canvas.css'
-import styles from "./Canvas.css";
 
+const handleStyle = { top: 20, left: 3 };
 
+// I've changed the inputs to start at a and go to m (if needed) and outputs to start
+// at z and go to n (if needed), makes it easier when making 3 input gates
 
-export function ANDGateNode ({ isConnectable, id }) {    
+export function ANDGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
     // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
@@ -37,20 +39,18 @@ export function ANDGateNode ({ isConnectable, id }) {
                         />
                 </svg>
                 </div>
-                <Handle type="source" id="c" style={{left: '93%', top: '46%'}} isConnectable={isConnectable} />
+                <Handle type="source" id="z" style={{top: '45%', left: '92%'}} isConnectable={isConnectable} />
             </div>
         </div>
     </>
     )
 }
 
-export function ORGateNode ({ isConnectable, id }) {
+export function ORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
 
     const handleRotateClick = () => {
-        //when you click the rotate button, it rotates 90 deg to the right
         setRotation((prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
@@ -63,6 +63,8 @@ export function ORGateNode ({ isConnectable, id }) {
             <div>
             <Handle type="target" id="a" style={{top: '25%', left: '19%'}} isConnectable={isConnectable}/>
             <Handle type="target" id="b" style={{top: '64%', left: '19%'}} isConnectable={isConnectable}/>
+            {/* <Handle type="target" id="a" style={{top: '26%', left: '19%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="b" style={{top: '66%', left: '19%'}} isConnectable={isConnectable}/> */}
             <div>
             <svg className='gate_svg'>
                 <OrGate key="or" 
@@ -73,7 +75,7 @@ export function ORGateNode ({ isConnectable, id }) {
             </svg>
             </div>
             
-            <Handle type="source" id="c" style={{left: '93%', top: '46%'}} isConnectable={isConnectable} />
+            <Handle type="source" id="z" style={{top: '46%', left: '93%'}} isConnectable={isConnectable} />
 
         </div>
         </div>
@@ -81,13 +83,11 @@ export function ORGateNode ({ isConnectable, id }) {
     )
 }
 
-export function XORGateNode ({ isConnectable, id }) {
+export function XORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
 
     const handleRotateClick = () => {
-        //when you click the rotate button, it rotates 90 deg to the right
         setRotation((prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
@@ -111,20 +111,18 @@ export function XORGateNode ({ isConnectable, id }) {
                     </svg>
                     </div>
                     
-                    <Handle type="source" id="c" style={{left: '95%', top: '46%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '46%', left: '95%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>
     )
 }
 
-export function NANDGateNode ({ isConnectable, id }) {
+export function NANDGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
 
     const handleRotateClick = () => {
-        //when you click the rotate button, it rotates 90 deg to the right
         setRotation((prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
@@ -148,20 +146,18 @@ export function NANDGateNode ({ isConnectable, id }) {
                 </svg>
                 </div>
                 
-                <Handle type="source" id="c" style={{left: '99%', top: '47%'}} isConnectable={isConnectable} />
+                <Handle type="source" id="z" style={{top: '45%', left: '99%'}} isConnectable={isConnectable} />
             </div>
             </div>
         </>
     )
 }
 
-export function NORGateNode ({ isConnectable, id }) {
+export function NORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
 
     const handleRotateClick = () => {
-        //when you click the rotate button, it rotates 90 deg to the right
         setRotation((prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
@@ -186,20 +182,18 @@ export function NORGateNode ({ isConnectable, id }) {
                     </svg>
                     </div>
                     
-                    <Handle type="source" id="c" style={{left: '102%', top: '47%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '46%', left: '102%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>
     )
 }
 
-export function NOTGateNode ({ isConnectable, id }) {
+export function NOTGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
 
     const handleRotateClick = () => {
-        //when you click the rotate button, it rotates 90 deg to the right
         setRotation((prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
@@ -229,13 +223,11 @@ export function NOTGateNode ({ isConnectable, id }) {
     )
 }
 
-export function XNORGateNode ({ isConnectable, id }) {
+export function XNORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
 
     const handleRotateClick = () => {
-        //when you click the rotate button, it rotates 90 deg to the right
         setRotation((prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
@@ -248,7 +240,8 @@ export function XNORGateNode ({ isConnectable, id }) {
                 <div>
                     <Handle type="target" id="a" style={{top: '25%', left: '4%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '63%', left: '5%'}} isConnectable={isConnectable}/>
-
+                    {/* <Handle type="target" id="a" style={{top: '26%', left: '7%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="b" style={{top: '66%', left: '7%'}} isConnectable={isConnectable}/> */}
                     <div>
                     <svg className='gate_svg'>
                         <XnorGate key="xnor" 
@@ -259,7 +252,7 @@ export function XNORGateNode ({ isConnectable, id }) {
                     </svg>
                     </div>
                     
-                    <Handle type="source" id="c" style={{left: '104%', top: '47%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '46%', left: '102%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>

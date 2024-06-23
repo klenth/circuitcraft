@@ -2,9 +2,10 @@
 /* eslint-disable no-unused-vars */
 
 import React, { useEffect, useRef, useState } from "react";
-import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
-// import { drag } from "d3-drag";
-// import { select } from "d3-selection";
+import ReactFlow, { BaseEdge, EdgeLabelRenderer, useReactFlow, Position, getSmoothStepPath, useStore } from "reactflow";
+import { drag } from "d3-drag";
+import { select } from "d3-selection";
+
 import { getSmartEdge, svgDrawStraightLinePath, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
 import Canvas from "./Canvas";
 
@@ -24,9 +25,19 @@ const CustomStepEdge = ({
   //store svg path data
   const [path, setPath] = useState('');
 
-  const edgeRef = useRef(null);
+  const [edgePosition, setEdgePosition] = useState({
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+  });
+
+  const { getZoom } = useReactFlow();
+  const zoom = getZoom();
   //This hook returns an array of the current nodes
   const nodes = useNodes();
+  const edgeRef = useRef(null);
+
 
   //!! need updateEdgePath to get the new dimensions of nodes to be passed for handle connection !!
 
@@ -89,61 +100,6 @@ const CustomStepEdge = ({
     svgPathString += `L ${target.x}, ${target.y} `;
     return svgPathString;
   };
-
-
-
-    // const { svgPathString } = getSmartEdge({
-    //   sourcePosition,
-    //   targetPosition,
-    //   sourceX: newSourceX,
-    //   sourceY: newSourceY,
-    //   targetX: newTargetX,
-    //   targetY: newTargetY,
-    //   nodes: nodes,
-    //   options: {nodePadding: 20, drawEdge: svgDrawStraightLinePath, generatePath: pathfindingJumpPointNoDiagonal }
-    // });
-
-    //add a const with draw edge code and feed that up
-
-
-    //Initial path is calculated using getSmartEdge function
-    //let path = svgPathString;
-
-
-    // path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${newTargetY} L${newTargetX},${newTargetY}`;
-      // M${newSourceX},${newSourceY}: Move to the source point.
-      // L${midX},${newSourceY}: Draw a line to the midpoint horizontally.
-      // L${midX},${newTargetY}: Draw a vertical line to the target's y-coordinate.
-      // L${newTargetX},${newTargetY}: Draw a line to the target point.
-
-    // Collision Detection and Adjustment: Iterate through all nodes to check if the vertical segment intersects any node's bounding box:
-    // if (nodes && nodes.length > 0) {
-    //   nodes.forEach(node => {
-    //     console.log(node);
-    //     const { position, width, height } = node;
-    //     const nodeLeft = position.x;
-    //     const nodeRight = position.x + width;
-    //     const nodeTop = position.y;
-    //     const nodeBottom = position.y + height;
-
-    //     // If there's an intersection, adjust the path to avoid the node by creating an additional segment.
-    //     // Offset: An offset of 20 pixels is used to avoid collision.
-    //     if (midX > nodeLeft && midX < nodeRight) {
-    //       console.log(midX, nodeLeft, nodeRight);
-    //       if ((newSourceY < nodeTop && newTargetY > nodeBottom) || (newSourceY > nodeBottom && newTargetY < nodeTop)) {
-    //         const offset = 20;
-    //         if (newSourceY < newTargetY) {
-    //           path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${nodeTop - offset} L${newTargetX},${nodeTop - offset} L${newTargetX},${newTargetY}`;
-    //         } else {
-    //           path = `M${newSourceX},${newSourceY} L${midX},${newSourceY} L${midX},${nodeBottom + offset} L${newTargetX},${nodeBottom + offset} L${newTargetX},${newTargetY}`;
-    //         }
-    //       }
-    //     }
-    //   });
-    // }
-
-    //return path;
-
 
   //useEffect ensures the edge path is updated whenever the source or target coordinates or nodes change.
   useEffect(() => {
