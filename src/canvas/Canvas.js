@@ -13,9 +13,6 @@ import ReactFlow, {
 
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
-import CustomStepEdge from './CustomEdge';
-import { SmartStepEdge } from '@tisoap/react-flow-smart-edge'
-//import GridSmartEdge from './GridSmartEdge';
 import CircuitEdge from './CircuitEdge';
 
 const rfStyle = {
@@ -36,7 +33,6 @@ const initialEdges = [
     { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'CircuitEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
     { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'CircuitEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
     { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'CircuitEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } },
-    { id: 'e6-7', source: 'node-6', target: 'node-7', type: 'customStepEdge' },
 ];
 
 const nodeTypes = {
@@ -49,7 +45,7 @@ const nodeTypes = {
     XNORGateNode,
 };
 
-const edgeTypes = { CircuitEdge: CircuitEdge, customStepEdge: CustomStepEdge  };
+const edgeTypes = { CircuitEdge: CircuitEdge  };
 
 function Canvas() {
     const [nodes, setNodes] = useState(initialNodes);

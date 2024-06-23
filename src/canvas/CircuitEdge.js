@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
 import { drag } from "d3-drag";
 import { select } from "d3-selection";
-import { getSmartEdge, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
 
 const CircuitEdge = ({
                            id,
@@ -19,30 +18,31 @@ const CircuitEdge = ({
     const [path, setPath] = useState('');
     const nodes = useNodes();
 
+    
     useEffect(() => {
+
+        function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
+            return {
+                sourceX: sourceX + offsetX,
+                sourceY: sourceY + offsetY,
+                targetX: targetX - offsetX,
+                targetY: targetY + offsetY,
+            };
+        }
+  
         const updateEdgePath = () => {
-            /*const { svgPathString, error } = getSmartEdge({
-                sourcePosition,
-                targetPosition,
-                sourceX,
-                sourceY,
-                targetX,
-                targetY,
-                nodes,
-                options: {
-                    generatePath: pathfindingJumpPointNoDiagonal,
-                    gridRatio: 1,
-                },
-            });*/
+            
+            const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+            getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
             const { svgPathString, error } = routeEdge({
                 sourcePosition, targetPosition,
-                sourceX, sourceY,
-                targetX, targetY
+                sourceX: newSourceX, sourceY: newSourceY,
+                targetX: newTargetX, targetY: newTargetY
             });
 
             if (error) {
-                setPath(`M${sourceX},${sourceY} L${targetX},${targetY}`);
+                setPath(`M${newSourceX},${newSourceY} L${newTargetX},${newTargetY}`);
             } else {
                 setPath(svgPathString);
             }
@@ -74,6 +74,10 @@ const routeEdge = ({
     targetX, targetY,
     sourcePosition, targetPosition
 }) => {
+    //const { sourceX, sourceY, targetX, targetY } = getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+    // const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+    // getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+
     const sourceP = new Point(sourceX, sourceY);
     const targetP = new Point(targetX, targetY);
     const sourceNormal = PlusI; //positionVector(sourcePosition);
