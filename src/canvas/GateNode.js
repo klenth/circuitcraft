@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-
 import { useState, useEffect, useCallback } from 'react';
 import { Handle, Position, useUpdateNodeInternals, useReactFlow } from 'reactflow';
 import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from '../gates/Gates';
@@ -39,7 +36,7 @@ export function ANDGateNode ({ id, isConnectable }) {
                         />
                 </svg>
                 </div>
-                <Handle type="source" id="z" style={{top: '45%', left: '92%'}} isConnectable={isConnectable} />
+                <Handle type="source" id="z" style={{top: '45%', left: '93%'}} isConnectable={isConnectable} />
             </div>
         </div>
     </>
@@ -61,10 +58,9 @@ export function ORGateNode ({ id, isConnectable }) {
                 <div className='rotate_handle' onClick={handleRotateClick} />
             </div>
             <div>
-            <Handle type="target" id="a" style={{top: '25%', left: '19%'}} isConnectable={isConnectable}/>
-            <Handle type="target" id="b" style={{top: '64%', left: '19%'}} isConnectable={isConnectable}/>
-            {/* <Handle type="target" id="a" style={{top: '26%', left: '19%'}} isConnectable={isConnectable}/>
-            <Handle type="target" id="b" style={{top: '66%', left: '19%'}} isConnectable={isConnectable}/> */}
+            <Handle type="target" id="a" style={{top: '26%', left: '19%'}} isConnectable={isConnectable}/>
+            <Handle type="target" id="b" style={{top: '66%', left: '19%'}} isConnectable={isConnectable}/>
+
             <div>
             <svg className='gate_svg'>
                 <OrGate key="or" 
@@ -98,8 +94,8 @@ export function XORGateNode ({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '25%', left: '12%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '64%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '26%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="b" style={{top: '66%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
                     <svg className='gate_svg'>
@@ -169,8 +165,8 @@ export function NORGateNode ({ id, isConnectable }) {
                 </div>
 
                 <div>
-                    <Handle type="target" id="a" style={{top: '25%', left: '12%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '64%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '26%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="b" style={{top: '66%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
                     <svg className='gate_svg'>
@@ -240,8 +236,6 @@ export function XNORGateNode ({ id, isConnectable }) {
                 <div>
                     <Handle type="target" id="a" style={{top: '25%', left: '4%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '63%', left: '5%'}} isConnectable={isConnectable}/>
-                    {/* <Handle type="target" id="a" style={{top: '26%', left: '7%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '66%', left: '7%'}} isConnectable={isConnectable}/> */}
                     <div>
                     <svg className='gate_svg'>
                         <XnorGate key="xnor" 
@@ -252,7 +246,7 @@ export function XNORGateNode ({ id, isConnectable }) {
                     </svg>
                     </div>
                     
-                    <Handle type="source" id="z" style={{top: '46%', left: '102%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '46%', left: '104%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>
