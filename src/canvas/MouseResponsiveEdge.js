@@ -1,5 +1,3 @@
-import { BaseEdge } from 'react-flow-renderer';
-
 // based on https://stackoverflow.com/questions/77831116/is-it-possible-to-shape-reactflow-edges-by-dragging-them#78118229
 
 export const MouseResponsiveEdge = ({
