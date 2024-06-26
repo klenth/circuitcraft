@@ -39,3 +39,7 @@ h1.toolbox {
     width: 90%;
     height: auto;
 }
+
+.input {
+    padding-bottom: 20px;
+}
