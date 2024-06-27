@@ -234,8 +234,8 @@ export function XNORGateNode ({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '26%', left: '7%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '66%', left: '7%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '25%', left: '4%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="b" style={{top: '63%', left: '5%'}} isConnectable={isConnectable}/>
                     <div>
                         <svg className='gate_svg'>
                             <XnorGate key="xnor"
