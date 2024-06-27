@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
 import { drag } from "d3-drag";
 import { select } from "d3-selection";
+import { MouseResponsiveEdge } from './MouseResponsiveEdge';
+import { screenToFlowPosition } from 'reactflow';
 
 const CircuitEdge = ({
                            id,
@@ -16,44 +18,84 @@ const CircuitEdge = ({
                        }) => {
 
     const [path, setPath] = useState('');
+    const [points, setPoints] = useState(null);
+    const [drag, setDrag] = useState(null);
     const nodes = useNodes();
-
+    const flow = useReactFlow();
     
-    useEffect(() => {
 
-        function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
-            return {
-                sourceX: sourceX + offsetX,
-                sourceY: sourceY + offsetY,
-                targetX: targetX - offsetX,
-                targetY: targetY + offsetY,
-            };
-        }
-  
-        const updateEdgePath = () => {
-            
-            const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-            getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-
-            const { svgPathString, error } = routeEdge({
-                sourcePosition, targetPosition,
-                sourceX: newSourceX, sourceY: newSourceY,
-                targetX: newTargetX, targetY: newTargetY
-            });
-
-            if (error) {
-                setPath(`M${newSourceX},${newSourceY} L${newTargetX},${newTargetY}`);
-            } else {
-                setPath(svgPathString);
-            }
+    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
+        return {
+            sourceX: sourceX + offsetX,
+            sourceY: sourceY + offsetY,
+            targetX: targetX - offsetX,
+            targetY: targetY + offsetY,
         };
+    }
+  
+    const updateEdgePath = () => {
+        
+        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
-        updateEdgePath();
-    }, [sourceX, sourceY, targetX, targetY, nodes, sourcePosition, targetPosition]);
+        const { svgPathString, error } = routeEdge({
+            sourcePosition, targetPosition,
+            sourceX: newSourceX, sourceY: newSourceY,
+            targetX: newTargetX, targetY: newTargetY
+        });
+
+        if (error) {
+            setPath(`M${newSourceX},${newSourceY} L${newTargetX},${newTargetY}`);
+            setPoints([]);
+        } else {
+            setPath(svgPathString);
+            setPoints(points);
+        }
+    };
+
+    useEffect(
+        updateEdgePath,
+        [sourceX, sourceY, targetX, targetY, nodes, sourcePosition, targetPosition]
+    );
+
+    let renderedPath = path;
+
+    if (drag) {
+        const draggedPoints = applyDrag({ points, drag });
+        renderedPath = renderPath({
+            sourceX, sourceY,
+            points: draggedPoints,
+            targetX, targetY
+        });
+        // console.debug(renderedPath);
+    }
 
     return (
         <>
-            <BaseEdge path={path} markerEnd={markerEnd} style={{ ...style, strokeWidth: 3 }} />
+            <MouseResponsiveEdge
+                path={renderedPath}
+                markerEnd={markerEnd}
+                style={{ ...style, strokeWidth: 3 }}
+                onPointerDown={event => setDrag(newDrag({ event, points, flow }))}
+                onPointerMove={event => {
+                    if (drag) {
+                        const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
+                        setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
+                    }
+                }}
+                onPointerUp={() => {
+                    if (drag) {
+                        const draggedPoints = applyDrag({ points, drag });
+                        setPoints(applyDrag({ points, drag }));
+                        setPath(renderPath({
+                            sourceX, sourceY,
+                            points: draggedPoints,
+                            targetX, targetY
+                        }));
+                        setDrag(null);
+                    }
+                }}
+            />
             <EdgeLabelRenderer>
                 <div
                     ref={useRef(null)}
@@ -68,6 +110,60 @@ const CircuitEdge = ({
         </>
     );
 };
+
+function newDrag({ event, points, flow }) {
+    const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
+    const px = coords.x, py = coords.y;
+    // find the segment of the edge that is being dragged and set up dragging object appropriately
+
+    // calculate the distance (L¹ metric) between line segment (p1, p2) and point (px, py)
+    const segmentDistance = (p1, p2) => {
+        // Take advantage of the fact that all segments are horizontal or vertical
+        const horizontal = (p1.y === p2.y);
+
+        // [a, b]: endpoints of line segment (x for horizontal, y for vertical)
+        // c: other coordinate of line segment (y for horizontal, x for vertical)
+        // p, q: coordinates of point ((x, y) for horizontal, (y, x) for vertical)
+        const { a, b, c, p, q } = horizontal
+            ? { a: Math.min(p1.x, p2.x), b: Math.max(p1.x, p2.x), c: p1.y, p: px, q: py }
+            : { a: Math.min(p1.y, p2.y), b: Math.max(p1.y, p2.y), c: p1.x, p: py, q: px };
+
+        let d = Math.abs(q - c);
+        if (p < a)
+            d += a - p;
+        else if (p > b)
+            d += p - b;
+
+        return { d, horizontal };
+    };
+
+    // compute distance from point to each line segment and choose minimum - that's the segment that will
+    // be dragged
+    let minIndex = null, minDistance = null, minHorizontal = null;
+    for (let i = 0; i + 1 < points.length; ++i) {
+        const { d, horizontal } = segmentDistance(points[i], points[i + 1]);
+        if (minIndex === null || d < minDistance) {
+            minIndex = i;
+            minDistance = d;
+            minHorizontal = horizontal;
+        }
+    }
+
+    if (minIndex !== null) {
+        event.target.setPointerCapture(event.pointerId);
+        return {
+            segmentIndex: minIndex,
+            horizontal: minHorizontal,
+            initX: px,
+            initY: py,
+            currentX: px,
+            currentY: py,
+        };
+    }
+
+    // possible to find no segments (e.g. if there are 0 or 1 points) - then no drag
+    return null;
+}
 
 const routeEdge = ({
     sourceX, sourceY,
@@ -109,12 +205,40 @@ const routeEdge = ({
         lastPoint = nextPoint;
     }
 
+    const pathString = renderPath({
+        sourceX, sourceY,
+        points,
+        targetX, targetY
+    });
+
+    return { svgPathString: pathString, error: null, points: points, };
+};
+
+const renderPath = ({ sourceX, sourceY, points, targetX, targetY }) => {
     let pathString = `M${sourceX},${sourceY}`;
     for (const point of points)
         pathString += `L${point.x},${point.y}`;
     pathString += `L${targetX},${targetY}`;
 
-    return { svgPathString: pathString, error: null };
+    return pathString;
+};
+
+const applyDrag = ({
+    points, drag
+}) => {
+    const newPoints = [ ...points ];
+    const si = drag.segmentIndex;
+    if (drag.horizontal) {
+        const delta = drag.currentY - drag.initY;
+        newPoints[si] = { x: points[si].x, y: points[si].y + delta };
+        newPoints[si + 1] = { x: points[si + 1].x, y: points[si + 1].y + delta };
+    } else {
+        const delta = drag.currentX - drag.initX;
+        newPoints[si] = { x: points[si].x + delta, y: points[si].y };
+        newPoints[si + 1] = { x: points[si + 1].x + delta, y: points[si + 1].y };
+    }
+
+    return newPoints;
 };
 
 class Point {
