@@ -142,7 +142,7 @@ export function NANDGateNode ({ id, isConnectable }) {
                 </svg>
                 </div>
                 
-                <Handle type="source" id="z" style={{top: '45%', left: '99%'}} isConnectable={isConnectable} />
+                <Handle type="source" id="z" style={{top: '46%', left: '99%'}} isConnectable={isConnectable} />
             </div>
             </div>
         </>

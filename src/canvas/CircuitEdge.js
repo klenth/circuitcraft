@@ -62,11 +62,18 @@ const CircuitEdge = ({
 
     if (drag) {
         const draggedPoints = applyDrag({ points, drag });
+
+        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+
         renderedPath = renderPath({
-            sourceX, sourceY,
+            sourceX: newSourceX, sourceY: newSourceY,
             points: draggedPoints,
-            targetX, targetY
+            targetX: newTargetX, targetY: newTargetY
         });
+
+        console.log('Coordinates:', { sourceX, newSourceX, sourceY, newSourceY, targetX, newTargetX, targetY, newTargetY });
+
         // console.debug(renderedPath);
     }
 
@@ -75,7 +82,7 @@ const CircuitEdge = ({
             <MouseResponsiveEdge
                 path={renderedPath}
                 markerEnd={markerEnd}
-                style={{ ...style, strokeWidth: 3 }}
+                style={{ ...style, strokeWidth: 3 }} //stroke: 'black'
                 onPointerDown={event => setDrag(newDrag({ event, points, flow }))}
                 onPointerMove={event => {
                     if (drag) {

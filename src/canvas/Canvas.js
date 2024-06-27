@@ -60,7 +60,7 @@ function Canvas() {
         [setEdges]
     );
     const onConnect = useCallback(
-        (connection) => setEdges((eds) => addEdge({ ...connection, type: 'GridSmartEdge', data: { nodes } }, eds)),
+        (connection) => setEdges((eds) => addEdge({ ...connection, type: 'CircuitEdge', data: { nodes } }, eds)),
         [setEdges, nodes]
     );
 
