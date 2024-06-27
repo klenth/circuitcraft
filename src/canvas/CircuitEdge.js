@@ -38,7 +38,7 @@ const CircuitEdge = ({
         const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
         getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
-        const { svgPathString, error } = routeEdge({
+        const { svgPathString, error, points } = routeEdge({
             sourcePosition, targetPosition,
             sourceX: newSourceX, sourceY: newSourceY,
             targetX: newTargetX, targetY: newTargetY
