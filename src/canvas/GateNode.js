@@ -59,7 +59,7 @@ export function ANDGateNode ({ id, isConnectable }) {
                             />
                         </svg>
                     </div>
-                    <Handle type="source" id="z" style={{top: '45%', left: '93%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '45.5%', left: '93%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>
@@ -81,7 +81,7 @@ export function ORGateNode ({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '26%', left: '19%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '26.2%', left: '19%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '66%', left: '19%'}} isConnectable={isConnectable}/>
 
                     <div>
@@ -117,7 +117,7 @@ export function XORGateNode ({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '26%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '26.2%', left: '12%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '66%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
@@ -165,7 +165,7 @@ export function NANDGateNode ({ id, isConnectable }) {
                         </svg>
                     </div>
 
-                    <Handle type="source" id="z" style={{top: '45%', left: '99%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '45.5%', left: '99%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>
@@ -188,7 +188,7 @@ export function NORGateNode ({ id, isConnectable }) { //changed-----------------
                 </div>
 
                 <div>
-                    <Handle type="target" id="a" style={{top: '26%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '26.2%', left: '12%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '66%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
@@ -257,7 +257,7 @@ export function XNORGateNode ({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '26%', left: '5%'}} isConnectable={isConnectable}/>
+                    <Handle type="target" id="a" style={{top: '26.2%', left: '5%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '66%', left: '5%'}} isConnectable={isConnectable}/>
                     <div>
                         <svg className='gate_svg'>
