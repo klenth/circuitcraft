@@ -59,7 +59,7 @@ export function ANDGateNode ({ id, isConnectable }) {
                             />
                         </svg>
                     </div>
-                    <Handle type="source" id="z" style={{top: '45%', left: '92%'}} isConnectable={isConnectable} />
+                    <Handle type="source" id="z" style={{top: '45%', left: '93%'}} isConnectable={isConnectable} />
                 </div>
             </div>
         </>

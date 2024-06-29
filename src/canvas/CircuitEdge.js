@@ -93,11 +93,13 @@ const CircuitEdge = ({
                 onPointerUp={() => {
                     if (drag) {
                         const draggedPoints = applyDrag({ points, drag });
+                        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+                        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
                         setPoints(applyDrag({ points, drag }));
                         setPath(renderPath({
-                            sourceX, sourceY,
+                            sourceX: newSourceX, sourceY: newSourceY,
                             points: draggedPoints,
-                            targetX, targetY
+                            targetX: newTargetX, targetY: newTargetY
                         }));
                         setDrag(null);
                     }
