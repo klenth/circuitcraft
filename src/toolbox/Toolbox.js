@@ -1,13 +1,29 @@
 import React, { useState } from 'react';
 import './Toolbox.css';
-import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from '../gates/Gates.js';
+import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junction } from '../gates/Gates.js';
 import { GenerateInputNodes, GenerateOutputNodes } from '../nodegen/GenerateNodes';
 
-export default function Toolbox({ setInputNodes, setOutputNodes }) {
+export default function Toolbox({ addNode }) {
     const [hovered_gate, set_hovered_gate] = useState(null);
 
     function handle_gate_click(gate_type) {
-        alert(`Clicked on ${gate_type} gate`);
+        //alert(`Clicked on ${gate_type} gate`);
+        const newNode = {
+            id: `${gate_type}-${Date.now()}`, //timestamp only here for unique id
+            type: `${gate_type}GateNode`,
+            position: { x: 0, y: 0 },
+            data: { label: gate_type },
+        };
+        addNode(newNode);
+    }
+
+    function junction_click() {
+        const newNode = {
+            id: `junction-${Date.now()}`,
+            type: Junction,
+            position: { x: 0, y: 0 },
+        }
+        addNode(newNode);
     }
 
     function handle_mouse_hover(gate_type) {
@@ -18,16 +34,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
         set_hovered_gate(null);
     }
 
-    const positions = {
-        'ANDGateNode': { x: 0, y: -40 },
-        'ORGateNode': { x: -50, y: 100 },
-        'XORGateNode': { x: 100, y: 100 },
-        'NORGateNode': { x: -200, y: 100 },
-        'NANDGateNode': { x: -150, y: -40 },
-        'NOTGateNode': { x: 150, y: -40 },
-        'XNORGateNode': { x: 250, y: 100 }
-    };
-
     return (
         <div className='toolbox_container'>
             <div className='svg_container'>
@@ -35,7 +41,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('AND')}
                     onMouseEnter={() => handle_mouse_hover('AND')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.ANDGateNode.x}px`, top: `${positions.ANDGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="-45 -50 100 100">
                     <AndGate
@@ -49,7 +54,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('OR')}
                     onMouseEnter={() => handle_mouse_hover('OR')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.ORGateNode.x}px`, top: `${positions.ORGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="0 -10 100 100">
                     <OrGate
@@ -63,7 +67,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('NOT')}
                     onMouseEnter={() => handle_mouse_hover('NOT')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.NOTGateNode.x}px`, top: `${positions.NOTGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="0 -10 100 100">
                     <NotGate
@@ -77,7 +80,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('XOR')}
                     onMouseEnter={() => handle_mouse_hover('XOR')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.XORGateNode.x}px`, top: `${positions.XORGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="0 -10 100 100">
                     <XorGate
@@ -91,7 +93,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('NAND')}
                     onMouseEnter={() => handle_mouse_hover('NAND')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.NANDGateNode.x}px`, top: `${positions.NANDGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="10 -10 100 100">
                     <NandGate
@@ -105,7 +106,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('NOR')}
                     onMouseEnter={() => handle_mouse_hover('NOR')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.NORGateNode.x}px`, top: `${positions.NORGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="15 -10 100 100">
                     <NorGate
@@ -119,7 +119,6 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     onClick={() => handle_gate_click('XNOR')}
                     onMouseEnter={() => handle_mouse_hover('XNOR')}
                     onMouseLeave={handle_mouse_leave}
-                    style={{left: `${positions.XNORGateNode.x}px`, top: `${positions.XNORGateNode.y}px`}}
                     width="50" height="25"
                     viewBox="1 -10 100 100">
                     <XnorGate
@@ -130,10 +129,10 @@ export default function Toolbox({ setInputNodes, setOutputNodes }) {
                     />
                 </svg>
                 <div className="input">
-                    <GenerateInputNodes setInputNodes={setInputNodes}/>
+                    <GenerateInputNodes addNode={addNode} />
                 </div>
                 <div className="input">
-                    <GenerateOutputNodes setOutputNodes={setOutputNodes}/>
+                    <GenerateOutputNodes addNode={addNode} />
                 </div>
             </div>
         </div>

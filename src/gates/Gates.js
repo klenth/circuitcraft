@@ -232,4 +232,16 @@ function NotGate(props) {
     ))
 }
 
-export { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate };
+function Junction(props) {
+    return gate(props, p => (
+        <circle
+            cx={50}
+            cy={50}
+            r={50}
+            fill="black"
+            key={p.key + "_circle"}
+        />
+    ));
+}
+
+export { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junction };
