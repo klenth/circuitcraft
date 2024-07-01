@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
+import './GenerateNodes.css';
 
-const InputNode = ({ data }) => (
-    <div>
-        {data.label}
-        <Handle type="source" position={Position.Right} />
-    </div>
-);
-
-const OutputNode = ({ data }) => (
-    <div>
-        {data.label}
-        <Handle type="target" position={Position.Left} />
-    </div>
-);
 
 const GenerateInputNodes = ({ addNode }) => {
     const [inputCount, setInputCount] = useState(0);
@@ -24,6 +12,17 @@ const GenerateInputNodes = ({ addNode }) => {
             data: { label: `Input ${inputCount + 1}` },
             position: { x: 0, y: 0 },
             type: 'input',
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: '70px',
+                height: '25px',
+                borderRadius: '0',
+            },
+            className: 'input_node'
         };
         addNode(newNode);
         setInputCount(inputCount + 1);
@@ -45,6 +44,17 @@ const GenerateOutputNodes = ({ addNode }) => {
             data: { label: `Output ${outputCount + 1}` },
             position: { x: 25, y: 25 },
             type: 'output',
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: '70px',
+                height: '25px',
+                borderRadius: '0',
+            },
+            className: 'output_node'
         };
         addNode(newNode);
         setOutputCount(outputCount + 1);
@@ -57,4 +67,4 @@ const GenerateOutputNodes = ({ addNode }) => {
     );
 };
 
-export { InputNode, OutputNode, GenerateInputNodes, GenerateOutputNodes };
+export { GenerateInputNodes, GenerateOutputNodes };

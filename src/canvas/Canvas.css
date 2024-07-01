@@ -4,6 +4,11 @@
     z-index: 1;
   }
 
+  .junction_svg {
+    width: 30px;
+    height: 20px;
+  }
+
   /* Handles styling */
   .react-flow .react-flow__handle {
     width: 14px;
@@ -17,6 +22,12 @@
     min-height: 2px!important;
   }
  
+  .junction_handle {
+    border-radius: 5px!important;
+    width: 8px!important;
+    height: 8px!important;
+  }
+
   /* Rotate handle styling */
   .node {
     width: 100%;
@@ -47,7 +58,7 @@
     background: var(--thistle);
     border-radius: 100%;
     transform: translate(-50%, -50%);
-    cursor: pointer;
+    cursor: alias;
     display: none;
     z-index: -1; /* so that it goes behind the curve of the gate */
   }

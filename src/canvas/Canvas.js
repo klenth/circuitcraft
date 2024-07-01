@@ -1,8 +1,6 @@
 import './Canvas.css';
 import React, { useCallback } from 'react';
 import ReactFlow, {
-    Background,
-    BackgroundVariant,
     useNodesState,
     useEdgesState,
     addEdge,
@@ -11,8 +9,7 @@ import ReactFlow, {
 } from 'reactflow';
 
 import 'reactflow/dist/style.css';
-import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
-import { InputNode, OutputNode } from '../nodegen/GenerateNodes';
+import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
 
 const rfStyle = {
@@ -27,8 +24,9 @@ const nodeTypes = {
     NANDGateNode,
     NOTGateNode,
     XNORGateNode,
-    InputNode,
-    OutputNode,
+    // InputNode,
+    // OutputNode,
+    JunctionGateNode
 };
 
 const edgeTypes = { CircuitEdge: CircuitEdge };

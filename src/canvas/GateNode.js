@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Handle, Position, useUpdateNodeInternals, useReactFlow } from 'reactflow';
-import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate } from '../gates/Gates';
+import { Handle, Position, useUpdateNodeInternals, useReactFlow, NodeResizer } from 'reactflow';
+import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junction } from '../gates/Gates';
 import './Canvas.css';
 
 const handleStyle = { top: 20, left: 3 };
@@ -31,10 +31,11 @@ function useConnectionStatus(nodeId) {
 // I've changed the inputs to start at a and go to m (if needed) and outputs to start
 // at z and go to n (if needed), makes it easier when making 3 input gates
 
-export function ANDGateNode ({ id, isConnectable }) {
+export function ANDGateNode ({ id, isConnectable, data }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const [rotation, setRotation] = useState(0);
-    // const [rotatable, setRotatable] = useState(!!data.rotatable ?? false);
+    const [isHovered, setIsHovered] = useState(false);
+    // const [resizable, setResizable] = useState(!!data.resizable);
 
     const handleRotateClick = () => {
         //when you click the rotate button, it rotates 90 deg to the right
@@ -43,7 +44,12 @@ export function ANDGateNode ({ id, isConnectable }) {
     };
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} 
+            className='node' 
+            // onMouseEnter={() => setIsHovered(true)} 
+            // onMouseLeave={() => setIsHovered(false)}
+            onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={100} minHeight={70} />
                 <div className='rotate_handle_container'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
@@ -270,6 +276,24 @@ export function XNORGateNode ({ id, isConnectable }) {
                     </div>
 
                     <Handle type="source" id="z" style={{top: '46%', left: '104%'}} isConnectable={isConnectable} />
+                </div>
+            </div>
+        </>
+    )
+}
+
+export function JunctionGateNode ({ id, isConnectable }) {
+    return (
+        <>
+            <div>
+                <Handle type="source" id="a" className='junction_handle' style={{top: '50%', left: '50%'}} isConnectable={isConnectable}/>
+                <div>
+                <svg className='junction_svg'>
+                    <Junction key="junction"
+                                x={-35}
+                                y={-25}
+                    />
+                </svg>
                 </div>
             </div>
         </>

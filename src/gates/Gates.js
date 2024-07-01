@@ -8,6 +8,7 @@ function gate(props, geometrySource) {
     p.x = (props.x || 0) + (props.dragging?.delta.dx || 0);
     p.y = (props.y || 0) + (props.dragging?.delta.dy || 0);
     p.scale = props.scale || 1.0;
+    p.fill = props.fill || "black";
 
     let className = "Gate";
     if (props.dragging)
@@ -236,9 +237,9 @@ function Junction(props) {
     return gate(props, p => (
         <circle
             cx={50}
-            cy={50}
-            r={50}
-            fill="black"
+            cy={40}
+            r={5}
+            fill={p.fill}
             key={p.key + "_circle"}
         />
     ));

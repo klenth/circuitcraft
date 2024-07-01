@@ -17,15 +17,6 @@ export default function Toolbox({ addNode }) {
         addNode(newNode);
     }
 
-    function junction_click() {
-        const newNode = {
-            id: `junction-${Date.now()}`,
-            type: Junction,
-            position: { x: 0, y: 0 },
-        }
-        addNode(newNode);
-    }
-
     function handle_mouse_hover(gate_type) {
         set_hovered_gate(gate_type);
     }
@@ -126,6 +117,18 @@ export default function Toolbox({ addNode }) {
                         text="XNOR"
                         scale={hovered_gate === 'XNOR' ? 1.15 : 1}
                         border={hovered_gate === 'XNOR' ? '#595959' : 'black'}
+                    />
+                </svg>
+                <svg
+                    onClick={() => handle_gate_click('Junction')}
+                    onMouseEnter={() => handle_mouse_hover('Junction')}
+                    onMouseLeave={handle_mouse_leave}
+                    width="40" height="10"
+                    viewBox="30 30 60 40">
+                    <Junction
+                        key="junction"
+                        scale={hovered_gate === 'Junction' ? 1.1 : 1}
+                        fill={hovered_gate === 'Junction' ? '#595959' : 'black'}
                     />
                 </svg>
                 <div className="input">
