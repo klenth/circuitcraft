@@ -11,6 +11,7 @@ export const MouseResponsiveEdge = ({
     onPointerDown = (() => {}),
     onPointerUp = (() => {}),
     onPointerMove = (() => {}),
+    onLostPointerCapture = (() => {}),
 }) => {
     return (
         <>
@@ -33,6 +34,7 @@ export const MouseResponsiveEdge = ({
                     onPointerDown={e => onPointerDown(e)}
                     onPointerUp={e  => onPointerUp(e)}
                     onPointerMove={e => onPointerMove(e)}
+                    onLostPointerCapture={e => onLostPointerCapture(e)}
                 />
             )}
         </>

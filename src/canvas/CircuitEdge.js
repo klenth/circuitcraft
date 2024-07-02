@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
 import { drag } from "d3-drag";
 import { select } from "d3-selection";
+import { getSmartEdge, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
 import { MouseResponsiveEdge } from './MouseResponsiveEdge';
 import { screenToFlowPosition } from 'reactflow';
 
@@ -22,7 +23,7 @@ const CircuitEdge = ({
     const [drag, setDrag] = useState(null);
     const nodes = useNodes();
     const flow = useReactFlow();
-    
+
 
     function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
         return {
@@ -32,10 +33,10 @@ const CircuitEdge = ({
             targetY: targetY + offsetY,
         };
     }
-  
+
     const updateEdgePath = () => {
-        
-        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+
+        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
         getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
         const { svgPathString, error, points } = routeEdge({
@@ -63,7 +64,7 @@ const CircuitEdge = ({
     if (drag) {
         const draggedPoints = applyDrag({ points, drag });
 
-        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
         getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
         renderedPath = renderPath({
@@ -77,31 +78,40 @@ const CircuitEdge = ({
         // console.debug(renderedPath);
     }
 
+    const handlePointerDown = event => {
+        event.target.setPointerCapture(event.pointerId);
+        setDrag(newDrag({ event, points, flow }));
+    };
+
+    const handlePointerMove = event => {
+        if (drag) {
+            const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
+            setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
+        }
+    };
+
+    const handleLostPointerCapture = () => {
+        if (drag) {
+            const draggedPoints = applyDrag({ points, drag });
+            setPoints(applyDrag({ points, drag }));
+            setPath(renderPath({
+                sourceX, sourceY,
+                points: draggedPoints,
+                targetX, targetY
+            }));
+            setDrag(null);
+        }
+    };
+
     return (
         <>
             <MouseResponsiveEdge
                 path={renderedPath}
                 markerEnd={markerEnd}
-                style={{ ...style, strokeWidth: 3 }} //stroke: 'black'
-                onPointerDown={event => setDrag(newDrag({ event, points, flow }))}
-                onPointerMove={event => {
-                    if (drag) {
-                        const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
-                        setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
-                    }
-                }}
-                onPointerUp={() => {
-                    if (drag) {
-                        const draggedPoints = applyDrag({ points, drag });
-                        setPoints(applyDrag({ points, drag }));
-                        setPath(renderPath({
-                            sourceX, sourceY,
-                            points: draggedPoints,
-                            targetX, targetY
-                        }));
-                        setDrag(null);
-                    }
-                }}
+                style={{ ...style, strokeWidth: 3 }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onLostPointerCapture={handleLostPointerCapture}
             />
             <EdgeLabelRenderer>
                 <div
@@ -178,7 +188,7 @@ const routeEdge = ({
     sourcePosition, targetPosition
 }) => {
     //const { sourceX, sourceY, targetX, targetY } = getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-    // const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+    // const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
     // getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
 
     const sourceP = new Point(sourceX, sourceY);
