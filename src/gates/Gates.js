@@ -9,17 +9,18 @@ function gate(props, geometrySource) {
     p.y = (props.y || 0) + (props.dragging?.delta.dy || 0);
     p.scale = props.scale || 1.0;
     p.fill = props.fill || "black";
+    p.width = props.width || 100;
+    p.height = props.height || 70;
 
     let className = "Gate";
     if (props.dragging)
         className += " dragging";
     p.className = className;
 
-
     return (
         <g
             className={className}
-            transform={"translate(" + p.x + ", " + p.y + ") scale(" + p.scale + ")"}
+            transform={`translate(${p.x}, ${p.y}) scale(${p.width / 100}, ${p.height / 70})`}
             onPointerDown={props.handlePointerDown}
             onPointerMove={props.handlePointerMove}
             onPointerUp={props.handlePointerUp}
