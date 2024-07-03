@@ -77,33 +77,42 @@ const CircuitEdge = ({
         // console.debug(renderedPath);
     }
 
+    const handlePointerDown = event => {
+        event.target.setPointerCapture(event.pointerId);
+        setDrag(newDrag({ event, points, flow }));
+    };
+
+    const handlePointerMove = event => {
+        if (drag) {
+            const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
+            setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
+        }
+    };
+
+    const handleLostPointerCapture = () => {
+        if (drag) {
+            const draggedPoints = applyDrag({ points, drag });
+            const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+            getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+            setPoints(applyDrag({ points, drag }));
+            setPath(renderPath({
+                sourceX: newSourceX, sourceY: newSourceY,
+                points: draggedPoints,
+                targetX: newTargetX, targetY: newTargetY
+            }));
+            setDrag(null);
+        }
+    };
+
     return (
         <>
             <MouseResponsiveEdge
                 path={renderedPath}
                 markerEnd={markerEnd}
-                style={{ ...style, strokeWidth: 3 }} //stroke: 'black'
-                onPointerDown={event => setDrag(newDrag({ event, points, flow }))}
-                onPointerMove={event => {
-                    if (drag) {
-                        const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
-                        setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
-                    }
-                }}
-                onPointerUp={() => {
-                    if (drag) {
-                        const draggedPoints = applyDrag({ points, drag });
-                        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-                        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-                        setPoints(applyDrag({ points, drag }));
-                        setPath(renderPath({
-                            sourceX: newSourceX, sourceY: newSourceY,
-                            points: draggedPoints,
-                            targetX: newTargetX, targetY: newTargetY
-                        }));
-                        setDrag(null);
-                    }
-                }}
+                style={{ ...style, strokeWidth: 3 }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onLostPointerCapture={handleLostPointerCapture}
             />
             <EdgeLabelRenderer>
                 <div
