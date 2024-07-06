@@ -11,23 +11,28 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
+import { RotationProvider } from './RotationContext';
+
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
 };
 
-const nodeTypes = {
-    ANDGateNode,
-    ORGateNode,
-    XORGateNode,
-    NORGateNode,
-    NANDGateNode,
-    NOTGateNode,
-    XNORGateNode,
-    // InputNode,
-    // OutputNode,
-    JunctionGateNode
-};
+<RotationProvider>
+    {const nodeTypes = {
+        ANDGateNode,
+        ORGateNode,
+        XORGateNode,
+        NORGateNode,
+        NANDGateNode,
+        NOTGateNode,
+        XNORGateNode,
+        // InputNode,
+        // OutputNode,
+        JunctionGateNode
+    }}
+</RotationProvider>
+
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
 

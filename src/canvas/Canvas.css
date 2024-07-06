@@ -58,7 +58,7 @@
     background: var(--thistle);
     border-radius: 100%;
     transform: translate(-50%, -50%);
-    cursor: alias;
+    cursor: pointer;
     display: none;
     z-index: -1; /* so that it goes behind the curve of the gate */
   }

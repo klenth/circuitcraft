@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
-import { drag } from "d3-drag";
-import { select } from "d3-selection";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { EdgeLabelRenderer, useReactFlow, useNodes } from "reactflow";
 import { MouseResponsiveEdge } from './MouseResponsiveEdge';
-import { screenToFlowPosition } from 'reactflow';
+import { useRotation } from './RotationContext';
 
 const CircuitEdge = ({
                            id,
@@ -23,13 +21,37 @@ const CircuitEdge = ({
     const nodes = useNodes();
     const flow = useReactFlow();
     
+    // Access the rotations context
+    const { rotations } = useRotation();
+    const rotation = rotations[id] || 0;
+
+    console.log("CircuitEdge.js rotation " + rotation);
 
     function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
+        let adjustedOffsetX = offsetX;
+        let adjustedOffsetY = offsetY;
+        
+        // Get the rotation value for the current edge id
+        // const nodeRotation = rotation[id] || 0;
+
+        // console.log("rotation" + nodeRotation);
+
+        // if (nodeRotation === 90) {
+        //     adjustedOffsetX = -offsetY;
+        //     adjustedOffsetY = offsetX;
+        // } else if (nodeRotation === 180) {
+        //     adjustedOffsetX = -offsetX;
+        //     adjustedOffsetY = -offsetY;
+        // } else if (nodeRotation === 270) {
+        //     adjustedOffsetX = offsetY;
+        //     adjustedOffsetY = -offsetX;
+        // }
+
         return {
-            sourceX: sourceX + offsetX,
-            sourceY: sourceY + offsetY,
-            targetX: targetX - offsetX,
-            targetY: targetY + offsetY,
+            sourceX: sourceX + adjustedOffsetX,
+            sourceY: sourceY + adjustedOffsetY,
+            targetX: targetX - adjustedOffsetX,
+            targetY: targetY + adjustedOffsetY,
         };
     }
   

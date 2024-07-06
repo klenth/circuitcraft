@@ -6,6 +6,7 @@ import Menubar from './menubar/Menubar';
 import App from './App';
 import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
+import { RotationProvider } from './canvas/RotationContext';
 
 const initialNodes = [
     { id: 'AND-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
@@ -33,9 +34,11 @@ const Root = () => {
 
     return (
         <React.StrictMode>
-            <Menubar />
-            <Toolbox addNode={addNode} />
-            <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} />
+            <RotationProvider>
+                <Menubar />
+                <Toolbox addNode={addNode} />
+                <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} />
+            </RotationProvider>
         </React.StrictMode>
     );
 };

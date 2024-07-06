@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { Handle, Position, useUpdateNodeInternals, useReactFlow, NodeResizer } from 'reactflow';
 import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junction } from '../gates/Gates';
 import './Canvas.css';
+import { useRotation } from './RotationContext';
+
 
 const handleStyle = { top: 20, left: 3 };
 
@@ -10,17 +12,20 @@ const handleStyle = { top: 20, left: 3 };
 
 export function ANDGateNode ({ id, isConnectable, data }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
     const [isHovered, setIsHovered] = useState(false);
-    const [size, setSize] = useState({ width: 100, height: 70 });
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
 
+
     const handleResize = (event, { width, height }) => {
         setSize({ width, height });
+        updateNodeInternals(id);
     };
 
     return (
@@ -32,13 +37,21 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                 <div className='rotate_handle_container'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
+                {console.log("GateNode.js rotation " + rotation)}
                 <div>
                     <Handle type="target" id="a" style={{top: '25%', left: '11%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '65%', left: '11%'}} isConnectable={isConnectable}/>
                     <div>
-                        <svg className='gate_svg' width={size.width} height={size.height}>
-                            <AndGate key="and" x={58} y={40} text="AND" width={size.width} height={size.height} />
+                        <svg className='' width={size.width} height={size.height}>
+                            <AndGate key="and" x={size.width - 52} y={size.height - 40} text="AND" width={size.width - 10} height={size.height - 10} />
                         </svg>
+                        {console.log("Width: " + size.width)}
+                        {console.log("Height: " + size.height)}
+                        {console.log("x: " + (size.width - 52))}
+                        {console.log("y: " + (size.height - 40 ))}
+                        {console.log("Width of gate: " + (size.width - 10))}
+                        {console.log("Height of gate: " + (size.height - 10))}
+
                     </div>
                     <Handle type="source" id="z" style={{top: '45.5%', left: '93%'}} isConnectable={isConnectable} />
                 </div>
@@ -46,6 +59,7 @@ export function ANDGateNode ({ id, isConnectable, data }) {
         </>
     );
 }
+
 
 export function ORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
