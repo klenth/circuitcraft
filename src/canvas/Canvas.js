@@ -18,20 +18,20 @@ const rfStyle = {
     backgroundColor: '#00b5e25e',
 };
 
-<RotationProvider>
-    {const nodeTypes = {
-        ANDGateNode,
-        ORGateNode,
-        XORGateNode,
-        NORGateNode,
-        NANDGateNode,
-        NOTGateNode,
-        XNORGateNode,
-        // InputNode,
-        // OutputNode,
-        JunctionGateNode
-    }}
-</RotationProvider>
+{/* <RotationProvider> */}
+const nodeTypes = {
+    ANDGateNode,
+    ORGateNode,
+    XORGateNode,
+    NORGateNode,
+    NANDGateNode,
+    NOTGateNode,
+    XNORGateNode,
+    // InputNode,
+    // OutputNode,
+    JunctionGateNode
+}
+// </RotationProvider>
 
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
