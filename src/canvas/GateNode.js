@@ -33,24 +33,27 @@ export function ANDGateNode ({ id, isConnectable, data }) {
             <div style={{ transform: `rotate(${rotation}deg)` }}
                  className='node'
                  onClick={() => setIsHovered(true)}>
-                <NodeResizer isVisible={isHovered} minWidth={100} minHeight={70} onResize={handleResize} />
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
-                {console.log("GateNode.js rotation " + rotation)}
+                {/*console.log("GateNode.js rotation " + rotation)*/}
                 <div>
                     <Handle type="target" id="a" style={{top: '25%', left: '11%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '65%', left: '11%'}} isConnectable={isConnectable}/>
                     <div>
                         <svg className='' width={size.width} height={size.height}>
-                            <AndGate key="and" x={size.width - 52} y={size.height - 40} text="AND" width={size.width - 10} height={size.height - 10} />
+                            <AndGate key="and"
+                                     x={size.width + 208}
+                                     y={ size.height + 156 }
+                                     text="AND"
+                                     width={size.width - 10}
+                                     height={size.height - 10}
+                            />
+                            {/*At min width of  110, x = size.width - 52. At mid width of 220, x = size.width + 17. At max width of 330, x = size.width + 208
+                               At min height of 80, y = size.height - 40. At mid height of 160, y = size.height + 12. At max height of 240, y = size.height + 156*/}
                         </svg>
-                        {console.log("Width: " + size.width)}
-                        {console.log("Height: " + size.height)}
-                        {console.log("x: " + (size.width - 52))}
-                        {console.log("y: " + (size.height - 40 ))}
-                        {console.log("Width of gate: " + (size.width - 10))}
-                        {console.log("Height of gate: " + (size.height - 10))}
+                        {console.log(`Width: ${size.width},\nHeight: ${size.height},\nx: ${size.width - 52},\ny: ${size.height - 40},\nWidth of gate: ${size.width - 10},\nHeight of gate: ${size.height - 10}`)}
 
                     </div>
                     <Handle type="source" id="z" style={{top: '45.5%', left: '93%'}} isConnectable={isConnectable} />
@@ -61,17 +64,27 @@ export function ANDGateNode ({ id, isConnectable, data }) {
 }
 
 
-export function ORGateNode ({ id, isConnectable }) {
+export function ORGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
+    const [isHovered, setIsHovered] = useState(false);
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
+    const handleResize = (event, { width, height }) => {
+        setSize({ width, height });
+        updateNodeInternals(id);
+    };
+
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} className='node' onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container curved_gate_styling'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
@@ -85,29 +98,42 @@ export function ORGateNode ({ id, isConnectable }) {
                                     x={18}
                                     y={8}
                                     text="OR"
+                                    width={size.width - 10}
+                                    height={size.height - 10}
                             />
+                            {/*At min width of  110, x = 18. At mid width of 220, x = size.width + 17. At max width of 330, x = size.width + 208
+                               At min height of 80, y = 8. At mid height of 160, y = size.height + 12. At max height of 240, y = size.height + 156*/}
                         </svg>
                     </div>
 
                     <Handle type="source" id="z" style={{top: '46%', left: '93%'}} isConnectable={isConnectable} />
-
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export function XORGateNode ({ id, isConnectable }) {
+export function XORGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
+    const [isHovered, setIsHovered] = useState(false);
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
+    const handleResize = (event, { width, height }) => {
+        setSize({ width, height });
+        updateNodeInternals(id);
+    };
+
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} className='node' onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container curved_gate_styling'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
@@ -121,6 +147,8 @@ export function XORGateNode ({ id, isConnectable }) {
                                      x={20}
                                      y={8}
                                      text="XOR"
+                                     width={size.width - 10}
+                                     height={size.height - 10}
                             />
                         </svg>
                     </div>
@@ -129,20 +157,30 @@ export function XORGateNode ({ id, isConnectable }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export function NANDGateNode ({ id, isConnectable }) {
+export function NANDGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
+    const [isHovered, setIsHovered] = useState(false);
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
+    const handleResize = (event, { width, height }) => {
+        setSize({ width, height });
+        updateNodeInternals(id);
+    };
+
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} className='node' onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container not_gate_styling'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
@@ -156,6 +194,8 @@ export function NANDGateNode ({ id, isConnectable }) {
                                       x={8}
                                       y={8}
                                       text="NAND"
+                                      width={size.width - 10}
+                                      height={size.height - 10}
                             />
                         </svg>
                     </div>
@@ -164,24 +204,33 @@ export function NANDGateNode ({ id, isConnectable }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export function NORGateNode ({ id, isConnectable }) { //changed-----------------------------------------
+export function NORGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
+    const [isHovered, setIsHovered] = useState(false);
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
+    const handleResize = (event, { width, height }) => {
+        setSize({ width, height });
+        updateNodeInternals(id);
+    };
+
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} className='node' onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container curved_gate_styling not_curved_gate_styling'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
-
                 <div>
                     <Handle type="target" id="a" style={{top: '26.2%', left: '12%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '66%', left: '12%'}} isConnectable={isConnectable}/>
@@ -192,6 +241,8 @@ export function NORGateNode ({ id, isConnectable }) { //changed-----------------
                                      x={10}
                                      y={8}
                                      text="NOR"
+                                     width={size.width - 10}
+                                     height={size.height - 10}
                             />
                         </svg>
                     </div>
@@ -200,20 +251,30 @@ export function NORGateNode ({ id, isConnectable }) { //changed-----------------
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export function NOTGateNode ({ id, isConnectable }) {
+export function NOTGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
+    const [isHovered, setIsHovered] = useState(false);
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
+    const handleResize = (event, { width, height }) => {
+        setSize({ width, height });
+        updateNodeInternals(id);
+    };
+
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} className='node' onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container not_curved_gate_styling not_gate'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
@@ -226,6 +287,8 @@ export function NOTGateNode ({ id, isConnectable }) {
                                      x={18}
                                      y={8}
                                      text="NOT"
+                                     width={size.width - 10}
+                                     height={size.height - 10}
                             />
                         </svg>
                     </div>
@@ -234,20 +297,30 @@ export function NOTGateNode ({ id, isConnectable }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export function XNORGateNode ({ id, isConnectable }) {
+export function XNORGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
+    const [isHovered, setIsHovered] = useState(false);
+    const [size, setSize] = useState({ width: 110, height: 80 });
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
+    const handleResize = (event, { width, height }) => {
+        setSize({ width, height });
+        updateNodeInternals(id);
+    };
+
     return (
         <>
-            <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
+            <div style={{ transform: `rotate(${rotation}deg)` }} className='node' onClick={() => setIsHovered(true)}>
+                <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container not_curved_gate_styling'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
@@ -260,6 +333,8 @@ export function XNORGateNode ({ id, isConnectable }) {
                                       x={12}
                                       y={8}
                                       text="XNOR"
+                                      width={size.width - 10}
+                                      height={size.height - 10}
                             />
                         </svg>
                     </div>
@@ -268,7 +343,7 @@ export function XNORGateNode ({ id, isConnectable }) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
 export function JunctionGateNode ({ id, isConnectable }) {

@@ -25,7 +25,7 @@ const CircuitEdge = ({
     const { rotations } = useRotation();
     const rotation = rotations[id] || 0;
 
-    console.log("CircuitEdge.js rotation " + rotation);
+    //console.log("CircuitEdge.js rotation " + rotation);
 
     function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
         let adjustedOffsetX = offsetX;
