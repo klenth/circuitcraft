@@ -14,10 +14,6 @@ export const RotationProvider = ({ children }) => {
         });
     }, []);
 
-    useEffect(() => {
-        console.log("RotationContext.js rotation", rotations);
-    }, [rotations]); // Log whenever rotations change
-
     return (
         <RotationContext.Provider value={{ rotations, setRotation }}>
             {children}

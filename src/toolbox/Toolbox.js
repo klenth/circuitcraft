@@ -7,7 +7,6 @@ export default function Toolbox({ addNode }) {
     const [hovered_gate, set_hovered_gate] = useState(null);
 
     function handle_gate_click(gate_type) {
-        //alert(`Clicked on ${gate_type} gate`);
         const newNode = {
             id: `${gate_type}-${Date.now()}`, //timestamp only here for unique id
             type: `${gate_type}GateNode`,

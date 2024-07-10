@@ -37,7 +37,6 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                 <div className='rotate_handle_container'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
-                {console.log("GateNode.js rotation " + rotation)}
                 <div>
                     <Handle type="target" id="a" style={{top: '25%', left: '11%'}} isConnectable={isConnectable}/>
                     <Handle type="target" id="b" style={{top: '65%', left: '11%'}} isConnectable={isConnectable}/>
@@ -45,12 +44,6 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                         <svg className='' width={size.width} height={size.height}>
                             <AndGate key="and" x={size.width - 52} y={size.height - 40} text="AND" width={size.width - 10} height={size.height - 10} />
                         </svg>
-                        {console.log("Width: " + size.width)}
-                        {console.log("Height: " + size.height)}
-                        {console.log("x: " + (size.width - 52))}
-                        {console.log("y: " + (size.height - 40 ))}
-                        {console.log("Width of gate: " + (size.width - 10))}
-                        {console.log("Height of gate: " + (size.height - 10))}
 
                     </div>
                     <Handle type="source" id="z" style={{top: '45.5%', left: '93%'}} isConnectable={isConnectable} />
@@ -63,10 +56,11 @@ export function ANDGateNode ({ id, isConnectable, data }) {
 
 export function ORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
     return (
@@ -99,12 +93,14 @@ export function ORGateNode ({ id, isConnectable }) {
 
 export function XORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)` }} className='node'>
@@ -134,10 +130,11 @@ export function XORGateNode ({ id, isConnectable }) {
 
 export function NANDGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
     return (
@@ -169,10 +166,11 @@ export function NANDGateNode ({ id, isConnectable }) {
 
 export function NORGateNode ({ id, isConnectable }) { //changed-----------------------------------------
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
     return (
@@ -205,10 +203,11 @@ export function NORGateNode ({ id, isConnectable }) { //changed-----------------
 
 export function NOTGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
     return (
@@ -239,10 +238,11 @@ export function NOTGateNode ({ id, isConnectable }) {
 
 export function XNORGateNode ({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
-    const [rotation, setRotation] = useState(0);
+    const { rotations, setRotation } = useRotation();
+    const rotation = rotations[id] || 0;
 
     const handleRotateClick = () => {
-        setRotation((prevRotation) => (prevRotation + 90) % 360);
+        setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
     return (
@@ -271,7 +271,7 @@ export function XNORGateNode ({ id, isConnectable }) {
     )
 }
 
-export function JunctionGateNode ({ id, isConnectable }) {
+export function JunctionGateNode ({ isConnectable }) {
     return (
         <>
             <div>

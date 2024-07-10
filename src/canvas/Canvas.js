@@ -18,7 +18,6 @@ const rfStyle = {
     backgroundColor: '#00b5e25e',
 };
 
-{/* <RotationProvider> */}
 const nodeTypes = {
     ANDGateNode,
     ORGateNode,
@@ -31,7 +30,6 @@ const nodeTypes = {
     // OutputNode,
     JunctionGateNode
 }
-// </RotationProvider>
 
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
@@ -51,20 +49,24 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
     );
 
     return (
-        <div style={{ width: '75vw', height: '90vh', borderRadius: '3px' }}>
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onConnect={onConnect}
-                nodeTypes={nodeTypes}
-                edgeTypes={edgeTypes}
-                fitView
-                style={rfStyle}
-            >
-            </ReactFlow>
-        </div>
+        <RotationProvider>
+            <div style={{ width: '75vw', height: '90vh', borderRadius: '3px' }}>
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onConnect={onConnect}
+                    nodeTypes={nodeTypes}
+                    edgeTypes={edgeTypes}
+                    fitView
+                    style={rfStyle}
+                >
+                </ReactFlow>
+
+            </div>
+        </RotationProvider>
+
     );
 }
 

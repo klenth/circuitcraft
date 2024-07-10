@@ -13,6 +13,8 @@ const CircuitEdge = ({
                            targetPosition,
                            markerEnd,
                            style = {},
+                           source,
+                           target,
                        }) => {
 
     const [path, setPath] = useState('');
@@ -23,42 +25,33 @@ const CircuitEdge = ({
     
     // Access the rotations context
     const { rotations } = useRotation();
-    const rotation = rotations[id] || 0;
 
-    console.log("CircuitEdge.js rotation " + rotation);
+    const rotationAdjustments = {
+        270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
+        180: { source: { x: -5.5, y: 1.2 }, target: { x: 5.5, y: 1.2 } },
+        90: { source: { x: -5.5, y: 13 }, target: { x: -5.7, y: 1 } },
+        0: { source: { x: 6, y: 1.6 }, target: { x: -6, y: 1.6 } },
+    };
 
-    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
-        let adjustedOffsetX = offsetX;
-        let adjustedOffsetY = offsetY;
-        
-        // Get the rotation value for the current edge id
-        // const nodeRotation = rotation[id] || 0;
-
-        // console.log("rotation" + nodeRotation);
-
-        // if (nodeRotation === 90) {
-        //     adjustedOffsetX = -offsetY;
-        //     adjustedOffsetY = offsetX;
-        // } else if (nodeRotation === 180) {
-        //     adjustedOffsetX = -offsetX;
-        //     adjustedOffsetY = -offsetY;
-        // } else if (nodeRotation === 270) {
-        //     adjustedOffsetX = offsetY;
-        //     adjustedOffsetY = -offsetX;
-        // }
-
+    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation) {
+        const sourceAdjustment = rotationAdjustments[sourceRotation] || { x: 0, y: 0 };
+        const targetAdjustment = rotationAdjustments[targetRotation] || { x: 0, y: 0 };
         return {
-            sourceX: sourceX + adjustedOffsetX,
-            sourceY: sourceY + adjustedOffsetY,
-            targetX: targetX - adjustedOffsetX,
-            targetY: targetY + adjustedOffsetY,
+            sourceX: sourceX + sourceAdjustment.source.x,
+            sourceY: sourceY + sourceAdjustment.source.y,
+            targetX: targetX + targetAdjustment.target.x,
+            targetY: targetY + targetAdjustment.target.y,
         };
     }
   
     const updateEdgePath = () => {
         
+        const sourceRotation = rotations[source] || 0;
+        const targetRotation = rotations[target] || 0;
+
+
         const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
 
         const { svgPathString, error, points } = routeEdge({
             sourcePosition, targetPosition,
@@ -85,8 +78,12 @@ const CircuitEdge = ({
     if (drag) {
         const draggedPoints = applyDrag({ points, drag });
 
+        const sourceRotation = rotations[source] || 0;
+        const targetRotation = rotations[target] || 0;
+
+
         const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
 
         renderedPath = renderPath({
             sourceX: newSourceX, sourceY: newSourceY,
@@ -114,8 +111,11 @@ const CircuitEdge = ({
                 onPointerUp={() => {
                     if (drag) {
                         const draggedPoints = applyDrag({ points, drag });
+
+                        const sourceRotation = rotations[source] || 0;
+                        const targetRotation = rotations[target] || 0;
                         const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-                        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+                        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
                         setPoints(applyDrag({ points, drag }));
                         setPath(renderPath({
                             sourceX: newSourceX, sourceY: newSourceY,
