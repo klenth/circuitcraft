@@ -15,6 +15,7 @@ const CircuitEdge = ({
                            style = {},
                            source,
                            target,
+                           data,
                        }) => {
 
     const [path, setPath] = useState('');
@@ -25,6 +26,9 @@ const CircuitEdge = ({
     
     // Access the rotations context
     const { rotations } = useRotation();
+    // Access the nodes and type information
+    const sourceNode = nodes.find(node => node.id === source);
+    const sourceGateType = sourceNode?.type;
 
     const rotationAdjustments = {
         270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
@@ -33,9 +37,21 @@ const CircuitEdge = ({
         0: { source: { x: 6, y: 1.6 }, target: { x: -6, y: 1.6 } },
     };
 
+    //for fine-tuning later. It gives an error sometimes saying the following:
+    //Uncaught TypeError: Cannot destructure property 'sourceX' of 'getHandleConnectionPoint(...)' as it is undefined.
+
     function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation) {
         const sourceAdjustment = rotationAdjustments[sourceRotation] || { x: 0, y: 0 };
         const targetAdjustment = rotationAdjustments[targetRotation] || { x: 0, y: 0 };
+
+        if (sourceGateType === 'input'){
+            sourceAdjustment.source.y = -1;
+        }
+        if (sourceGateType === 'JunctionGateNode'){
+            sourceAdjustment.source.x = 0;
+            sourceAdjustment.source.y = 3;
+        }
+    
         return {
             sourceX: sourceX + sourceAdjustment.source.x,
             sourceY: sourceY + sourceAdjustment.source.y,

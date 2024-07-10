@@ -14,6 +14,7 @@ export default function Toolbox({ addNode }) {
             data: { label: gate_type },
         };
         addNode(newNode);
+        console.log("Gate type: " + newNode.type);
     }
 
     function handle_mouse_hover(gate_type) {

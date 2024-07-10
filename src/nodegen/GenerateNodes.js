@@ -25,6 +25,7 @@ const GenerateInputNodes = ({ addNode }) => {
             className: 'input_node'
         };
         addNode(newNode);
+        console.log("Gate type: " + newNode.type);
         setInputCount(inputCount + 1);
     };
 
