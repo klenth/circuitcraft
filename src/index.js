@@ -9,7 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { RotationProvider } from './canvas/RotationContext';
 
 const initialNodes = [
-    /*{ id: 'AND-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },*/
+    { id: 'AND-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
     { id: 'OR-1', type: 'ORGateNode', position: { x: -50, y: 100 } },
     { id: 'XOR-1', type: 'XORGateNode', position: { x: 100, y: 100 } },
     { id: 'NOR-1', type: 'NORGateNode', position: { x: -200, y: 100 } },
