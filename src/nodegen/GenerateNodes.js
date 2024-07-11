@@ -68,4 +68,36 @@ const GenerateOutputNodes = ({ addNode }) => {
     );
 };
 
-export { GenerateInputNodes, GenerateOutputNodes };
+const GenerateLabelNodes = ({ addNode }) => {
+    const [labelCount, setLabelCount] = useState(0);
+
+    const addLabelNode = () => {
+        const newNode = {
+            id: `label-${labelCount + 1}`,
+            data: { label: `Label ${labelCount + 1}` },
+            position: { x: 25, y: 25 },
+            type: 'label',
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: '70px',
+                height: '25px',
+                borderRadius: '0',
+            },
+            className: 'label_node'
+        };
+        addNode(newNode);
+        setLabelCount(labelCount + 1);
+    };
+
+    return (
+        <div>
+            <button onClick={addLabelNode}>Add Label</button>
+        </div>
+    );
+};
+
+export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes };

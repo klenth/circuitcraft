@@ -29,6 +29,10 @@
     background-color: transparent!important;
   }
 
+  svg path, svg circle{
+    vector-effect: non-scaling-stroke;
+  }
+
   /* Rotate handle styling */
   .node {
     width: 100%;
