@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
-import { drag } from "d3-drag";
-import { select } from "d3-selection";
-import { getSmartEdge, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
+import { EdgeLabelRenderer, useReactFlow, useNodes } from "reactflow";
 import { MouseResponsiveEdge } from './MouseResponsiveEdge';
-import { screenToFlowPosition } from 'reactflow';
 
 const CircuitEdge = ({
                            id,
@@ -21,7 +17,7 @@ const CircuitEdge = ({
     const [path, setPath] = useState('');
     const [points, setPoints] = useState(null);
     const [drag, setDrag] = useState(null);
-    const nodes = useNodes();
+    //const nodes = useNodes(); // not needed?
     const flow = useReactFlow();
 
     const updateEdgePath = () => {
@@ -40,9 +36,10 @@ const CircuitEdge = ({
         }
     };
 
+    // removed dependency on nodes as any time any node is changed, *all* edges get reset!
     useEffect(
         updateEdgePath,
-        [sourceX, sourceY, targetX, targetY, nodes, sourcePosition, targetPosition]
+        [sourceX, sourceY, targetX, targetY, /*nodes,*/ sourcePosition, targetPosition]
     );
 
     let renderedPath = path;
@@ -54,22 +51,25 @@ const CircuitEdge = ({
             points: draggedPoints,
             targetX, targetY
         });
-        // console.debug(renderedPath);
     }
 
     const handlePointerDown = event => {
         event.target.setPointerCapture(event.pointerId);
         setDrag(newDrag({ event, points, flow }));
+        event.preventDefault();
+        event.stopPropagation();
     };
 
     const handlePointerMove = event => {
         if (drag) {
             const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
             setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
+            event.preventDefault();
+            event.stopPropagation();
         }
     };
 
-    const handleLostPointerCapture = () => {
+    const handlePointerUp = event => {
         if (drag) {
             const draggedPoints = applyDrag({ points, drag });
             setPoints(applyDrag({ points, drag }));
@@ -79,6 +79,8 @@ const CircuitEdge = ({
                 targetX, targetY
             }));
             setDrag(null);
+            event.preventDefault();
+            event.stopPropagation();
         }
     };
 
@@ -90,7 +92,9 @@ const CircuitEdge = ({
                 style={{ ...style, strokeWidth: 3 }}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
-                onLostPointerCapture={handleLostPointerCapture}
+                onPointerUp={handlePointerUp}
+                onDragStart={e => console.debug(`onDragStart`, e)}
+                onDrag={e => console.debug('onDrag', e)}
             />
             <EdgeLabelRenderer>
                 <div
@@ -245,10 +249,6 @@ class Point {
 
     displaced(v) {
         return new Point(this.x + v.x, this.y + v.y);
-    }
-
-    flat() {
-        return { x: this.x, y: this.y };
     }
 }
 
