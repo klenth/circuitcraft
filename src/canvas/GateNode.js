@@ -42,7 +42,7 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                     <Handle type="target" id="b" style={{top: '65%', left: '11%'}} isConnectable={isConnectable}/>
                     <div>
                         <svg className='' width={size.width} height={size.height}>
-                            <AndGate key="and" x={size.width - 52} y={size.height - 40} text="AND" width={size.width - 10} height={size.height - 10} />
+                            <AndGate key="and" x={size.width - 52} y={size.height - 40} text="" width={size.width - 10} height={size.height - 10} />
                         </svg>
 
                     </div>
@@ -276,6 +276,7 @@ export function JunctionGateNode ({ isConnectable }) {
         <>
             <div>
                 <Handle type="source" id="a" className='junction_handle' style={{top: '50%', left: '50%'}} isConnectable={isConnectable}/>
+                <Handle type="target" id="z" className='junction_handle' style={{top: '50%', left: '50%'}} isConnectable={isConnectable}/>
                 <div>
                 <svg className='junction_svg'>
                     <Junction key="junction"
