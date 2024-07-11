@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EdgeLabelRenderer, useReactFlow, useNodes } from "reactflow";
 import { MouseResponsiveEdge } from './MouseResponsiveEdge';
 import { useRotation } from './RotationContext';
+
 
 const CircuitEdge = ({
                            id,
@@ -21,7 +22,7 @@ const CircuitEdge = ({
     const [path, setPath] = useState('');
     const [points, setPoints] = useState(null);
     const [drag, setDrag] = useState(null);
-    const nodes = useNodes();
+    //const nodes = useNodes(); // not needed?
     const flow = useReactFlow();
     
     // Access the rotations context
@@ -76,7 +77,7 @@ const CircuitEdge = ({
         });
 
         if (error) {
-            setPath(`M${newSourceX},${newSourceY} L${newTargetX},${newTargetY}`);
+            setPath(`M${sourceX},${sourceY} L${targetX},${targetY}`);
             setPoints([]);
         } else {
             setPath(svgPathString);
@@ -84,9 +85,10 @@ const CircuitEdge = ({
         }
     };
 
+    // removed dependency on nodes as any time any node is changed, *all* edges get reset!
     useEffect(
         updateEdgePath,
-        [sourceX, sourceY, targetX, targetY, nodes, sourcePosition, targetPosition]
+        [sourceX, sourceY, targetX, targetY, /*nodes,*/ sourcePosition, targetPosition]
     );
 
     let renderedPath = path;
@@ -106,41 +108,56 @@ const CircuitEdge = ({
             points: draggedPoints,
             targetX: newTargetX, targetY: newTargetY
         });
-
-        // console.debug(renderedPath);
     }
 
+    const handlePointerDown = event => {
+        event.target.setPointerCapture(event.pointerId);
+        setDrag(newDrag({ event, points, flow }));
+        event.preventDefault();
+        event.stopPropagation();
+    };
+
+    const handlePointerMove = event => {
+        if (drag) {
+            const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
+            setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
+    const handlePointerUp = event => {
+        if (drag) {
+            const draggedPoints = applyDrag({ points, drag });
+            setPoints(applyDrag({ points, drag }));
+
+            const sourceRotation = rotations[source] || 0;
+            const targetRotation = rotations[target] || 0;
+            
+            const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
+            getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
+            setPath(renderPath({
+                sourceX: newSourceX, sourceY: newSourceY,
+                points: draggedPoints,
+                targetX: newTargetX, targetY: newTargetY
+            }));
+            setDrag(null);
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
 
     return (
         <>
             <MouseResponsiveEdge
                 path={renderedPath}
                 markerEnd={markerEnd}
-                style={{ ...style, strokeWidth: 3 }} //stroke: 'black'
-                onPointerDown={event => setDrag(newDrag({ event, points, flow }))}
-                onPointerMove={event => {
-                    if (drag) {
-                        const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
-                        setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
-                    }
-                }}
-                onPointerUp={() => {
-                    if (drag) {
-                        const draggedPoints = applyDrag({ points, drag });
-
-                        const sourceRotation = rotations[source] || 0;
-                        const targetRotation = rotations[target] || 0;
-                        const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-                        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
-                        setPoints(applyDrag({ points, drag }));
-                        setPath(renderPath({
-                            sourceX: newSourceX, sourceY: newSourceY,
-                            points: draggedPoints,
-                            targetX: newTargetX, targetY: newTargetY
-                        }));
-                        setDrag(null);
-                    }
-                }}
+                style={{ ...style, strokeWidth: 3 }}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onDragStart={e => console.debug(`onDragStart`, e)}
+                onDrag={e => console.debug('onDrag', e)}
             />
             <EdgeLabelRenderer>
                 <div
@@ -216,10 +233,6 @@ const routeEdge = ({
     targetX, targetY,
     sourcePosition, targetPosition
 }) => {
-    //const { sourceX, sourceY, targetX, targetY } = getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-    // const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } = 
-    // getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-
     const sourceP = new Point(sourceX, sourceY);
     const targetP = new Point(targetX, targetY);
     const sourceNormal = PlusI; //positionVector(sourcePosition);
@@ -299,10 +312,6 @@ class Point {
 
     displaced(v) {
         return new Point(this.x + v.x, this.y + v.y);
-    }
-
-    flat() {
-        return { x: this.x, y: this.y };
     }
 }
 
