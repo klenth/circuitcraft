@@ -22,7 +22,7 @@ const CircuitEdge = ({
     const [path, setPath] = useState('');
     const [points, setPoints] = useState(null);
     const [drag, setDrag] = useState(null);
-    //const nodes = useNodes(); // not needed?
+    const nodes = useNodes();
     const flow = useReactFlow();
     
     // Access the rotations context
