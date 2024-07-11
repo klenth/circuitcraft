@@ -418,6 +418,8 @@ export function JunctionGateNode({id, isConnectable}) {
             <div>
                 <Handle type="source" id="a" className='junction_handle' style={{top: '50%', left: '50%'}}
                         isConnectable={isConnectable}/>
+                <Handle type="target" id="z" className='junction_handle' style={{top: '50%', left: '50%'}}
+                        isConnectable={isConnectable}/>
                 <div>
                     <svg className='junction_svg'>
                     <Junction key="junction"
