@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Toolbox from './toolbox/Toolbox';
@@ -6,18 +6,21 @@ import Menubar from './menubar/Menubar';
 import App from './App';
 import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+const Root = () => {
+    const [inputNodes, setInputNodes] = useState([]);
+    const [outputNodes, setOutputNodes] = useState([]);
+
+    return (
+        <React.StrictMode>
+            <Menubar />
+            <Toolbox setInputNodes={setInputNodes} setOutputNodes={setOutputNodes} />
+            <Canvas inputNodes={inputNodes} outputNodes={outputNodes} />
+        </React.StrictMode>
+    );
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Menubar />
-    <Toolbox />
-    <Canvas />
-  </React.StrictMode>
-);
+root.render(<Root />);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

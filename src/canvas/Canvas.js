@@ -1,5 +1,5 @@
 import './Canvas.css';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import ReactFlow, {
     Background,
     BackgroundVariant,
@@ -13,7 +13,7 @@ import ReactFlow, {
 
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode } from './GateNode';
-//import GridSmartEdge from './GridSmartEdge';
+import { InputNode, OutputNode } from '../nodegen/GenerateNodes';
 import CircuitEdge from './CircuitEdge';
 
 const rfStyle = {
@@ -21,19 +21,19 @@ const rfStyle = {
 };
 
 const initialNodes = [
-    { id: 'node-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
-    { id: 'node-2', type: 'ORGateNode', position: { x: -50, y: 100 } },
-    { id: 'node-3', type: 'XORGateNode', position: { x: 100, y: 100 } },
-    { id: 'node-4', type: 'NORGateNode', position: { x: -200, y: 100 } },
-    { id: 'node-5', type: 'NANDGateNode', position: { x: -150, y: -40 } },
-    { id: 'node-6', type: 'NOTGateNode', position: { x: 150, y: -40 } },
-    { id: 'node-7', type: 'XNORGateNode', position: { x: 250, y: 100 } },
+    { id: 'AND-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
+    { id: 'OR-1', type: 'ORGateNode', position: { x: -50, y: 100 } },
+    { id: 'XOR-1', type: 'XORGateNode', position: { x: 100, y: 100 } },
+    { id: 'NOR-1', type: 'NORGateNode', position: { x: -200, y: 100 } },
+    { id: 'NAND-1', type: 'NANDGateNode', position: { x: -150, y: -40 } },
+    { id: 'NOT-1', type: 'NOTGateNode', position: { x: 150, y: -40 } },
+    { id: 'XNOR-1', type: 'XNORGateNode', position: { x: 250, y: 100 } },
 ];
 
 const initialEdges = [
-    { id: 'e1-2', source: 'node-1', target: 'node-2', type: 'CircuitEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
-    { id: 'e3-6', source: 'node-3', target: 'node-6', type: 'CircuitEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
-    { id: 'e4-5', source: 'node-4', target: 'node-5', type: 'CircuitEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
+    { id: 'e1-2', source: 'AND-1', target: 'OR-1', type: 'CircuitEdge', style: { stroke: 'red'}, data: { nodes: initialNodes } },
+    { id: 'e3-6', source: 'XOR-1', target: 'NOT-1', type: 'CircuitEdge', style: { stroke: 'green'}, data: { nodes: initialNodes } },
+    { id: 'e4-5', source: 'NAND-1', target: 'NOR-1', type: 'CircuitEdge', style: { stroke: 'blue'}, data: { nodes: initialNodes } }
 ];
 
 const nodeTypes = {
@@ -44,13 +44,19 @@ const nodeTypes = {
     NANDGateNode,
     NOTGateNode,
     XNORGateNode,
+    InputNode,
+    OutputNode,
 };
 
-const edgeTypes = { CircuitEdge: CircuitEdge };
+const edgeTypes = { CircuitEdge: CircuitEdge  };
 
-function Canvas() {
-    const [nodes, setNodes] = useState(initialNodes);
+function Canvas({ inputNodes, outputNodes }) {
+    const [nodes, setNodes] = useState([...initialNodes, ...inputNodes, ...outputNodes]);
     const [edges, setEdges] = useState(initialEdges);
+
+    useEffect(() => {
+        setNodes([...initialNodes, ...inputNodes, ...outputNodes]);
+    }, [inputNodes, outputNodes]);
 
     const onNodesChange = useCallback(
         (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -61,7 +67,7 @@ function Canvas() {
         [setEdges]
     );
     const onConnect = useCallback(
-        (connection) => setEdges((eds) => addEdge({ ...connection, type: 'GridSmartEdge', data: { nodes } }, eds)),
+        (connection) => setEdges((eds) => addEdge({ ...connection, type: 'CircuitEdge', data: { nodes } }, eds)),
         [setEdges, nodes]
     );
 
