@@ -24,6 +24,7 @@ export default function Toolbox({ addNode }) {
     function handle_mouse_leave() {
         set_hovered_gate(null);
     }
+    
 
     return (
         <div className='toolbox_container'>
@@ -33,7 +34,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('AND')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="-45 -50 100 100">
+                    viewBox="-55 -50 100 100">
                     <AndGate
                         key="and"
                         scale={hovered_gate === 'AND' ? 1.15 : 1}
@@ -45,7 +46,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('OR')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="0 -10 100 100">
+                    viewBox="-12 -10 100 100">
                     <OrGate
                         key="or"
                         scale={hovered_gate === 'OR' ? 1.15 : 1}
@@ -57,7 +58,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('NOT')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="0 -10 100 100">
+                    viewBox="-13 -10 100 100">
                     <NotGate
                         key="not"
                         scale={hovered_gate === 'NOT' ? 1.15 : 1}
@@ -69,7 +70,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('XOR')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="0 -10 100 100">
+                    viewBox="-13 -10 100 100">
                     <XorGate
                         key="xor"
                         scale={hovered_gate === 'XOR' ? 1.15 : 1}
@@ -81,7 +82,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('NAND')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="10 -10 100 100">
+                    viewBox="-7 -10 100 100">
                     <NandGate
                         key="nand"
                         scale={hovered_gate === 'NAND' ? 1.15 : 1}
@@ -93,7 +94,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('NOR')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="15 -10 100 100">
+                    viewBox="-8 -10 100 100">
                     <NorGate
                         key="nor"
                         scale={hovered_gate === 'NOR' ? 1.15 : 1}
@@ -105,7 +106,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('XNOR')}
                     onMouseLeave={handle_mouse_leave}
                     width="50" height="25"
-                    viewBox="1 -10 100 100">
+                    viewBox="-12 -10 100 100">
                     <XnorGate
                         key="xnor"
                         scale={hovered_gate === 'XNOR' ? 1.15 : 1}
@@ -117,7 +118,7 @@ export default function Toolbox({ addNode }) {
                     onMouseEnter={() => handle_mouse_hover('Junction')}
                     onMouseLeave={handle_mouse_leave}
                     width="40" height="10"
-                    viewBox="30 30 60 40">
+                    viewBox="19 30 60 40">
                     <Junction
                         key="junction"
                         scale={hovered_gate === 'Junction' ? 1.1 : 1}

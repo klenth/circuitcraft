@@ -52,7 +52,7 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
 
     return (
         <RotationProvider>
-            <div style={{ width: '75vw', height: '90vh', borderRadius: '3px' }}>
+            <div style={{ width: '85vw', height: '90vh', borderRadius: '3px' }}>
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}

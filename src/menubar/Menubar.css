@@ -31,9 +31,9 @@
 }
 
 .bar_toolbox {
-    width: 25%;
+    width: 14%;
     font-weight: 700;
-    /* margin-right: 5em; */
+    margin-left: 10em;
 }
 
 .bar_items div li {

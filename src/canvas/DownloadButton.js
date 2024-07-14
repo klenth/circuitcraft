@@ -46,11 +46,11 @@ function DownloadButton() {
   };
 
   return (
-    <Panel position="top-right">
+    // <Panel position="top-right">
       <button className="download-btn" onClick={onClick}>
         Download Image
       </button>
-    </Panel>
+    // </Panel>
   );
 }
 
