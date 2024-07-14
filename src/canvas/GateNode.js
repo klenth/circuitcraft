@@ -4,7 +4,6 @@ import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junctio
 import './Canvas.css';
 import { useRotation } from './RotationContext';
 
-
 const handleStyle = { top: 20, left: 3 };
 
 /* I've changed the inputs to start at a and go to m (if needed) and outputs to start
@@ -31,7 +30,6 @@ export function ANDGateNode ({ id, isConnectable, data }) {
         setRotation(id, (prevRotation) => (prevRotation + 90) % 360);
         updateNodeInternals(id);
     };
-
 
     const handleResize = (event, { width, height }) => {
         setSize({ width, height });
@@ -76,7 +74,6 @@ export function ANDGateNode ({ id, isConnectable, data }) {
         </>
     );
 }
-
 
 export function ORGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();

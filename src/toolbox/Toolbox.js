@@ -3,7 +3,7 @@ import './Toolbox.css';
 import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junction } from '../gates/Gates.js';
 import { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes } from '../nodegen/GenerateNodes';
 
-export default function Toolbox({ addNode }) {
+export default function Toolbox({ addNode, handleLabelChange }) {
     const [hovered_gate, set_hovered_gate] = useState(null);
 
     function handle_gate_click(gate_type) {
@@ -14,7 +14,6 @@ export default function Toolbox({ addNode }) {
             data: { label: "" },
         };
         addNode(newNode);
-        //console.log("Gate type: " + newNode.type);
     }
 
     function handle_mouse_hover(gate_type) {
@@ -125,13 +124,13 @@ export default function Toolbox({ addNode }) {
                     />
                 </svg>
                 <div className="input">
-                    <GenerateInputNodes addNode={addNode}/>
+                    <GenerateInputNodes addNode={addNode} />
                 </div>
                 <div className="input">
-                    <GenerateOutputNodes addNode={addNode}/>
+                    <GenerateOutputNodes addNode={addNode} />
                 </div>
                 <div className="input">
-                    <GenerateLabelNodes addNode={addNode}/>
+                    <GenerateLabelNodes addNode={addNode} handleLabelChange={handleLabelChange} />
                 </div>
             </div>
         </div>

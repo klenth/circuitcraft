@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import './GenerateNodes.css';
-
 
 const GenerateInputNodes = ({ addNode }) => {
     const [inputCount, setInputCount] = useState(0);
@@ -25,7 +24,6 @@ const GenerateInputNodes = ({ addNode }) => {
             className: 'input_node'
         };
         addNode(newNode);
-        console.log("Gate type: " + newNode.type);
         setInputCount(inputCount + 1);
     };
 
@@ -68,15 +66,16 @@ const GenerateOutputNodes = ({ addNode }) => {
     );
 };
 
-const GenerateLabelNodes = ({ addNode }) => {
+const GenerateLabelNodes = ({ addNode, handleLabelChange }) => {
     const [labelCount, setLabelCount] = useState(0);
 
     const addLabelNode = () => {
         const newNode = {
             id: `label-${labelCount + 1}`,
-            data: { label: `Label ${labelCount + 1}` },
+            data: { label: `Label ${labelCount + 1}`, onLabelChange: handleLabelChange },
             position: { x: 25, y: 25 },
             type: 'label',
+            isEditable: true,
             style: {
                 display: 'flex',
                 justifyContent: 'center',
@@ -100,4 +99,41 @@ const GenerateLabelNodes = ({ addNode }) => {
     );
 };
 
-export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes };
+const LabelNode = ({ id, data, isEditable }) => {
+    const [isEditing, setIsEditing] = useState(true);
+    const [labelText, setLabelText] = useState(data.label);
+
+    useEffect(() => {
+        setLabelText(data.label);
+    }, [data.label]);
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        data.onLabelChange(id, labelText); // Access from data prop
+    };
+
+    const handleChange = (e) => {
+        setLabelText(e.target.value);
+    };
+
+    return (
+        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={labelText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoFocus
+                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
+                />
+            ) : (
+                <span>{data.label}</span>
+            )}
+            <Handle type="source" position={Position.Right} />
+            <Handle type="target" position={Position.Left} />
+        </div>
+    );
+};
+
+export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes, LabelNode };

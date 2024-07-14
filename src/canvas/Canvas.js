@@ -1,18 +1,14 @@
-import './Canvas.css';
 import React, { useCallback } from 'react';
 import ReactFlow, {
-    useNodesState,
-    useEdgesState,
     addEdge,
     applyEdgeChanges,
     applyNodeChanges,
 } from 'reactflow';
-
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
 import { RotationProvider } from './RotationContext';
-
+import { LabelNode } from '../nodegen/GenerateNodes';
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -26,15 +22,13 @@ const nodeTypes = {
     NANDGateNode,
     NOTGateNode,
     XNORGateNode,
-    // InputNode,
-    // OutputNode,
-    JunctionGateNode
-}
-
+    JunctionGateNode,
+    label: LabelNode
+};
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
 
-function Canvas({ nodes, edges, setNodes, setEdges }) {
+function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange }) {
     const onNodesChange = useCallback(
         (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
         [setNodes]
@@ -61,12 +55,10 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
                     edgeTypes={edgeTypes}
                     fitView
                     style={rfStyle}
-                >
-                </ReactFlow>
-
+                    onLabelChange={handleLabelChange}
+                />
             </div>
         </RotationProvider>
-
     );
 }
 
