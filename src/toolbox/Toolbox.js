@@ -37,7 +37,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-55 -50 100 100">
                     <AndGate
                         key="and"
-                        scale={hovered_gate === 'AND' ? 1.15 : 1}
                         border={hovered_gate === 'AND' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -49,7 +48,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-12 -10 100 100">
                     <OrGate
                         key="or"
-                        scale={hovered_gate === 'OR' ? 1.15 : 1}
                         border={hovered_gate === 'OR' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -61,7 +59,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-13 -10 100 100">
                     <NotGate
                         key="not"
-                        scale={hovered_gate === 'NOT' ? 1.15 : 1}
                         border={hovered_gate === 'NOT' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -73,7 +70,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-13 -10 100 100">
                     <XorGate
                         key="xor"
-                        scale={hovered_gate === 'XOR' ? 1.15 : 1}
                         border={hovered_gate === 'XOR' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -85,7 +81,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-7 -10 100 100">
                     <NandGate
                         key="nand"
-                        scale={hovered_gate === 'NAND' ? 1.15 : 1}
                         border={hovered_gate === 'NAND' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -97,7 +92,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-8 -10 100 100">
                     <NorGate
                         key="nor"
-                        scale={hovered_gate === 'NOR' ? 1.15 : 1}
                         border={hovered_gate === 'NOR' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -109,7 +103,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="-12 -10 100 100">
                     <XnorGate
                         key="xnor"
-                        scale={hovered_gate === 'XNOR' ? 1.15 : 1}
                         border={hovered_gate === 'XNOR' ? '#595959' : 'black'}
                     />
                 </svg>
@@ -121,7 +114,6 @@ export default function Toolbox({ addNode }) {
                     viewBox="19 30 60 40">
                     <Junction
                         key="junction"
-                        scale={hovered_gate === 'Junction' ? 1.1 : 1}
                         fill={hovered_gate === 'Junction' ? '#595959' : 'black'}
                     />
                 </svg>

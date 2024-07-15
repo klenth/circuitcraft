@@ -41,7 +41,6 @@ function AndGate(props) {
                 stroke={p.border}
                 strokeWidth={4}
                 key={p.key + "_path"}
-                transform={p.scale}
             />
 
             <text
