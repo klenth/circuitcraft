@@ -34,6 +34,7 @@ h1.toolbox {
 .svg_container svg {
     width: 95%;
     height: auto;
+    transition: 0.2s;
 }
 
 .svg_container svg:hover {
@@ -52,6 +53,7 @@ h1.toolbox {
     border-radius: 2px;
     padding: 6px 10px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .input button:hover {
