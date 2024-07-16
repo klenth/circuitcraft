@@ -1,90 +1,103 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'reactflow';
+import './GenerateNodes.css';
 
-const InputNode = ({ data }) => (
-    <div>
-        {data.label}
-        <Handle type="source" position={Position.Right} />
-    </div>
-);
 
-const OutputNode = ({ data }) => (
-    <div>
-        {data.label}
-        <Handle type="target" position={Position.Left} />
-    </div>
-);
+const GenerateInputNodes = ({ addNode }) => {
+    const [inputCount, setInputCount] = useState(0);
 
-const GenerateInputNodes = ({ setInputNodes }) => {
-    const [number, setNumber] = useState('');
-
-    const handleInputChange = (event) => {
-        const value = event.target.value;
-        setNumber(value);
-
-        if (!isNaN(value) && value !== '') {
-            const nodeCount = parseInt(value, 10);
-            const newNodes = Array.from({ length: nodeCount }, (_, i) => ({
-                id: `input-${i + 1}`,
-                data: { label: `Input ${i + 1}` },
-                position: { x: (i * 50), y: (i * 50) },
-                type: 'input',
-            }));
-            setInputNodes(newNodes);
-        } else {
-            setInputNodes([]);
-        }
+    const addInputNode = () => {
+        const newNode = {
+            id: `input-${inputCount + 1}`,
+            data: { label: `Input ${inputCount + 1}` },
+            position: { x: 0, y: 0 },
+            type: 'input',
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: '70px',
+                height: '25px',
+                borderRadius: '0',
+            },
+            className: 'input_node'
+        };
+        addNode(newNode);
+        console.log("Gate type: " + newNode.type);
+        setInputCount(inputCount + 1);
     };
 
     return (
         <div>
-            <label>
-                How many inputs?
-                <input
-                    type="text"
-                    value={number}
-                    onChange={handleInputChange}
-                    style={{ textDecoration: 'underline', width: '40px', margin: '0 10px' }}
-                />
-            </label>
+            <button onClick={addInputNode}>Add Input</button>
         </div>
     );
 };
 
-const GenerateOutputNodes = ({ setOutputNodes }) => {
-    const [number, setNumber] = useState('');
+const GenerateOutputNodes = ({ addNode }) => {
+    const [outputCount, setOutputCount] = useState(0);
 
-    const handleInputChange = (event) => {
-        const value = event.target.value;
-        setNumber(value);
-
-        if (!isNaN(value) && value !== '') {
-            const nodeCount = parseInt(value, 10);
-            const newNodes = Array.from({ length: nodeCount }, (_, i) => ({
-                id: `output-${i + 1}`,
-                data: { label: `Output ${i + 1}` },
-                position: { x: (i * 50) + 25, y: (i * 50) + 25 },
-                type: 'output',
-            }));
-            setOutputNodes(newNodes);
-        } else {
-            setOutputNodes([]);
-        }
+    const addOutputNode = () => {
+        const newNode = {
+            id: `output-${outputCount + 1}`,
+            data: { label: `Output ${outputCount + 1}` },
+            position: { x: 25, y: 25 },
+            type: 'output',
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: '70px',
+                height: '25px',
+                borderRadius: '0',
+            },
+            className: 'output_node'
+        };
+        addNode(newNode);
+        setOutputCount(outputCount + 1);
     };
 
     return (
         <div>
-            <label>
-                How many outputs?
-                <input
-                    type="text"
-                    value={number}
-                    onChange={handleInputChange}
-                    style={{ textDecoration: 'underline', width: '40px', margin: '0 10px' }}
-                />
-            </label>
+            <button onClick={addOutputNode}>Add Output</button>
         </div>
     );
 };
 
-export { InputNode, OutputNode, GenerateInputNodes, GenerateOutputNodes };
+const GenerateLabelNodes = ({ addNode }) => {
+    const [labelCount, setLabelCount] = useState(0);
+
+    const addLabelNode = () => {
+        const newNode = {
+            id: `label-${labelCount + 1}`,
+            data: { label: `Label ${labelCount + 1}` },
+            position: { x: 25, y: 25 },
+            type: 'label',
+            style: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: 'none',
+                backgroundColor: 'transparent',
+                width: '70px',
+                height: '25px',
+                borderRadius: '0',
+            },
+            className: 'label_node'
+        };
+        addNode(newNode);
+        setLabelCount(labelCount + 1);
+    };
+
+    return (
+        <div>
+            <button onClick={addLabelNode}>Add Label</button>
+        </div>
+    );
+};
+
+export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes };

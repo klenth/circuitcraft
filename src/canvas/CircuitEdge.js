@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BaseEdge, EdgeLabelRenderer, useReactFlow, useStore, useNodes } from "reactflow";
-import { drag } from "d3-drag";
-import { select } from "d3-selection";
-import { getSmartEdge, pathfindingJumpPointNoDiagonal } from '@tisoap/react-flow-smart-edge'
+import { EdgeLabelRenderer, useReactFlow, useNodes } from "reactflow";
 import { MouseResponsiveEdge } from './MouseResponsiveEdge';
-import { screenToFlowPosition } from 'reactflow';
+import { useRotation } from './RotationContext';
+
 
 const CircuitEdge = ({
                            id,
@@ -16,6 +14,9 @@ const CircuitEdge = ({
                            targetPosition,
                            markerEnd,
                            style = {},
+                           source,
+                           target,
+                           data,
                        }) => {
 
     const [path, setPath] = useState('');
@@ -24,20 +25,50 @@ const CircuitEdge = ({
     const nodes = useNodes();
     const flow = useReactFlow();
 
+    // Access the rotations context
+    const { rotations } = useRotation();
+    // Access the nodes and type information
+    const sourceNode = nodes.find(node => node.id === source);
+    const sourceGateType = sourceNode?.type;
 
-    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, offsetX = 6, offsetY = 1.6) {
+    const rotationAdjustments = {
+        270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
+        180: { source: { x: -5.5, y: 1.2 }, target: { x: 5.5, y: 1.2 } },
+        90: { source: { x: -5.5, y: 13 }, target: { x: -5.7, y: 1 } },
+        0: { source: { x: 6, y: 1.6 }, target: { x: -6, y: 1.6 } },
+    };
+
+    //for fine-tuning later. It gives an error sometimes saying the following:
+    //Uncaught TypeError: Cannot destructure property 'sourceX' of 'getHandleConnectionPoint(...)' as it is undefined.
+
+    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation) {
+        const sourceAdjustment = rotationAdjustments[sourceRotation] || { x: 0, y: 0 };
+        const targetAdjustment = rotationAdjustments[targetRotation] || { x: 0, y: 0 };
+
+        if (sourceGateType === 'input'){
+            sourceAdjustment.source.y = -1;
+        }
+        if (sourceGateType === 'JunctionGateNode'){
+            sourceAdjustment.source.x = 0;
+            sourceAdjustment.source.y = 3;
+        }
+
         return {
-            sourceX: sourceX + offsetX,
-            sourceY: sourceY + offsetY,
-            targetX: targetX - offsetX,
-            targetY: targetY + offsetY,
+            sourceX: sourceX + sourceAdjustment.source.x,
+            sourceY: sourceY + sourceAdjustment.source.y,
+            targetX: targetX + targetAdjustment.target.x,
+            targetY: targetY + targetAdjustment.target.y,
         };
     }
 
     const updateEdgePath = () => {
 
+        const sourceRotation = rotations[source] || 0;
+        const targetRotation = rotations[target] || 0;
+
+
         const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
-        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
 
         const { svgPathString, error, points } = routeEdge({
             sourcePosition, targetPosition,
@@ -46,7 +77,7 @@ const CircuitEdge = ({
         });
 
         if (error) {
-            setPath(`M${newSourceX},${newSourceY} L${newTargetX},${newTargetY}`);
+            setPath(`M${sourceX},${sourceY} L${targetX},${targetY}`);
             setPoints([]);
         } else {
             setPath(svgPathString);
@@ -54,9 +85,10 @@ const CircuitEdge = ({
         }
     };
 
+    // removed dependency on nodes as any time any node is changed, *all* edges get reset!
     useEffect(
         updateEdgePath,
-        [sourceX, sourceY, targetX, targetY, nodes, sourcePosition, targetPosition]
+        [sourceX, sourceY, targetX, targetY, /*nodes,*/ sourcePosition, targetPosition]
     );
 
     let renderedPath = path;
@@ -64,42 +96,54 @@ const CircuitEdge = ({
     if (drag) {
         const draggedPoints = applyDrag({ points, drag });
 
+        const sourceRotation = rotations[source] || 0;
+        const targetRotation = rotations[target] || 0;
+
+
         const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
-        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
+        getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
 
         renderedPath = renderPath({
             sourceX: newSourceX, sourceY: newSourceY,
             points: draggedPoints,
             targetX: newTargetX, targetY: newTargetY
         });
-
-        console.log('Coordinates:', { sourceX, newSourceX, sourceY, newSourceY, targetX, newTargetX, targetY, newTargetY });
-
-        // console.debug(renderedPath);
     }
 
     const handlePointerDown = event => {
         event.target.setPointerCapture(event.pointerId);
         setDrag(newDrag({ event, points, flow }));
+        event.preventDefault();
+        event.stopPropagation();
     };
 
     const handlePointerMove = event => {
         if (drag) {
             const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
             setDrag({ ...drag, currentX: coords.x, currentY: coords.y });
+            event.preventDefault();
+            event.stopPropagation();
         }
     };
 
-    const handleLostPointerCapture = () => {
+    const handlePointerUp = event => {
         if (drag) {
             const draggedPoints = applyDrag({ points, drag });
             setPoints(applyDrag({ points, drag }));
+
+            const sourceRotation = rotations[source] || 0;
+            const targetRotation = rotations[target] || 0;
+
+            const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
+            getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation);
             setPath(renderPath({
-                sourceX, sourceY,
+                sourceX: newSourceX, sourceY: newSourceY,
                 points: draggedPoints,
-                targetX, targetY
+                targetX: newTargetX, targetY: newTargetY
             }));
             setDrag(null);
+            event.preventDefault();
+            event.stopPropagation();
         }
     };
 
@@ -111,7 +155,9 @@ const CircuitEdge = ({
                 style={{ ...style, strokeWidth: 3 }}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
-                onLostPointerCapture={handleLostPointerCapture}
+                onPointerUp={handlePointerUp}
+                onDragStart={e => console.debug(`onDragStart`, e)}
+                onDrag={e => console.debug('onDrag', e)}
             />
             <EdgeLabelRenderer>
                 <div
@@ -187,10 +233,6 @@ const routeEdge = ({
     targetX, targetY,
     sourcePosition, targetPosition
 }) => {
-    //const { sourceX, sourceY, targetX, targetY } = getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-    // const { sourceX: newSourceX, sourceY: newSourceY, targetX: newTargetX, targetY: newTargetY } =
-    // getHandleConnectionPoint(sourceX, sourceY, targetX, targetY);
-
     const sourceP = new Point(sourceX, sourceY);
     const targetP = new Point(targetX, targetY);
     const sourceNormal = PlusI; //positionVector(sourcePosition);
@@ -270,10 +312,6 @@ class Point {
 
     displaced(v) {
         return new Point(this.x + v.x, this.y + v.y);
-    }
-
-    flat() {
-        return { x: this.x, y: this.y };
     }
 }
 

@@ -4,6 +4,11 @@
     z-index: 1;
   }
 
+  .junction_svg {
+    width: 30px;
+    height: 20px;
+  }
+
   /* Handles styling */
   .react-flow .react-flow__handle {
     width: 14px;
@@ -17,6 +22,17 @@
     min-height: 2px!important;
   }
  
+  .junction_handle {
+    border-radius: 5px!important;
+    width: 8px!important;
+    height: 8px!important;
+    background-color: transparent!important;
+  }
+
+  svg path, svg circle{
+    vector-effect: non-scaling-stroke;
+  }
+
   /* Rotate handle styling */
   .node {
     width: 100%;

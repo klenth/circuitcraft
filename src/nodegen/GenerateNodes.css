@@ -1,0 +1,13 @@
+.input_node .react-flow__handle {
+    left: 100%!important;
+    top: 47%!important;
+}
+
+.output_node .react-flow__handle {
+    left: 0%!important;
+    top: 47%!important;
+}
+
+.label_node .react-flow__handle {
+    display: none;
+}
