@@ -156,8 +156,6 @@ const CircuitEdge = ({
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}
-                onDragStart={e => console.debug(`onDragStart`, e)}
-                onDrag={e => console.debug('onDrag', e)}
             />
             <EdgeLabelRenderer>
                 <div
