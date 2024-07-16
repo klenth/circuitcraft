@@ -32,6 +32,28 @@ const Root = () => {
         setNodes((prevNodes) => [...prevNodes, newNode]);
     }, []);
 
+    const handleSave = () => {
+        // all the state to be saved
+        const saveData = {
+            format: 'circuitcraft-save-json',
+            version: 0.1,   // update this whenever format of saved data changes
+            nodes: nodes,
+            edges: edges,
+        };
+
+        const data = new Blob(JSON.stringify(saveData), { type: 'application/json' });
+        const a = document.createElement('a');
+        const url = URL.createObjectURL(data);
+        a.href = url;
+        a.download = 'circuit.json'; // TODO: better way to name the downloaded file?
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    };
+
     return (
         <React.StrictMode>
             <RotationProvider>
