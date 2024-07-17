@@ -5,6 +5,7 @@ import './Menubar.css';
 export function FileDropdown(props) {
     const [dropdown, setDropdown] = useState(false);
     const onSave = props.onSave || (() => {});
+    const onOpen = props.onOpen || (() => {});
     return (
         <>
             <ul className={dropdown ? "dropdown clicked" : "dropdown"} onClick={() => setDropdown(!dropdown)}>
@@ -12,7 +13,7 @@ export function FileDropdown(props) {
                     <Link to={"/"} className='link_item' onClick={() => setDropdown(false)}>New</Link>
                 </li>
                 <li className='dropdown_item' onClick={() => { setDropdown(false); onSave(); }}>Save</li>
-                <li className='dropdown_item'>Open</li>
+                <li className='dropdown_item' onClick={() => { setDropdown(false); onOpen(); }}>Open</li>
                 <li className='dropdown_item'>Expodrt</li>
             </ul>
         </>

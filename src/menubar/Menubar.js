@@ -15,6 +15,7 @@ export default function Menubar(props) {
                         {dropdown &&
                             <FileDropdown
                                 onSave={props.onSave}
+                                onOpen={props.onOpen}
                             />
                         }
                         </li>
