@@ -13,6 +13,8 @@ import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGat
 import CircuitEdge from './CircuitEdge';
 import { RotationProvider } from './RotationContext';
 
+import DownloadButton from './DownloadButton';
+
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -50,7 +52,7 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
 
     return (
         <RotationProvider>
-            <div style={{ width: '75vw', height: '90vh', borderRadius: '3px' }}>
+            <div style={{ width: '85vw', height: '90vh', borderRadius: '3px' }}>
                 <ReactFlow
                     nodes={nodes}
                     edges={edges}
@@ -62,8 +64,8 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
                     fitView
                     style={rfStyle}
                 >
+                <DownloadButton />
                 </ReactFlow>
-
             </div>
         </RotationProvider>
 

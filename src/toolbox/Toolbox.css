@@ -1,6 +1,6 @@
 .toolbox_container {
     background-color: var(--night);
-    width: 25%;
+    width: 15%;
     height: 90vh;
     margin: 0;
     padding: 0;
@@ -26,20 +26,37 @@ h1.toolbox {
     border-radius: 3px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     position: relative;
 }
 
-.svg_container svg:hover {
-    cursor: pointer;
+.svg_container svg {
+    width: 95%;
+    height: auto;
+    transition: 0.2s;
 }
 
-.svg_container svg {
-    width: 90%;
-    height: auto;
+.svg_container svg:hover {
+    cursor: pointer;
+    width: 100%;
 }
 
 .input {
-    padding-bottom: 20px;
+    padding-bottom: 17px;
+}
+
+.input button {
+    background-color: var(--night);
+    color: var(--birch);
+    border: none;
+    border-radius: 2px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.input button:hover {
+    background-color: var(--thistle);
+    font-weight: 700;
 }

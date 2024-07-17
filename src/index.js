@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Toolbox from './toolbox/Toolbox';
 import Menubar from './menubar/Menubar';
-import App from './App';
 import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
 import { RotationProvider } from './canvas/RotationContext';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+
 
 const initialNodes = [
     /*{ id: 'AND-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
@@ -56,11 +58,17 @@ const Root = () => {
 
     return (
         <React.StrictMode>
+            <Router>
             <RotationProvider>
                 <Menubar />
                 <Toolbox addNode={addNode} />
-                <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} />
+                <Routes>
+                <Route path="/" element={ 
+                    <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} />
+                }/> {/* This does not re-render canvas */}
+                </Routes>
             </RotationProvider>
+            </Router>
         </React.StrictMode>
     );
 };

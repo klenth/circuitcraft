@@ -13,3 +13,6 @@ Dependencies needed for React Flow:
 Dependencies needed for React Flow Smart Edge:
 (for better collision control of nodes and edges)
     npm install @tisoap/react-flow-smart-edge
+
+Dependencies needed for html-to-image:
+    npm install --save html-to-image
