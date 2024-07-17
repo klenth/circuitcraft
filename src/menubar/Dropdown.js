@@ -2,17 +2,18 @@ import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import './Menubar.css';
 
-export function FileDropdown() {
+export function FileDropdown(props) {
     const [dropdown, setDropdown] = useState(false);
+    const onSave = props.onSave || (() => {});
     return (
         <>
             <ul className={dropdown ? "dropdown clicked" : "dropdown"} onClick={() => setDropdown(!dropdown)}>
                 <li className='dropdown_item'>
                     <Link to={"/"} className='link_item' onClick={() => setDropdown(false)}>New</Link>
                 </li>
-                <li className='dropdown_item'>Download</li>
-                <li className='dropdown_item'>Upload</li>
-                <li className='dropdown_item'>Export</li>
+                <li className='dropdown_item' onClick={() => { setDropdown(false); onSave(); }}>Save</li>
+                <li className='dropdown_item'>Open</li>
+                <li className='dropdown_item'>Expodrt</li>
             </ul>
         </>
     );

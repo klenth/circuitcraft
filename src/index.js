@@ -43,7 +43,7 @@ const Root = () => {
             edges: edges,
         };
 
-        const data = new Blob(JSON.stringify(saveData), { type: 'application/json' });
+        const data = new Blob([JSON.stringify(saveData)], { type: 'application/json' });
         const a = document.createElement('a');
         const url = URL.createObjectURL(data);
         a.href = url;
@@ -60,7 +60,7 @@ const Root = () => {
         <React.StrictMode>
             <Router>
             <RotationProvider>
-                <Menubar />
+                <Menubar onSave={() => handleSave()}/>
                 <Toolbox addNode={addNode} />
                 <Routes>
                 <Route path="/" element={ 

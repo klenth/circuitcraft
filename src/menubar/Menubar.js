@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import DownloadButton from '../canvas/DownloadButton';
 import { FileDropdown } from './Dropdown';
 
-export default function Menubar() {
+export default function Menubar(props) {
     const [dropdown, setDropdown] = useState(false);
     return (
         <>
@@ -12,7 +12,11 @@ export default function Menubar() {
                     <div>
                         <li className='bar_file' onClick={() => setDropdown(!dropdown)} 
                         >File
-                        {dropdown && <FileDropdown />}
+                        {dropdown &&
+                            <FileDropdown
+                                onSave={props.onSave}
+                            />
+                        }
                         </li>
 
                         <li className='bar_edit'>Edit</li>
