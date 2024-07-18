@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import React, { useState, useEffect } from 'react';
+import { Handle } from 'reactflow';
 import './GenerateNodes.css';
 
-
-const GenerateInputNodes = ({ addNode }) => {
+const GenerateInputNodes = ({ addNode, handleLabelChange }) => {
     const [inputCount, setInputCount] = useState(0);
 
     const addInputNode = () => {
         const newNode = {
             id: `input-${inputCount + 1}`,
-            data: { label: `Input ${inputCount + 1}` },
+            data: { label: `Input ${inputCount + 1}`, onLabelChange: handleLabelChange },
             position: { x: 0, y: 0 },
             type: 'input',
+            isEditable: true,
             style: {
                 display: 'flex',
                 justifyContent: 'center',
@@ -24,8 +24,8 @@ const GenerateInputNodes = ({ addNode }) => {
             },
             className: 'input_node'
         };
+        console.log("This is addInputNode");
         addNode(newNode);
-        console.log("Gate type: " + newNode.type);
         setInputCount(inputCount + 1);
     };
 
@@ -36,15 +36,16 @@ const GenerateInputNodes = ({ addNode }) => {
     );
 };
 
-const GenerateOutputNodes = ({ addNode }) => {
+const GenerateOutputNodes = ({ addNode, handleLabelChange }) => {
     const [outputCount, setOutputCount] = useState(0);
 
     const addOutputNode = () => {
         const newNode = {
             id: `output-${outputCount + 1}`,
-            data: { label: `Output ${outputCount + 1}` },
+            data: { label: `Output ${outputCount + 1}`, onLabelChange: handleLabelChange },
             position: { x: 25, y: 25 },
             type: 'output',
+            isEditable: true,
             style: {
                 display: 'flex',
                 justifyContent: 'center',
@@ -68,15 +69,16 @@ const GenerateOutputNodes = ({ addNode }) => {
     );
 };
 
-const GenerateLabelNodes = ({ addNode }) => {
+const GenerateLabelNodes = ({ addNode, handleLabelChange }) => {
     const [labelCount, setLabelCount] = useState(0);
 
     const addLabelNode = () => {
         const newNode = {
             id: `label-${labelCount + 1}`,
-            data: { label: `Label ${labelCount + 1}` },
-            position: { x: 25, y: 25 },
+            data: { label: `Label ${labelCount + 1}`, onLabelChange: handleLabelChange },
+            position: { x: 0, y: 12.5 },
             type: 'label',
+            isEditable: true,
             style: {
                 display: 'flex',
                 justifyContent: 'center',
@@ -100,4 +102,122 @@ const GenerateLabelNodes = ({ addNode }) => {
     );
 };
 
-export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes };
+const LabelNode = ({ id, data, isEditable }) => {
+    const [isEditing, setIsEditing] = useState(true);
+    const [labelText, setLabelText] = useState(data.label);
+
+    useEffect(() => {
+        setLabelText(data.label);
+    }, [data.label]);
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        const trimmedText = labelText.trim();
+        const newText = trimmedText === "" ? "Label" : trimmedText;
+        setLabelText(newText);
+        data.onLabelChange(id, newText);
+    };
+
+    const handleChange = (e) => {
+        setLabelText(e.target.value);
+    };
+
+    return (
+        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={labelText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoFocus
+                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
+                />
+            ) : (
+                <span>{data.label}</span>
+            )}
+        </div>
+    );
+};
+
+const InputNode = ({ id, data, isEditable }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [labelText, setLabelText] = useState(data.label);
+
+    useEffect(() => {
+        setLabelText(data.label);
+    }, [data.label]);
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        const trimmedText = labelText.trim();
+        const newText = trimmedText === "" ? "Input" : trimmedText;
+        setLabelText(newText);
+        data.onLabelChange(id, newText);
+    };
+
+    const handleChange = (e) => {
+        setLabelText(e.target.value);
+    };
+
+    console.log("This is inputNode");
+
+    return (
+        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={labelText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoFocus
+                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
+                />
+            ) : (
+                <span>{data.label}</span>
+            )}
+            <Handle type="source" id="z" />
+        </div>
+    );
+};
+
+const OutputNode = ({ id, data, isEditable }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [labelText, setLabelText] = useState(data.label);
+
+    useEffect(() => {
+        setLabelText(data.label);
+    }, [data.label]);
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        const trimmedText = labelText.trim();
+        const newText = trimmedText === "" ? "Output" : trimmedText;
+        setLabelText(newText);
+        data.onLabelChange(id, newText);
+    };
+
+    const handleChange = (e) => {
+        setLabelText(e.target.value);
+    };
+
+    return (
+        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={labelText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoFocus
+                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
+                />
+            ) : (
+                <span>{data.label}</span>
+            )}
+            <Handle type="target" id="a" />
+        </div>
+    );
+};
+
+export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes, LabelNode, InputNode, OutputNode };

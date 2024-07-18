@@ -1,44 +1,37 @@
-  .gate_svg {
-    width: 110px;
-    height: 80px;
-    z-index: 1;
-  }
+.gate_svg {
+  width: 110px;
+  height: 80px;
+  z-index: 1;
+}
 
-  .junction_svg {
-    width: 30px;
-    height: 20px;
-  }
+.junction_svg {
+  width: 30px;
+  height: 20px;
+}
 
-  /* Handles styling */
-  .react-flow .react-flow__handle {
-    width: 14px;
-    height: 3px;
-    border-radius: 0px;
-    background-color: #000;
-    border: none;
-  }
+/* Handles styling */
+.react-flow .react-flow__handle {
+  width: 14px;
+  height: 3px;
+  border-radius: 0px;
+  background-color: #000;
+  border: none;
+}
 
-  .react-flow__handle {
-    min-height: 2px!important;
-  }
- 
-  .junction_handle {
-    border-radius: 5px!important;
-    width: 8px!important;
-    height: 8px!important;
-    background-color: transparent!important;
-  }
+.react-flow__handle {
+  min-height: 2px!important;
+}
 
-  svg path, svg circle{
-    vector-effect: non-scaling-stroke;
-  }
+.junction_handle {
+  border-radius: 5px!important;
+  width: 8px!important;
+  height: 8px!important;
+  background-color: transparent!important;
+}
 
-  /* Rotate handle styling */
-  .node {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
+svg path, svg circle{
+  vector-effect: non-scaling-stroke;
+}
 
   .node:hover .rotate_handle {
     display: block;
@@ -56,36 +49,51 @@
     padding-left: 7px; /* the rotate handle is not in the center of the container, hence padding */
     z-index: -1;
   }
+/* Rotate handle styling */
+.node {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
-  .rotate_handle {
-    width: 10px;
-    height: 10px;
-    background: var(--thistle);
-    border-radius: 100%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    display: none;
-    z-index: -1; /* so that it goes behind the curve of the gate */
-  }
+.node:hover .rotate_handle {
+  display: block;
+}
 
-  .rotate_handle:after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 2px;
-    height: 15px;
-    background: var(--thistle);
-    left: 4px;
-    top: 5px;
-  }
+.rotate_handle_container{
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  left: 30%;
+  top: -15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-left: 7px; /* the rotate handle is not in the center of the container, hence padding */
+  z-index: -1;
+}
 
-  .rotate_handle:hover {
-    display: block;
-  }
+.rotate_handle {
+  width: 10px;
+  height: 10px;
+  background: var(--thistle);
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  display: none;
+  z-index: -1; /* so that it goes behind the curve of the gate */
+}
 
-  .rotate_handle:after:hover{
-    display: block;
-  }
+.rotate_handle:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: var(--thistle);
+  left: 4px;
+  top: 5px;
+}
 
   .curved_gate_styling {
     top: -14px;
@@ -107,47 +115,44 @@
   }
 
 
-  /* Download image stuff */
-  .download-image.react-flow {
-    background: #B6E4F5;
-  }
-  
-  .download-image .react-flow__node {
-    width: 50px;
-    height: 50px;
-    color: white;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-color: white;
-  }
-  
-  .download-image .react-flow__node-custom {
-    font-size: 12px;
-    background: #eee;
-    border: 1px solid #555;
-    border-radius: 5px;
-    text-align: center;
-    padding: 10px;
-  }
-  
-  .download-image .react-flow__node-custom .react-flow__handle-right {
-    transform: none;
-  }
-  
-  .download-image .download-btn {
-    border: 1px solid #eee;
-    background: #ebf8ff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  
-  .download-image .download-btn:hover {
-    opacity: 0.9;
-  }
-  
+/* Download image stuff */
+.download-image.react-flow {
+  background: #B6E4F5;
+}
 
-  
+.download-image .react-flow__node {
+  width: 50px;
+  height: 50px;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-color: white;
+}
+
+.download-image .react-flow__node-custom {
+  font-size: 12px;
+  background: #eee;
+  border: 1px solid #555;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+}
+
+.download-image .react-flow__node-custom .react-flow__handle-right {
+  transform: none;
+}
+
+.download-image .download-btn {
+  border: 1px solid #eee;
+  background: #ebf8ff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.download-image .download-btn:hover {
+  opacity: 0.9;
+}

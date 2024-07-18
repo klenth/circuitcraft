@@ -10,21 +10,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 
 
-const initialNodes = [
-    /*{ id: 'AND-1', type: 'ANDGateNode', position: { x: 0, y: -40 } },
-    { id: 'OR-1', type: 'ORGateNode', position: { x: -50, y: 100 } },
-    { id: 'XOR-1', type: 'XORGateNode', position: { x: 100, y: 100 } },
-    { id: 'NOR-1', type: 'NORGateNode', position: { x: -200, y: 100 } },
-    { id: 'NAND-1', type: 'NANDGateNode', position: { x: -150, y: -40 } },
-    { id: 'NOT-1', type: 'NOTGateNode', position: { x: 150, y: -40 } },
-    { id: 'XNOR-1', type: 'XNORGateNode', position: { x: 250, y: 100 } },*/
-];
-
-const initialEdges = [
-    /*{ id: 'e1-2', source: 'AND-1', target: 'OR-1', type: 'CircuitEdge', style: { stroke: 'red' } },
-    { id: 'e3-6', source: 'XOR-1', target: 'NOT-1', type: 'CircuitEdge', style: { stroke: 'green' } },
-    { id: 'e4-5', source: 'NAND-1', target: 'NOR-1', type: 'CircuitEdge', style: { stroke: 'blue' } }*/
-];
+const initialNodes = [];
+const initialEdges = [];
 
 const Root = () => {
     const [nodes, setNodes] = useState(initialNodes);
@@ -85,6 +72,17 @@ const Root = () => {
         // document.body.appendChild(fileInput);
         fileInput.click();
     };
+    
+    const handleLabelChange = (id, newLabel) => {
+        setNodes((prevNodes) =>
+            prevNodes.map((node) => {
+                if (node.id === id) {
+                    return { ...node, data: { ...node.data, label: newLabel } };
+                }
+                return node;
+            })
+        );
+    };
 
     return (
         <React.StrictMode>
@@ -94,10 +92,10 @@ const Root = () => {
                     onSave={() => handleSave()}
                     onOpen={() => handleOpen()}
                 />
-                <Toolbox addNode={addNode} />
+                <Toolbox addNode={addNode} handleLabelChange={handleLabelChange} />
                 <Routes>
                 <Route path="/" element={ 
-                    <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} />
+                    <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} handleLabelChange={handleLabelChange} />
                 }/> {/* This does not re-render canvas */}
                 </Routes>
             </RotationProvider>

@@ -1,21 +1,16 @@
-import './Canvas.css';
 import React, { useCallback } from 'react';
 import ReactFlow, {
-    useNodesState,
-    useEdgesState,
     addEdge,
     applyEdgeChanges,
     applyNodeChanges,
 } from 'reactflow';
-
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
 import CircuitConnectionLine from './CircuitConnectionLine';
 import { RotationProvider } from './RotationContext';
-
 import DownloadButton from './DownloadButton';
-
+import { LabelNode, InputNode, OutputNode } from '../nodegen/GenerateNodes';
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -29,15 +24,15 @@ const nodeTypes = {
     NANDGateNode,
     NOTGateNode,
     XNORGateNode,
-    // InputNode,
-    // OutputNode,
-    JunctionGateNode
-}
-
+    JunctionGateNode,
+    label: LabelNode,
+    input: InputNode,
+    output: OutputNode,
+};
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
 
-function Canvas({ nodes, edges, setNodes, setEdges }) {
+function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange }) {
     const onNodesChange = useCallback(
         (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
         [setNodes]
@@ -65,12 +60,12 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
                     connectionLineComponent={CircuitConnectionLine}
                     fitView
                     style={rfStyle}
+                    onLabelChange={handleLabelChange}
                 >
                 <DownloadButton />
                 </ReactFlow>
             </div>
         </RotationProvider>
-
     );
 }
 

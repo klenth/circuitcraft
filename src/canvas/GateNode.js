@@ -4,7 +4,6 @@ import { AndGate, OrGate, XorGate, NandGate, NorGate, XnorGate, NotGate, Junctio
 import './Canvas.css';
 import { useRotation } from './RotationContext';
 
-
 const handleStyle = { top: 20, left: 3 };
 
 /* I've changed the inputs to start at a and go to m (if needed) and outputs to start
@@ -32,7 +31,6 @@ export function ANDGateNode ({ id, isConnectable, data }) {
         updateNodeInternals(id);
     };
 
-
     const handleResize = (event, { width, height }) => {
         setSize({ width, height });
         updateNodeInternals(id);
@@ -46,7 +44,7 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
@@ -77,7 +75,6 @@ export function ANDGateNode ({ id, isConnectable, data }) {
     );
 }
 
-
 export function ORGateNode({ id, isConnectable }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const { rotations, setRotation } = useRotation();
@@ -103,7 +100,7 @@ export function ORGateNode({ id, isConnectable }) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240} onResize={handleResize} />
                 <div className='rotate_handle_container curved_gate_styling'>
                     <div className='rotate_handle' onClick={handleRotateClick} />
@@ -157,7 +154,7 @@ export function XORGateNode({ id, isConnectable }) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240}
                              onResize={handleResize}/>
                 <div className='rotate_handle_container curved_gate_styling'>
@@ -212,7 +209,7 @@ export function NANDGateNode({id, isConnectable}) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240}
                              onResize={handleResize}/>
                 <div className='rotate_handle_container not_gate_styling'>
@@ -267,7 +264,7 @@ export function NORGateNode({id, isConnectable}) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240}
                              onResize={handleResize}/>
                 <div className='rotate_handle_container curved_gate_styling not_curved_gate_styling'>
@@ -322,7 +319,7 @@ export function NOTGateNode({id, isConnectable}) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240}
                              onResize={handleResize}/>
                 <div className='rotate_handle_container not_curved_gate_styling not_gate'>
@@ -376,7 +373,7 @@ export function XNORGateNode({id, isConnectable}) {
                           width: size.width,
                           height: size.height }}
                  className='node'
-                 onClick={() => setIsHovered(true)}>
+                 onClick={() => setIsHovered(!isHovered)}>
                 <NodeResizer isVisible={isHovered} minWidth={110} minHeight={80} maxWidth={330} maxHeight={240}
                              onResize={handleResize}/>
                 <div className='rotate_handle_container not_curved_gate_styling'>
