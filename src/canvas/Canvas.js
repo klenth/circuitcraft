@@ -63,6 +63,7 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
                     nodeTypes={nodeTypes}
                     edgeTypes={edgeTypes}
                     connectionLineComponent={CircuitConnectionLine}
+                    connectionMode={'loose'}
                     fitView
                     style={rfStyle}
                 >
