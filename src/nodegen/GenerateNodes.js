@@ -139,4 +139,82 @@ const LabelNode = ({ id, data, isEditable }) => {
     );
 };
 
-export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes, LabelNode };
+const InputNode = ({ id, data, isEditable }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [labelText, setLabelText] = useState(data.label);
+
+    useEffect(() => {
+        setLabelText(data.label);
+    }, [data.label]);
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        const trimmedText = labelText.trim();
+        const newText = trimmedText === "" ? "Input" : trimmedText;
+        setLabelText(newText);
+        data.onLabelChange(id, newText);
+    };
+
+    const handleChange = (e) => {
+        setLabelText(e.target.value);
+    };
+
+    return (
+        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={labelText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoFocus
+                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
+                />
+            ) : (
+                <span>{data.label}</span>
+            )}
+            <Handle type="source" id="z" />
+        </div>
+    );
+};
+
+const OutputNode = ({ id, data, isEditable }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [labelText, setLabelText] = useState(data.label);
+
+    useEffect(() => {
+        setLabelText(data.label);
+    }, [data.label]);
+
+    const handleBlur = () => {
+        setIsEditing(false);
+        const trimmedText = labelText.trim();
+        const newText = trimmedText === "" ? "Output" : trimmedText;
+        setLabelText(newText);
+        data.onLabelChange(id, newText);
+    };
+
+    const handleChange = (e) => {
+        setLabelText(e.target.value);
+    };
+
+    return (
+        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={labelText}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoFocus
+                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
+                />
+            ) : (
+                <span>{data.label}</span>
+            )}
+            <Handle type="target" id="a" />
+        </div>
+    );
+};
+
+export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes, LabelNode, InputNode, OutputNode };

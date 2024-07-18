@@ -124,10 +124,10 @@ export default function Toolbox({ addNode, handleLabelChange }) {
                     />
                 </svg>
                 <div className="input">
-                    <GenerateInputNodes addNode={addNode} />
+                    <GenerateInputNodes addNode={addNode} handleLabelChange={handleLabelChange}/>
                 </div>
                 <div className="input">
-                    <GenerateOutputNodes addNode={addNode} />
+                    <GenerateOutputNodes addNode={addNode} handleLabelChange={handleLabelChange}/>
                 </div>
                 <div className="input">
                     <GenerateLabelNodes addNode={addNode} handleLabelChange={handleLabelChange}/>

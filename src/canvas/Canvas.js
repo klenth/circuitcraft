@@ -8,7 +8,7 @@ import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
 import { RotationProvider } from './RotationContext';
-import { LabelNode } from '../nodegen/GenerateNodes';
+import { LabelNode, InputNode, OutputNode } from '../nodegen/GenerateNodes';
 
 const rfStyle = {
     backgroundColor: '#00b5e25e',
@@ -24,6 +24,8 @@ const nodeTypes = {
     XNORGateNode,
     JunctionGateNode,
     label: LabelNode,
+    input: InputNode,
+    output: OutputNode,
 };
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
