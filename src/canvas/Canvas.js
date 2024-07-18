@@ -11,6 +11,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
+import CircuitConnectionLine from './CircuitConnectionLine';
 import { RotationProvider } from './RotationContext';
 
 import DownloadButton from './DownloadButton';
@@ -61,6 +62,7 @@ function Canvas({ nodes, edges, setNodes, setEdges }) {
                     onConnect={onConnect}
                     nodeTypes={nodeTypes}
                     edgeTypes={edgeTypes}
+                    connectionLineComponent={CircuitConnectionLine}
                     fitView
                     style={rfStyle}
                 >
