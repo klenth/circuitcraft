@@ -18,7 +18,6 @@ const CircuitEdge = ({
                            target,
                            data,
                        }) => {
-
     const [path, setPath] = useState('');
     const [points, setPoints] = useState(null);
     const [drag, setDrag] = useState(null);

@@ -14,7 +14,7 @@ export function FileDropdown(props) {
                 </li>
                 <li className='dropdown_item' onClick={() => { setDropdown(false); onSave(); }}>Save</li>
                 <li className='dropdown_item' onClick={() => { setDropdown(false); onOpen(); }}>Open</li>
-                <li className='dropdown_item'>Expodrt</li>
+                <li className='dropdown_item'>Export</li>
             </ul>
         </>
     );
