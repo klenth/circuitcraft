@@ -58,6 +58,7 @@ function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange }) {
                     nodeTypes={nodeTypes}
                     edgeTypes={edgeTypes}
                     connectionLineComponent={CircuitConnectionLine}
+                    connectionMode={'loose'}
                     fitView
                     style={rfStyle}
                     onLabelChange={handleLabelChange}

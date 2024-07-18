@@ -9,14 +9,18 @@
   height: 20px;
 }
 
-/* Handles styling */
-.react-flow .react-flow__handle {
-  width: 14px;
-  height: 3px;
-  border-radius: 0px;
-  background-color: #000;
-  border: none;
-}
+  .react-flow .react-flow__edge-path {
+    stroke: black;
+  }
+
+  /* Handles styling */
+  .react-flow .react-flow__handle {
+    width: 14px;
+    height: 3px;
+    border-radius: 0px;
+    background-color: #000;
+    border: none;
+  }
 
 .react-flow__handle {
   min-height: 2px!important;
