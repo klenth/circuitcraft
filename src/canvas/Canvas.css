@@ -9,6 +9,10 @@
     height: 20px;
   }
 
+  .react-flow .react-flow__edge-path {
+    stroke: black;
+  }
+
   /* Handles styling */
   .react-flow .react-flow__handle {
     width: 14px;
