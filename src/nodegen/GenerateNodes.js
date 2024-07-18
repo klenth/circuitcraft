@@ -24,6 +24,7 @@ const GenerateInputNodes = ({ addNode, handleLabelChange }) => {
             },
             className: 'input_node'
         };
+        console.log("This is addInputNode");
         addNode(newNode);
         setInputCount(inputCount + 1);
     };
@@ -158,6 +159,8 @@ const InputNode = ({ id, data, isEditable }) => {
     const handleChange = (e) => {
         setLabelText(e.target.value);
     };
+
+    console.log("This is inputNode");
 
     return (
         <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
