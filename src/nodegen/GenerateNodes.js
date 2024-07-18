@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Handle, Position } from 'reactflow';
+import { Handle } from 'reactflow';
 import './GenerateNodes.css';
 
-const GenerateInputNodes = ({ addNode }) => {
+const GenerateInputNodes = ({ addNode, handleLabelChange }) => {
     const [inputCount, setInputCount] = useState(0);
 
     const addInputNode = () => {
         const newNode = {
             id: `input-${inputCount + 1}`,
-            data: { label: `Input ${inputCount + 1}` },
+            data: { label: `Input ${inputCount + 1}`, onLabelChange: handleLabelChange },
             position: { x: 0, y: 0 },
             type: 'input',
+            isEditable: true,
             style: {
                 display: 'flex',
                 justifyContent: 'center',
@@ -34,15 +35,16 @@ const GenerateInputNodes = ({ addNode }) => {
     );
 };
 
-const GenerateOutputNodes = ({ addNode }) => {
+const GenerateOutputNodes = ({ addNode, handleLabelChange }) => {
     const [outputCount, setOutputCount] = useState(0);
 
     const addOutputNode = () => {
         const newNode = {
             id: `output-${outputCount + 1}`,
-            data: { label: `Output ${outputCount + 1}` },
+            data: { label: `Output ${outputCount + 1}`, onLabelChange: handleLabelChange },
             position: { x: 25, y: 25 },
             type: 'output',
+            isEditable: true,
             style: {
                 display: 'flex',
                 justifyContent: 'center',
@@ -73,7 +75,7 @@ const GenerateLabelNodes = ({ addNode, handleLabelChange }) => {
         const newNode = {
             id: `label-${labelCount + 1}`,
             data: { label: `Label ${labelCount + 1}`, onLabelChange: handleLabelChange },
-            position: { x: 25, y: 25 },
+            position: { x: 0, y: 12.5 },
             type: 'label',
             isEditable: true,
             style: {
@@ -109,7 +111,10 @@ const LabelNode = ({ id, data, isEditable }) => {
 
     const handleBlur = () => {
         setIsEditing(false);
-        data.onLabelChange(id, labelText); // Access from data prop
+        const trimmedText = labelText.trim();
+        const newText = trimmedText === "" ? "Label" : trimmedText;
+        setLabelText(newText);
+        data.onLabelChange(id, newText);
     };
 
     const handleChange = (e) => {
@@ -130,8 +135,6 @@ const LabelNode = ({ id, data, isEditable }) => {
             ) : (
                 <span>{data.label}</span>
             )}
-            <Handle type="source" position={Position.Right} />
-            <Handle type="target" position={Position.Left} />
         </div>
     );
 };

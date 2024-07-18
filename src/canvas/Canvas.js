@@ -23,7 +23,7 @@ const nodeTypes = {
     NOTGateNode,
     XNORGateNode,
     JunctionGateNode,
-    label: LabelNode
+    label: LabelNode,
 };
 
 const edgeTypes = { CircuitEdge: CircuitEdge };

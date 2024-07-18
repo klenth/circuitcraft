@@ -130,7 +130,7 @@ export default function Toolbox({ addNode, handleLabelChange }) {
                     <GenerateOutputNodes addNode={addNode} />
                 </div>
                 <div className="input">
-                    <GenerateLabelNodes addNode={addNode} handleLabelChange={handleLabelChange} />
+                    <GenerateLabelNodes addNode={addNode} handleLabelChange={handleLabelChange}/>
                 </div>
             </div>
         </div>
