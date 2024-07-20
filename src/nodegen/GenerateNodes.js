@@ -215,7 +215,7 @@ const OutputNode = ({ id, data, isEditable }) => {
             ) : (
                 <span>{data.label}</span>
             )}
-            <Handle type="target" id="a" />
+            <Handle type="source"/*"target"*/ id="a" />
         </div>
     );
 };
