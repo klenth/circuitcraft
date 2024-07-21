@@ -50,8 +50,8 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '30%', left: '11%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '70%', left: '11%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '11%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '11%'}} isConnectable={isConnectable}/>
                     <div>
                         <svg className='' width={size.width} height={size.height}>
                             <AndGate key="and"
@@ -106,8 +106,8 @@ export function ORGateNode({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '30%', left: '19%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '70%', left: '19%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '19%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '19%'}} isConnectable={isConnectable}/>
 
                     <div>
                         <svg className='' width={size.width} height={size.height}>
@@ -161,8 +161,8 @@ export function XORGateNode({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
                         <svg className='' width={size.width} height={size.height}>
@@ -216,8 +216,8 @@ export function NANDGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '30%', left: '2%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '70%', left: '2%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '2%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '2%'}} isConnectable={isConnectable}/>
 
                     <div>
                         <svg className='' width={size.width} height={size.height}>
@@ -271,8 +271,8 @@ export function NORGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
                         <svg className='' width={size.width} height={size.height}>
@@ -326,7 +326,7 @@ export function NOTGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '50%', left: '11%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '50%', left: '11%'}} isConnectable={isConnectable}/>
 
                     <div>
                         <svg className='' width={size.width} height={size.height}>
@@ -380,8 +380,8 @@ export function XNORGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="target" id="a" style={{top: '30%', left: '5%'}} isConnectable={isConnectable}/>
-                    <Handle type="target" id="b" style={{top: '70%', left: '5%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '5%'}} isConnectable={isConnectable}/>
+                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '5%'}} isConnectable={isConnectable}/>
                     <div>
                         <svg className='' width={size.width} height={size.height}>
                             <XnorGate key="xnor"
@@ -406,10 +406,17 @@ export function JunctionGateNode({id, isConnectable}) {
     return (
         <>
             <div>
-                <Handle type="source" id="a" className='junction_handle' style={{top: '50%', left: '50%'}}
-                        isConnectable={isConnectable}/>
-                <Handle type="target" id="z" className='junction_handle' style={{top: '50%', left: '50%'}}
-                        isConnectable={isConnectable}/>
+                <Handle type="source" id="top" className='junction_handle' style={{top: '25%', left: '50%'}}
+                        isConnectable={isConnectable} position={"top"} />
+                <Handle type="source" id="right" className='junction_handle' style={{top: '50%', right: '25%'}}
+                        isConnectable={isConnectable} position={"right"} />
+                <Handle type="source" id="bottom" className='junction_handle' style={{bottom: '25%', left: '50%'}}
+                        isConnectable={isConnectable} position={"bottom"} />
+                <Handle type="source" id="left" className='junction_handle' style={{top: '50%', left: '25%'}}
+                        isConnectable={isConnectable} position={"left"}/>
+
+                {/*<Handle type="source" id="z" className='junction_handle' style={{top: '50%', left: '50%'}}*/}
+                {/*        isConnectable={isConnectable}/>*/}
                 <div>
                     <svg className='junction_svg'>
                     <Junction key="junction"
