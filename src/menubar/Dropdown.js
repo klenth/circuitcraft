@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
 import './Menubar.css';
 
 export function FileDropdown(props) {
@@ -9,9 +8,7 @@ export function FileDropdown(props) {
     return (
         <>
             <ul className={dropdown ? "dropdown clicked" : "dropdown"} onClick={() => setDropdown(!dropdown)}>
-                <li className='dropdown_item'>
-                    <Link to={"/"} className='link_item' onClick={() => setDropdown(false)}>New</Link>
-                </li>
+                <li className='dropdown_item'>New</li>
                 <li className='dropdown_item' onClick={() => { setDropdown(false); onSave(); }}>Save</li>
                 <li className='dropdown_item' onClick={() => { setDropdown(false); onOpen(); }}>Open</li>
                 <li className='dropdown_item'>Export</li>

@@ -2,145 +2,51 @@ import React, { useState, useEffect } from 'react';
 import { Handle } from 'reactflow';
 import './GenerateNodes.css';
 
-const GenerateInputNodes = ({ addNode, handleLabelChange }) => {
-    const [inputCount, setInputCount] = useState(0);
+// Function to generate a new node
+const generateNode = (type, count, handleLabelChange, addNode, position) => {
+    const newNode = {
+        id: `${type}-${count + 1}`,
+        data: { label: `${type.charAt(0).toUpperCase() + type.slice(1)} ${count + 1}`, onLabelChange: handleLabelChange },
+        position: position || { x: 0, y: 0 },
+        type: type,
+        isEditable: true,
+        style: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: 'none',
+            backgroundColor: 'transparent',
+            width: '70px',
+            height: '25px',
+            borderRadius: '0',
+        },
+        className: `${type}_node`,
+    };
+    addNode(newNode);
+};
 
-    const addInputNode = () => {
-        const newNode = {
-            id: `input-${inputCount + 1}`,
-            data: { label: `Input ${inputCount + 1}`, onLabelChange: handleLabelChange },
-            position: { x: 0, y: 0 },
-            type: 'input',
-            isEditable: true,
-            style: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                border: 'none',
-                backgroundColor: 'transparent',
-                width: '70px',
-                height: '25px',
-                borderRadius: '0',
-            },
-            className: 'input_node'
-        };
-        console.log("This is addInputNode");
-        addNode(newNode);
-        setInputCount(inputCount + 1);
+// Component to generate new nodes
+const GenerateNodes = ({ type, addNode, handleLabelChange, position }) => {
+    const [count, setCount] = useState(0);
+
+    const addNewNode = () => {
+        generateNode(type, count, handleLabelChange, addNode, position);
+        setCount(count + 1);
     };
 
     return (
         <div>
-            <button onClick={addInputNode}>Add Input</button>
+            <button onClick={addNewNode}>Add {type.charAt(0).toUpperCase() + type.slice(1)}</button>
         </div>
     );
 };
 
-const GenerateOutputNodes = ({ addNode, handleLabelChange }) => {
-    const [outputCount, setOutputCount] = useState(0);
+export const GenerateInputNodes = (props) => <GenerateNodes {...props} type="input" position={{ x: 0, y: 0 }} />;
+export const GenerateOutputNodes = (props) => <GenerateNodes {...props} type="output" position={{ x: 25, y: 25 }}/>;
+export const GenerateLabelNodes = (props) => <GenerateNodes {...props} type="label" position={{ x: 0, y: 15 }}/>;
 
-    const addOutputNode = () => {
-        const newNode = {
-            id: `output-${outputCount + 1}`,
-            data: { label: `Output ${outputCount + 1}`, onLabelChange: handleLabelChange },
-            position: { x: 25, y: 25 },
-            type: 'output',
-            isEditable: true,
-            style: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                border: 'none',
-                backgroundColor: 'transparent',
-                width: '70px',
-                height: '25px',
-                borderRadius: '0',
-            },
-            className: 'output_node'
-        };
-        addNode(newNode);
-        setOutputCount(outputCount + 1);
-    };
-
-    return (
-        <div>
-            <button onClick={addOutputNode}>Add Output</button>
-        </div>
-    );
-};
-
-const GenerateLabelNodes = ({ addNode, handleLabelChange }) => {
-    const [labelCount, setLabelCount] = useState(0);
-
-    const addLabelNode = () => {
-        const newNode = {
-            id: `label-${labelCount + 1}`,
-            data: { label: `Label ${labelCount + 1}`, onLabelChange: handleLabelChange },
-            position: { x: 0, y: 12.5 },
-            type: 'label',
-            isEditable: true,
-            style: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                border: 'none',
-                backgroundColor: 'transparent',
-                width: '70px',
-                height: '25px',
-                borderRadius: '0',
-            },
-            className: 'label_node'
-        };
-        addNode(newNode);
-        setLabelCount(labelCount + 1);
-    };
-
-    return (
-        <div>
-            <button onClick={addLabelNode}>Add Label</button>
-        </div>
-    );
-};
-
-const LabelNode = ({ id, data, isEditable }) => {
-    const [isEditing, setIsEditing] = useState(true);
-    const [labelText, setLabelText] = useState(data.label);
-
-    useEffect(() => {
-        setLabelText(data.label);
-    }, [data.label]);
-
-    const handleBlur = () => {
-        setIsEditing(false);
-        const trimmedText = labelText.trim();
-        const newText = trimmedText === "" ? "Label" : trimmedText;
-        setLabelText(newText);
-        data.onLabelChange(id, newText);
-    };
-
-    const handleChange = (e) => {
-        setLabelText(e.target.value);
-    };
-
-    return (
-        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
-            {isEditing ? (
-                <input
-                    type="text"
-                    value={labelText}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoFocus
-                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
-                />
-            ) : (
-                <span>{data.label}</span>
-            )}
-        </div>
-    );
-};
-
-const InputNode = ({ id, data, isEditable }) => {
+// Node component to render nodes
+const NodeComponent = ({ id, data, type }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [labelText, setLabelText] = useState(data.label);
 
@@ -151,48 +57,7 @@ const InputNode = ({ id, data, isEditable }) => {
     const handleBlur = () => {
         setIsEditing(false);
         const trimmedText = labelText.trim();
-        const newText = trimmedText === "" ? "Input" : trimmedText;
-        setLabelText(newText);
-        data.onLabelChange(id, newText);
-    };
-
-    const handleChange = (e) => {
-        setLabelText(e.target.value);
-    };
-
-    console.log("This is inputNode");
-
-    return (
-        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
-            {isEditing ? (
-                <input
-                    type="text"
-                    value={labelText}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    autoFocus
-                    style={{ width: '100%', backgroundColor: 'transparent', border: 'none' }}
-                />
-            ) : (
-                <span>{data.label}</span>
-            )}
-            <Handle type="source" id="z" />
-        </div>
-    );
-};
-
-const OutputNode = ({ id, data, isEditable }) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [labelText, setLabelText] = useState(data.label);
-
-    useEffect(() => {
-        setLabelText(data.label);
-    }, [data.label]);
-
-    const handleBlur = () => {
-        setIsEditing(false);
-        const trimmedText = labelText.trim();
-        const newText = trimmedText === "" ? "Output" : trimmedText;
+        const newText = trimmedText === "" ? type.charAt(0).toUpperCase() + type.slice(1) : trimmedText;
         setLabelText(newText);
         data.onLabelChange(id, newText);
     };
@@ -215,9 +80,12 @@ const OutputNode = ({ id, data, isEditable }) => {
             ) : (
                 <span>{data.label}</span>
             )}
-            <Handle type="target" id="a" />
+            {type === 'input' && <Handle type="source" id="z" />}
+            {type === 'output' && <Handle type="target" id="a" />}
         </div>
     );
 };
 
-export { GenerateInputNodes, GenerateOutputNodes, GenerateLabelNodes, LabelNode, InputNode, OutputNode };
+export const InputNode = (props) => <NodeComponent {...props} type="input" />;
+export const OutputNode = (props) => <NodeComponent {...props} type="output" />;
+export const LabelNode = (props) => <NodeComponent {...props} type="label" />;

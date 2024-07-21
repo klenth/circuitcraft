@@ -32,9 +32,9 @@ const CircuitEdge = ({
 
     const rotationAdjustments = {
         270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
-        180: { source: { x: -5.5, y: 1.2 }, target: { x: 5.5, y: 1.2 } },
-        90: { source: { x: -5.5, y: 13 }, target: { x: -5.7, y: 1 } },
-        0: { source: { x: 6, y: 1.6 }, target: { x: -6, y: 1.6 } },
+        180: { source: { x: -5.5, y: 1.5 }, target: { x: 5.5, y: 1.5 } },
+        90: { source: { x: -5.5, y: 13 }, target: { x: -5.5, y: 1 } },
+        0: { source: { x: 6, y: 1.5 }, target: { x: -6, y: 1.5 } },
     };
 
     //for fine-tuning later. It gives an error sometimes saying the following:
@@ -48,8 +48,9 @@ const CircuitEdge = ({
             sourceAdjustment.source.y = -1;
         }
         if (sourceGateType === 'JunctionGateNode'){
+            console.log("Junction gate is called");
             sourceAdjustment.source.x = 0;
-            sourceAdjustment.source.y = 3;
+            sourceAdjustment.source.y = 6;
         }
 
         return {

@@ -6,8 +6,6 @@ import Menubar from './menubar/Menubar';
 import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
 import { RotationProvider } from './canvas/RotationContext';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
 
 
 const initialNodes = [];
@@ -86,20 +84,14 @@ const Root = () => {
 
     return (
         <React.StrictMode>
-            <Router>
             <RotationProvider>
                 <Menubar
                     onSave={() => handleSave()}
                     onOpen={() => handleOpen()}
                 />
                 <Toolbox addNode={addNode} handleLabelChange={handleLabelChange} />
-                <Routes>
-                <Route path="/" element={ 
-                    <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} handleLabelChange={handleLabelChange} />
-                }/> {/* This does not re-render canvas */}
-                </Routes>
+                <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} handleLabelChange={handleLabelChange} />
             </RotationProvider>
-            </Router>
         </React.StrictMode>
     );
 };
