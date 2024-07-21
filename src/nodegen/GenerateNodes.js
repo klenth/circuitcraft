@@ -67,7 +67,7 @@ const NodeComponent = ({ id, data, type }) => {
     };
 
     return (
-        <div onDoubleClick={() => setIsEditing(true)} style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div onDoubleClick={() => setIsEditing(true)} className = 'node_style'>
             {isEditing ? (
                 <input
                     type="text"
@@ -80,8 +80,8 @@ const NodeComponent = ({ id, data, type }) => {
             ) : (
                 <span>{data.label}</span>
             )}
-            {type === 'input' && <Handle type="source" id="z" />}
-            {type === 'output' && <Handle type="target" id="a" />}
+            {type === 'input' && <Handle type="source" id="a" />}
+            {type === 'output' && <Handle type="target" id="z" />}
         </div>
     );
 };
