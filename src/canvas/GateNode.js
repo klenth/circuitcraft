@@ -53,7 +53,7 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                     <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '11%'}} isConnectable={isConnectable}/>
                     <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '11%'}} isConnectable={isConnectable}/>
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <AndGate key="and"
                                      /*x={ (24/11) * size.width - 182 }
                                      y={ (353/160) * size.height - 133.5 }*/
@@ -110,7 +110,7 @@ export function ORGateNode({ id, isConnectable }) {
                     <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '19%'}} isConnectable={isConnectable}/>
 
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <OrGate key="or"
                                     x={ (0.00491736 * size.width * size.width) - (0.39545455 * size.width) + 2 }
                                     y={ (0.00710937 * size.height * size.height) - (0.51875 * size.height) + 6 }
@@ -165,7 +165,7 @@ export function XORGateNode({ id, isConnectable }) {
                     <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <XorGate key="xor"
                                      x={ (0.00516529 * size.width * size.width) - (0.46818182 * size.width) + 8 }
                                      y={ (0.00710937 * size.height * size.height) - (0.51875 * size.height) + 6 }
@@ -220,7 +220,7 @@ export function NANDGateNode({id, isConnectable}) {
                     <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '2%'}} isConnectable={isConnectable}/>
 
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <NandGate key="nand"
                                       x={ (0.00495868 * size.width * size.width) - (0.50909091 * size.width) + 4 }
                                       y={ (0.00738281 * size.height * size.height) - (0.6156245 * size.height) + 12.5 }
@@ -275,7 +275,7 @@ export function NORGateNode({id, isConnectable}) {
                     <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
 
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <NorGate key="nor"
                                      x={ (0.00504132 * size.width * size.width) - (0.54545455 * size.width) + 9 }
                                      y={ (0.00710937 * size.height * size.height) - (0.51875 * size.height) + 6 }
@@ -329,7 +329,7 @@ export function NOTGateNode({id, isConnectable}) {
                     <Handle type="source"/*"target**/ id="a" style={{top: '50%', left: '11%'}} isConnectable={isConnectable}/>
 
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <NotGate key="not"
                                      x={ (0.00512397 * size.width * size.width) - (0.47272727 * size.width) + 8 }
                                      y={ (0.00734375 * size.height * size.height) - (0.6 * size.height) + 11 }
@@ -383,7 +383,7 @@ export function XNORGateNode({id, isConnectable}) {
                     <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '5%'}} isConnectable={isConnectable}/>
                     <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '5%'}} isConnectable={isConnectable}/>
                     <div>
-                        <svg className='' width={size.width} height={size.height}>
+                        <svg  width={size.width} height={size.height}>
                             <XnorGate key="xnor"
                                       x={ (0.00475207 * size.width * size.width) - (0.45 * size.width) + 1 }
                                       y={ (0.0071875 * size.height * size.height) - (0.55 * size.height) + 8 }
@@ -421,7 +421,7 @@ export function JunctionGateNode({id, isConnectable}) {
                     <svg className='junction_svg'>
                     <Junction key="junction"
                                 x={-35}
-                                y={-25}
+                                y={-28}
                     />
                 </svg>
                 </div>

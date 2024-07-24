@@ -19,6 +19,7 @@ const generateNode = (type, count, handleLabelChange, addNode, position) => {
             width: '70px',
             height: '25px',
             borderRadius: '0',
+            zIndex : '100',
         },
         className: `${type}_node`,
     };

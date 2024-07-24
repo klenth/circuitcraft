@@ -1,6 +1,5 @@
 import './Menubar.css';
 import React, {useState} from 'react';
-import DownloadButton from '../canvas/DownloadButton';
 import { FileDropdown } from './Dropdown';
 
 export default function Menubar(props) {
@@ -16,6 +15,7 @@ export default function Menubar(props) {
                             <FileDropdown
                                 onSave={props.onSave}
                                 onOpen={props.onOpen}
+                                exportPng = {props.exportPng}
                             />
                         }
                         </li>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Toolbox from './toolbox/Toolbox';
@@ -6,7 +6,8 @@ import Menubar from './menubar/Menubar';
 import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
 import { RotationProvider } from './canvas/RotationContext';
-
+import { ReactFlowProvider, useReactFlow, getNodesBounds, getViewportForBounds } from 'reactflow';
+import { toPng, toSvg } from 'html-to-image';
 
 const initialNodes = [];
 const initialEdges = [];
@@ -14,6 +15,7 @@ const initialEdges = [];
 const Root = () => {
     const [nodes, setNodes] = useState(initialNodes);
     const [edges, setEdges] = useState(initialEdges);
+    const reactFlowInstanceRef = useRef(null);
 
     const addNode = useCallback((newNode) => {
         setNodes((prevNodes) => [...prevNodes, newNode]);
@@ -72,6 +74,7 @@ const Root = () => {
     };
     
     const handleLabelChange = (id, newLabel) => {
+        console.log("the handle label change is being called in index");
         setNodes((prevNodes) =>
             prevNodes.map((node) => {
                 if (node.id === id) {
@@ -82,15 +85,62 @@ const Root = () => {
         );
     };
 
+    
+    const exportPng = (reactFlowInstance) => {
+        if (!reactFlowInstanceRef.current) return;
+        const { getNodes } = reactFlowInstanceRef.current;
+        const nodesBounds = getNodesBounds(getNodes());
+        const viewport = getViewportForBounds (
+            nodesBounds,
+            1024,
+            768,
+            0.5,
+            2,
+        );
+        const element = document.querySelector('.react-flow__viewport');
+        
+        if (element) {
+            toPng(element, {
+                backgroundColor: '#B6E4F5',
+                width: 1024,
+                height: 768,
+                style: {
+                    width: 1024,
+                    height: 768,
+                    transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+                },
+            }).then((dataUrl) => {
+                const a = document.createElement('a');
+                a.setAttribute('download', 'reactflow.png');
+                a.setAttribute('href', dataUrl);
+                a.click();
+            }).catch((error) => {
+                console.error('Error exporting PNG:', error);
+            });
+        } else {
+            console.error('Element not found: .react-flow__viewport');
+        }
+    };
+
     return (
         <React.StrictMode>
             <RotationProvider>
                 <Menubar
                     onSave={() => handleSave()}
                     onOpen={() => handleOpen()}
+                    exportPng={() => exportPng()}
                 />
                 <Toolbox addNode={addNode} handleLabelChange={handleLabelChange} />
-                <Canvas nodes={nodes} edges={edges} setNodes={setNodes} setEdges={setEdges} handleLabelChange={handleLabelChange} />
+                <ReactFlowProvider>
+                    <Canvas 
+                        nodes={nodes} 
+                        edges={edges} 
+                        setNodes={setNodes} 
+                        setEdges={setEdges} 
+                        handleLabelChange={handleLabelChange}
+                        setReactFlowInstance={(instance) => reactFlowInstanceRef.current = instance}
+                    />
+                </ReactFlowProvider>
             </RotationProvider>
         </React.StrictMode>
     );

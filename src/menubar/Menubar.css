@@ -87,4 +87,11 @@
     background-color: #693fa3;
 }
 
+.export_btn {
+    background-color: transparent;
+    border: 1px solid red;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
 /* Edit drop down styling */
