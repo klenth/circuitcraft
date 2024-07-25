@@ -20,6 +20,7 @@
 .bar_items li {
     color: var(--birch);
     font-size: 22px;
+    position: relative; 
 }
 
 .bar_items div {
@@ -55,11 +56,11 @@
 }
 
 /* File drop down styling */
-.dropdown {
+.file_dropdown {
     width: 6rem;
     position: absolute;
-    top: 80px;
-    left: 65px;
+    top: 10%; /* Adjust to be just below the parent li */
+    left: 4.25%; /* Align with the left edge of the parent li */
     list-style: none;
     text-align: start;
     z-index: 100;
@@ -69,7 +70,8 @@
     display: none;
 }
 
-.dropdown li {
+.file_dropdown li,
+.edit_dropdown li {
     background-color: var(--thistle);
     cursor: pointer;
     color: var(--birch);
@@ -94,4 +96,15 @@
     width: 100%;
     height: 100%;
 }
+
 /* Edit drop down styling */
+
+.edit_dropdown {
+    width: 6rem;
+    position: absolute;
+    top: 10%; /* Adjust to be just below the parent li */
+    left: 13.75%; /* Align with the left edge of the parent li */
+    list-style: none;
+    text-align: start;
+    z-index: 100;
+}
