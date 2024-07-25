@@ -7,7 +7,6 @@ import Canvas from './canvas/Canvas';
 import reportWebVitals from './reportWebVitals';
 import { RotationProvider } from './canvas/RotationContext';
 
-
 const initialNodes = [];
 const initialEdges = [];
 
