@@ -12,10 +12,7 @@ export function FileDropdown(props) {
                 <li className='dropdown_item'>New</li>
                 <li className='dropdown_item' onClick={() => { onSave() }}>Save</li>
                 <li className='dropdown_item' onClick={() => { onOpen() }}>Open</li>
-                <li className='dropdown_item'>
-                    <button className='export_btn' onClick={() => { exportPng() }}>Export PNG</button>
-                </li>
-                <li onClick={() => { exportPng() }}>Export PNG</li>
+                <li className='dropdown_item' onClick={() => { exportPng() }}>Export PNG</li>
             </ul>
         </>
     );
