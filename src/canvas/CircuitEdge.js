@@ -37,6 +37,7 @@ const CircuitEdge = ({
         0: { source: { x: 6, y: 1.5 }, target: { x: -6, y: 1.5 } },
     };
 
+
     //for fine-tuning later. It gives an error sometimes saying the following:
     //Uncaught TypeError: Cannot destructure property 'sourceX' of 'getHandleConnectionPoint(...)' as it is undefined.
 
@@ -48,9 +49,8 @@ const CircuitEdge = ({
             sourceAdjustment.source.y = -1;
         }
         if (sourceGateType === 'JunctionGateNode'){
-            console.log("Junction gate is called");
             sourceAdjustment.source.x = 0;
-            sourceAdjustment.source.y = 6;
+            sourceAdjustment.source.y = -1;
         }
 
         return {

@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReactFlow, {
     addEdge,
     applyEdgeChanges,
     applyNodeChanges,
+    useReactFlow
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { ANDGateNode, ORGateNode, XORGateNode, NORGateNode, NANDGateNode, NOTGateNode, XNORGateNode, JunctionGateNode } from './GateNode';
 import CircuitEdge from './CircuitEdge';
 import CircuitConnectionLine from './CircuitConnectionLine';
 import { RotationProvider } from './RotationContext';
-import DownloadButton from './DownloadButton';
 import { LabelNode, InputNode, OutputNode } from '../nodegen/GenerateNodes';
 
 const rfStyle = {
@@ -32,7 +32,15 @@ const nodeTypes = {
 
 const edgeTypes = { CircuitEdge: CircuitEdge };
 
-function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange }) {
+function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange, setReactFlowInstance }) {
+    const reactFlowInstance = useReactFlow();
+    
+    useEffect(() => {
+        if (setReactFlowInstance) {
+            setReactFlowInstance(reactFlowInstance);
+        }
+    }, [setReactFlowInstance, reactFlowInstance]);
+
     const onNodesChange = useCallback(
         (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
         [setNodes]
@@ -62,9 +70,8 @@ function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange }) {
                     isValidConnection={c => c.source !== c.target}
                     fitView
                     style={rfStyle}
-                    onLabelChange={handleLabelChange}
+                    onLabelChange={handleLabelChange} //this gives error unknown event handler property
                 >
-                <DownloadButton />
                 </ReactFlow>
             </div>
         </RotationProvider>
