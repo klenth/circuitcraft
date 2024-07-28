@@ -63,6 +63,8 @@ function Canvas({ nodes, edges, setNodes, setEdges, handleLabelChange }) {
                     fitView
                     style={rfStyle}
                     onLabelChange={handleLabelChange}
+                    snapToGrid={false}
+                    snapGrid={[0, 0]}
                 >
                 <DownloadButton />
                 </ReactFlow>

@@ -20,10 +20,12 @@
     border-radius: 0px;
     background-color: #000;
     border: none;
+    /*z-index: -1;*/
   }
 
 .react-flow__handle {
-  min-height: 2px!important;
+  min-height: 3px!important;
+  min-width: 3px !important;
 }
 
 .junction_handle {
@@ -35,6 +37,7 @@
 
 svg path, svg circle{
   vector-effect: non-scaling-stroke;
+  stroke-linecap: square;
 }
 
   .node:hover .rotate_handle {

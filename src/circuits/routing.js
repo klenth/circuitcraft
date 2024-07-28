@@ -1,3 +1,5 @@
+import { Position } from 'reactflow';
+
 export const routeEdge = ({
                        sourceX, sourceY,
                        targetX, targetY,
@@ -8,16 +10,24 @@ export const routeEdge = ({
     const sourceNormal = positionVector(sourcePosition);
     const targetNormal = positionVector(targetPosition);
     const displacement = sourceP.displacement(targetP);
-    const behind = displacement.dot(sourceNormal) >= 0;
+    const behind = displacement.dot(sourceNormal) <= 0;
     const parallel = sourceNormal.dot(targetNormal) !== 0.0;
 
     const points = [ sourceP ];
     const numInternalSegments = 2 + (parallel ? 1 : 0);
 
-    let horizontal = behind ?
+    let horizontal = sourceNormal.dot(PlusI) !== 0; /*behind ?
         sourceNormal.dot(PlusI) !== 0 :
         sourceNormal.dot(PlusJ) !== 0
-    ;
+
+    ;*/
+    if (behind)
+        horizontal = !horizontal;
+    else
+        points.push(sourceP);
+
+    console.debug(`displacement = (${displacement.x},${displacement.y}), sourceNormal = [${sourceNormal.x}, ${sourceNormal.y}]`);
+    console.debug(`behind = ${behind}, horizontal = ${horizontal}`);
 
     const numHorizontalSegments = Math.floor((numInternalSegments + (horizontal ? 1 : 0)) / 2);
     const numVerticalSegments = numInternalSegments - numHorizontalSegments;
@@ -33,6 +43,8 @@ export const routeEdge = ({
         points.push(nextPoint);
         lastPoint = nextPoint;
     }
+
+    points.push(lastPoint);
 
     const pathString = renderPath({
         sourceX, sourceY,
@@ -83,7 +95,12 @@ export class Vector {
 }
 
 export function positionVector(position) {
-    const map = { top: PlusJ, bottom: MinusJ, left: MinusI, right: PlusI };
+    const map = {};
+    map[Position.Top] = MinusJ;
+    map[Position.Right] = PlusI;
+    map[Position.Bottom] = PlusJ;
+    map[Position.Left] = MinusI;
+    // const map = { Position.Top: PlusJ, bottom: MinusJ, left: MinusI, right: PlusI };
     if (map[position])
         return map[position];
     else {
