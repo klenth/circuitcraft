@@ -23,6 +23,9 @@ export default function Menubar(props) {
                         <li className='bar_edit'>Edit</li>
                     </div>
                     <li className='bar_name'>CircuitCraft</li>
+                    <li className='help_icon'>
+                        <a href="/public/helppage/helppage.html" target='_blank' rel='noopener noreferrer'>Help</a>
+                    </li>
                     <li className='bar_toolbox'>Toolbox</li>
                 </ul>
             </nav>
