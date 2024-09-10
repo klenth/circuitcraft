@@ -10,6 +10,11 @@
     display: none;
 }
 
+.problem ol li img {
+	width: 90%;
+	height: auto;
+}
+
 .indented {
     margin-left: 64px;
 }
