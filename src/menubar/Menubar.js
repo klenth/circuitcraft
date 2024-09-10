@@ -2,6 +2,7 @@ import './Menubar.css';
 import React, {useState} from 'react';
 import DownloadButton from '../canvas/DownloadButton';
 import { FileDropdown } from './Dropdown';
+import csLogo from "./cs.w.twotone.transparent.png";
 
 export default function Menubar(props) {
     const [dropdown, setDropdown] = useState(false);
@@ -9,6 +10,7 @@ export default function Menubar(props) {
         <>
             <nav className='menubar'>
                 <ul className='bar_items'>
+                    <img src={csLogo} alt="CS department logo"/>
                     <div>
                         <li className='bar_file' onClick={() => setDropdown(!dropdown)} 
                         >File
@@ -20,13 +22,14 @@ export default function Menubar(props) {
                         }
                         </li>
 
-                        <li className='bar_edit'>Edit</li>
+                        {/* <li className='bar_edit'>Edit</li> */}
                     </div>
                     <li className='bar_name'>CircuitCraft</li>
                     <li className='help_icon'>
                         <a href="/public/helppage/helppage.html" target='_blank' rel='noopener noreferrer'>Help</a>
                     </li>
                     <li className='bar_toolbox'>Toolbox</li>
+
                 </ul>
             </nav>
         </>
