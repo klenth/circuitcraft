@@ -6,6 +6,9 @@ import csLogo from "./cs.w.twotone.transparent.png";
 
 export default function Menubar(props) {
     const [dropdown, setDropdown] = useState(false);
+    const openHelpPage = () => {
+        window.open('/helppage/helppage.html', '_blank');
+    };
     return (
         <>
             <nav className='menubar'>
@@ -26,7 +29,7 @@ export default function Menubar(props) {
                     </div>
                     <li className='bar_name'>CircuitCraft</li>
                     <li className='help_icon'>
-                        <a href="/public/helppage/helppage.html" target='_blank' rel='noopener noreferrer'>Help</a>
+                        <button onClick={openHelpPage}>Help</button>
                     </li>
                     <li className='bar_toolbox'>Toolbox</li>
 

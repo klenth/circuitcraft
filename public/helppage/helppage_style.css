@@ -13,6 +13,12 @@
 .problem ol li img {
 	width: 90%;
 	height: auto;
+	margin-top: 20px;
+}
+
+.problem ol li img.height {
+	width: 30%;
+	height: auto;
 }
 
 .indented {

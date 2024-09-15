@@ -63,14 +63,21 @@
     margin-left: 6em;
 }
 
-.help_icon a {
+.help_icon button {
     text-decoration: none;
     color: var(--birch);
+    background-color: transparent;
+    border-style: none;
+    font-size: 16pt;
+    width: 3em; /* setting a width so that the menubar items' width remains the same on hover */
 }
 
-.help_icon a:hover {
+.help_icon button:hover {
     font-weight: 700;
     text-decoration: underline;
+    cursor: pointer;
+    font-family: "Lato", sans-serif;
+    font-size: 16pt;
 }
 
 /* File drop down styling */
