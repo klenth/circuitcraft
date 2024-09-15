@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="fancy">
+<head>
+    <meta charset="UTF-8">
+    <title>WebARM: documentation</title>
+    <link rel="stylesheet" href="helppage_style.css">
+    <link rel="stylesheet" href="helppage_highlighting.css">
+
+    <style>
+        pre, code {
+            font-family: Iosevka Kathy Web, monospace;
+            font-stretch: expanded;
+        }
+
+        .instruction-table tbody td:first-child, .instruction-table tbody td:nth-child(2) {
+            font-family: Iosevka Kathy Web, monospace;
+            font-stretch: expanded;
+        }
+
+        .instruction-table tbody tr > *, .condition-code-table tbody tr > * {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+
+        .instruction-table tbody tr:nth-child(2n) > *, .condition-code-table tbody tr:nth-child(2n) {
+            background-color: #00b5e220;
+        }
+
+        .instruction-table tbody tr > :first-child {
+            min-width: max-content;
+        }
+
+        .condition-code-table tr > :nth-child(3) {
+            text-align: center;
+        }
+
+        .syscall-table tbody tr:nth-child(2n) > * {
+            background-color: #00b5e220;
+        }
+
+        .syscall-table tbody tr > :nth-child(1), .syscall-table tbody tr > :nth-child(2) {
+            font-family: Iosevka Kathy Web, monospace;
+            font-stretch: expanded;
+        }
+
+        .syscall-table tbody tr > :nth-child(4) {
+            min-width: max-content;
+        }
+
+        .syscall-table tbody tr>* {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul class="problem-links"></ul>
+        <div class="icon"></div>
+        <div class="plain-link"></div>
+        <div class="dark-mode-toggle" title="Toggle dark mode"></div>
+    </nav>
+
+    <main class="justified">
+        <div class="assignment-info">
+            <h1>CircuitCraft</h1>
+            <h2>A circuit diagram drawing software for education</h2>
+
+            <p>
+                Using CircuitCraft, you can easily build circuit diagrams within your browser. This page documents how to build your diagram.
+            </p>
+        </div>
+
+        <div class="problems">
+
+            <div class="problem">
+                <div class="title">Structure</div>
+
+                <p>
+                    In CircuitCraft, the page consists of three different areas:
+                </p>
+                <ol>
+                    <li>Menubar: Purple area at the top of the page<br>
+                        <img src="assests/menubar.png">
+                    </li>
+                    <li>Canvas: Blue area to the left under the menubar<br>
+                        <img src="assests/canvas.png">
+                    </li>
+                    <li>Toolbox: Yellow area to the right under the menubar<br>
+                        <img class="height" src="assests/toolbox.png">
+                    </li>
+                </ol>
+
+                <h3>Menubar</h3>
+                <p>
+                    Contains dropdown menu for 'File' and a link to the help page.
+                </p>
+
+                <p>
+                    To interact with the dropdown menu: Click 'File' to open the menu. Click 'File' again to close the menu.
+                </p>
+
+                <h3>Canvas</h3>
+                <p>
+                    This is where you will draw your diagram.
+                </p>
+
+                <h4>Navigating Around the Canvas</h4>
+                <ul>
+                    <li>To move around the Canvas: click and drag on the canvas<br>
+                        <video width="320" height="240" controls>
+                            <source src="assests/move_canvas.mp4" type="video/mp4">
+                        </video>
+                    </li>
+                    <li>To zoom in and out of the Canvas: scroll up or down on mouse or pinch in and out on trackpads
+                        <video width="220" height="320" controls>
+                            <source src="assests/zoom.mp4" type="video/mp4">
+                        </video>
+                    </li>
+                </ul>
+
+                <h3>Toolbox</h3>
+                <p>
+                    This contains interactable objects that are in the form of gates, junctions, inputs, outputs, and labels.
+                </p>
+
+                <div class="indented">
+                    <h4>Gates</h4>
+                    <p>
+                        <img src="assests/gates.png">
+                    </p>
+
+                    <h4>Junction</h4>
+                    <p>
+                        <img src="assests/junction.png">
+                    </p>
+
+                    <h4>Inputs, Outputs, and Labels</h4>
+                    <p>
+                        <img src="assests/editable_nodes.png">
+                    </p>
+                </div>
+            </div>
+
+            <div class="problem">
+                <div class="title">Adding and Removing from the Canvas</div>
+
+                <h3>Adding</h3>
+                <p>
+                    To add objects to the canvas, click the object you want to add: gates, junctions, inputs, outputs, and labels from the toolbox. They will then add to the canvas, if you add multiple objects at a single time, they will overlap and hide behind each other.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/adding.mp4" type="video/mp4">
+                    </video>
+                </p>
+
+                <h3>Removing</h3>
+                <p>
+                    All objects on the canvas can be removed by selecting the object so that a rectangular outline appears around the object. Hit the 'backspace' or 'delete' key.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/remove.mp4" type="video/mp4">
+                    </video>
+                </p>
+            </div>
+
+            <div class="problem">
+                <div class="title">Changing Names of Inputs, Outputs, and Labels</div>
+
+                <p>
+                    Double click the default name such as "Input 1", "Output 1", "Label 1" and a textbox will surround the default text. To save the changes, simply click off the input, output, or label.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/rename.mp4" type="video/mp4">
+                    </video>
+                </p>
+            </div>
+
+            <div class="problem">
+                <div class="title">Connecting Objects on the Canvas Together</div>
+
+                <p>
+                    All gates, inputs, and outputs have a black rectangle, clicking the end will begin the creation of a wire to connect the objects.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/connecting.mp4" type="video/mp4">
+                    </video>
+                </p>
+            </div>
+
+            <div class="problem">
+                <div class="title">Moving Objects on the Canvas</div>
+
+                <p>
+                    Objects: Click and drag the object. This can be more difficult with the junction due to it's size.<br>
+                    <video width="220" height="320" controls>
+                        <source src="assests/move_object.mp4" type="video/mp4">
+                    </video>
+                </p>
+
+                <p>
+                    Wires: Click a wire (turning it dark grey) then click and drag to move the edge around.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/move_wire.mp4" type="video/mp4">
+                    </video>
+                </p>
+            </div>
+
+            <div class="problem">
+                <div class="title">Resizing Gates</div>
+
+                <p>
+                    Selecting a gate will reveal the blue outline, click and drag the blue squares to make the object bigger or smaller. When a gate is placed on the canvas, it cannot be any smaller.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/resize.mp4" type="video/mp4">
+                    </video>
+                </p>
+            </div>
+
+            <div class="problem">
+                <div class="title">Rotating Gates</div>
+
+                <p>
+                    Hovering over a gate or selecting a gate will reveal a purple handle, click the purple object to rotate the gate.<br>
+                    <video width="320" height="240" controls>
+                        <source src="assests/rotate.mp4" type="video/mp4">
+                    </video>
+                </p>
+            </div>
+
+            <div class="problem">
+                <div class="title">Exporting and Saving Your Diagrams</div>
+
+                <p>
+                    Under 'File' there is 'Save' which will download a json file, this can be uploaded to CircuitCraft with open and restore the diagram.
+                </p>
+
+                <p>
+                    'Export PNG' will download a png which can be used to submit on canvas.
+                </p>
+
+                <video width="320" height="240" controls>
+                    <source src="assests/save_export.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="problem">
+                <div class="title">Loading your Saved Diagrams</div>
+
+                <p>
+                    Under 'File' there is 'Open' which will allow you to upload a previously saved json file of the circuit diagram.
+                </p>
+
+                <video width="320" height="240" controls>
+                    <source src="assests/save_export.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </main>
+
+    <script src="helppage_scripts.js"></script>
+    <script src="helppage_highlighting.js"></script>
+</body>
+</html>

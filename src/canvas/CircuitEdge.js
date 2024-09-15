@@ -30,6 +30,13 @@ const CircuitEdge = ({
     const sourceNode = nodes.find(node => node.id === source);
     const sourceGateType = sourceNode?.type;
 
+    // const rotationAdjustments = {
+    //     270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
+    //     180: { source: { x: -5.5, y: 1.2 }, target: { x: 5.5, y: 1.2 } },
+    //     90: { source: { x: -5.5, y: 13 }, target: { x: -5.7, y: 1 } },
+    //     0: { source: { x: 6, y: 1.6 }, target: { x: -6, y: 1.6 } },
+    // };
+
     const rotationAdjustments = {
         270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
         180: { source: { x: -5.5, y: 1.5 }, target: { x: 5.5, y: 1.5 } },
@@ -112,7 +119,7 @@ const CircuitEdge = ({
 
     const handlePointerDown = event => {
         event.target.setPointerCapture(event.pointerId);
-        setDrag(newDrag({ event, points, flow }));
+        setDrag(newDrag({ event, points, screenToFlowPosition: flow.screenToFlowPosition }));
         event.preventDefault();
         event.stopPropagation();
     };
@@ -172,8 +179,8 @@ const CircuitEdge = ({
     );
 };
 
-function newDrag({ event, points, flow }) {
-    const coords = flow.screenToFlowPosition({ x: event.pageX, y: event.pageY });
+function newDrag({ event, points, screenToFlowPosition }) {
+    const coords = screenToFlowPosition({ x: event.pageX, y: event.pageY });
     const px = coords.x, py = coords.y;
     // find the segment of the edge that is being dragged and set up dragging object appropriately
 

@@ -2,6 +2,7 @@ npm install
 npm start
 
 Dependencies needed for Menubar:
+    npm install express path
 
 Dependencies needed for React Flow:
     npm install reactflow

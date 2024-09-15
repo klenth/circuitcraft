@@ -19,6 +19,77 @@ const handleStyle = { top: 20, left: 3 };
                                                                     -Makenna
 */
 
+const positions = [Position.Top, Position.Right, Position.Bottom, Position.Left];
+
+const rotatePosition = (position, angle) => positions[(positions.indexOf(position) + (angle / 90)) % positions.length];
+
+// Helper function to generate inpuut handles for a gate. To get stacking right, for each input handle it actually
+// generates two <Handle>s: one that is invisible (transparent background) that's on top, that edges actually connect
+// to, and a second one displayed behind the gate (z-index of -1) that can't be connected to. This ensures that handles
+// show as behind/under the component (so their edges don't lay on top) while still making the handles interactable.
+function inputHandles({ position=Position.Left, count=5, isConnectable=true }) {
+    // Calculate the y-coordinates for the handles
+    const tops = Array(count).fill(0).map((_, i) => `calc(${100 * (i + 1) / (count + 1)}% - 1.5px)`);
+
+    // Actual handles: can be connected to, but aren't displayed
+    const handles = tops.flatMap((top, i) => (
+            <Handle
+                key={`input-${i}`}
+                type={'source'}
+                id={`input-${i}`}
+                isConnectable={isConnectable}
+                position={position}
+                style={{
+                    top: top,
+                    height: '0',
+                    left: '0',
+                    right: 'auto',
+                    width: '0',
+                    transform: 'none',
+                    background: 'transparent',
+                }}
+            />
+    ));
+
+    // Display handles: are visible (shown behind the gate) but can't be connected to
+    const displayHandles = tops.flatMap((top, i) => (
+        <Handle
+            key={`input-${i}-display`}
+            type={'source'}
+            id={`input-${i}-display`}
+            isConnectable={false}
+            position={position}
+            style={{
+                top: top,
+                height: '0',
+                left: '0',
+                right: 'auto',
+                width: '30%',
+                transform: 'none',
+                zIndex: -1,
+            }}
+        />
+    ));
+
+    return (
+        <>
+            {handles}
+            {displayHandles}
+        </>
+    );
+}
+
+function outputHandles({ position=Position.Left, isConnectable=true }) {
+    return (
+        <>
+            <Handle type="source" id="z" style={{top: 'calc(50% - 1.5px)', left: 'auto', right: '0', width: '0', transform: 'none', background: 'transparent'}} isConnectable={isConnectable}
+                position={position}/>
+            <Handle type="source" id="z-display" style={{top: 'calc(50% - 1.5px)', left: 'auto', right: '0', width: '15%', transform: 'none', zIndex: -1}} isConnectable={false}
+                position={position}/>
+        </>
+    );
+}
+
 export function ANDGateNode ({ id, isConnectable, data }) {
     const updateNodeInternals = useUpdateNodeInternals();
     const { rotations, setRotation } = useRotation();
@@ -36,9 +107,13 @@ export function ANDGateNode ({ id, isConnectable, data }) {
         updateNodeInternals(id);
     };
 
+    const inputPosition = rotatePosition(Position.Left, rotation);
+    const outputPosition = rotatePosition(Position.Right, rotation);
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)`,
+                          transformOrigin: '50% 50%',
                           minWidth: '110px',
                           minHeight: '80px',
                           width: size.width,
@@ -50,8 +125,15 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '11%'}} isConnectable={isConnectable}/>
-                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '11%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="a" style={{top: 'calc(30% - 1.5px)', height: '0', left: '0', right: 'auto', width: '0', transform: 'none', background: 'transparent'}} isConnectable={isConnectable}*/}
+                    {/*        position={inputPosition}/>*/}
+                    {/*<Handle type="source" id="b" style={{top: 'calc(70% - 1.5px)', height: '0', left: '0', right: 'auto', width: '0', transform: 'none', background: 'transparent'}} isConnectable={isConnectable}*/}
+                    {/*        position={inputPosition}/>*/}
+                    {/*<Handle type="source" id="a-display" style={{top: 'calc(30% - 1.5px)', left: '0', right: 'auto', width: '15%', transform: 'none', zIndex: -1}} isConnectable={false}*/}
+                    {/*        position={inputPosition}/>*/}
+                    {/*<Handle type="source" id="b-display" style={{top: 'calc(70% - 1.5px)', left: '0', right: 'auto', width: '15%', transform: 'none', zIndex: -1}} isConnectable={false}*/}
+                    {/*        position={inputPosition}/>*/}
+                    {inputHandles({ position: inputPosition, count: 5, isConnectable })}
                     <div>
                         <svg  width={size.width} height={size.height}>
                             <AndGate key="and"
@@ -68,7 +150,11 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                         {console.log(`Width: ${size.width},\nHeight: ${size.height},\nx: ${size.width - 52},\ny: ${size.height - 40},\nWidth of gate: ${size.width - 10},\nHeight of gate: ${size.height - 10}`)}
 
                     </div>
-                    <Handle type="source" id="z" style={{top: '50%', left: '93%'}} isConnectable={isConnectable} />
+                    {outputHandles({ position: outputPosition, isConnectable: isConnectable })}
+                    {/*<Handle type="source" id="z" style={{top: 'calc(50% - 1.5px)', left: 'auto', right: '0', width: '0', transform: 'none', background: 'transparent'}} isConnectable={isConnectable}*/}
+                    {/*        position={outputPosition}/>*/}
+                    {/*<Handle type="source" id="z-display" style={{top: 'calc(50% - 1.5px)', left: 'auto', right: '0', width: '15%', transform: 'none', zIndex: -1}} isConnectable={false}*/}
+                    {/*        position={outputPosition}/>*/}
                 </div>
             </div>
         </>
@@ -92,6 +178,9 @@ export function ORGateNode({ id, isConnectable }) {
         updateNodeInternals(id);
     };
 
+    const inputPosition = rotatePosition(Position.Left, rotation);
+    const outputPosition = rotatePosition(Position.Right, rotation);
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)`,
@@ -106,8 +195,9 @@ export function ORGateNode({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick} />
                 </div>
                 <div>
-                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '19%'}} isConnectable={isConnectable}/>
-                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '19%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="a" style={{top: '30%', left: '19%'}} isConnectable={isConnectable} position={Position.Left}/>*/}
+                    {/*<Handle type="source" id="b" style={{top: '70%', left: '19%'}} isConnectable={isConnectable} position={Position.Left}/>*/}
+                    {inputHandles({ count: 3, position: inputPosition, isConnectable: isConnectable })}
 
                     <div>
                         <svg  width={size.width} height={size.height}>
@@ -122,7 +212,8 @@ export function ORGateNode({ id, isConnectable }) {
                         </svg>
                     </div>
 
-                    <Handle type="source" id="z" style={{top: '50%', left: '93%'}} isConnectable={isConnectable} />
+                    {/*<Handle type="source" id="z" style={{top: '50%', left: '93%'}} isConnectable={isConnectable} position={Position.Right}/>*/}
+                    {outputHandles({ position: outputPosition, isConnectable })}
                 </div>
             </div>
         </>
@@ -146,6 +237,9 @@ export function XORGateNode({ id, isConnectable }) {
         updateNodeInternals(id);
     };
 
+    const inputPosition = rotatePosition(Position.Left, rotation);
+    const outputPosition = rotatePosition(Position.Right, rotation);
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)`,
@@ -161,8 +255,9 @@ export function XORGateNode({ id, isConnectable }) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>
-                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>*/}
+                    {/*<Handle type="source" id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>*/}
+                    {inputHandles({ position: inputPosition, count: 2, isConnectable })}
 
                     <div>
                         <svg  width={size.width} height={size.height}>
@@ -177,7 +272,8 @@ export function XORGateNode({ id, isConnectable }) {
                         </svg>
                     </div>
 
-                    <Handle type="source" id="z" style={{top: '50%', left: '95%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="z" style={{top: '50%', left: '95%'}} isConnectable={isConnectable}/>*/}
+                    {outputHandles({ position: outputPosition, isConnectable })}
                 </div>
             </div>
         </>
@@ -201,6 +297,9 @@ export function NANDGateNode({id, isConnectable}) {
         updateNodeInternals(id);
     };
 
+    const inputPosition = rotatePosition(Position.Left, rotation);
+    const outputPosition = rotatePosition(Position.Right, rotation);
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)`,
@@ -216,8 +315,9 @@ export function NANDGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '2%'}} isConnectable={isConnectable}/>
-                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '2%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="a" style={{top: '30%', left: '2%'}} isConnectable={isConnectable}/>*/}
+                    {/*<Handle type="source" id="b" style={{top: '70%', left: '2%'}} isConnectable={isConnectable}/>*/}
+                    {inputHandles({ position: inputPosition, count: 2, isConnectable })}
 
                     <div>
                         <svg  width={size.width} height={size.height}>
@@ -232,7 +332,8 @@ export function NANDGateNode({id, isConnectable}) {
                         </svg>
                     </div>
 
-                    <Handle type="source" id="z" style={{top: '50%', left: '99%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="z" style={{top: '50%', left: '99%'}} isConnectable={isConnectable}/>*/}
+                    {outputHandles({ position: outputPosition, isConnectable })}
                 </div>
             </div>
         </>
@@ -256,6 +357,9 @@ export function NORGateNode({id, isConnectable}) {
         updateNodeInternals(id);
     };
 
+    const inputPosition = rotatePosition(Position.Left, rotation);
+    const outputPosition = rotatePosition(Position.Right, rotation);
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)`,
@@ -271,8 +375,9 @@ export function NORGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="source"/*"target**/ id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>
-                    <Handle type="source"/*"target**/ id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="a" style={{top: '30%', left: '12%'}} isConnectable={isConnectable}/>*/}
+                    {/*<Handle type="source" id="b" style={{top: '70%', left: '12%'}} isConnectable={isConnectable}/>*/}
+                    {inputHandles({ position: inputPosition, count: 2, isConnectable })}
 
                     <div>
                         <svg  width={size.width} height={size.height}>
@@ -287,7 +392,8 @@ export function NORGateNode({id, isConnectable}) {
                         </svg>
                     </div>
 
-                    <Handle type="source" id="z" style={{top: '50%', left: '102%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="z" style={{top: '50%', left: '102%'}} isConnectable={isConnectable}/>*/}
+                    {outputHandles({ position: outputPosition, isConnectable })}
                 </div>
             </div>
         </>
@@ -311,6 +417,9 @@ export function NOTGateNode({id, isConnectable}) {
         updateNodeInternals(id);
     };
 
+    const inputPosition = rotatePosition(Position.Left, rotation);
+    const outputPosition = rotatePosition(Position.Right, rotation);
+
     return (
         <>
             <div style={{ transform: `rotate(${rotation}deg)`,
@@ -326,7 +435,8 @@ export function NOTGateNode({id, isConnectable}) {
                     <div className='rotate_handle' onClick={handleRotateClick}/>
                 </div>
                 <div>
-                    <Handle type="source"/*"target**/ id="a" style={{top: '50%', left: '11%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="a" style={{top: '50%', left: '11%'}} isConnectable={isConnectable}/>*/}
+                    {inputHandles({ position: inputPosition, count: 1, isConnectable })}
 
                     <div>
                         <svg  width={size.width} height={size.height}>
@@ -341,7 +451,8 @@ export function NOTGateNode({id, isConnectable}) {
                         </svg>
                     </div>
 
-                    <Handle type="source" id="z" style={{top: '50%', left: '96%'}} isConnectable={isConnectable}/>
+                    {/*<Handle type="source" id="z" style={{top: '50%', left: '96%'}} isConnectable={isConnectable}/>*/}
+                    {outputHandles({ position: outputPosition, isConnectable })}
                 </div>
             </div>
         </>
@@ -407,13 +518,13 @@ export function JunctionGateNode({id, isConnectable}) {
         <>
             <div>
                 <Handle type="source" id="top" className='junction_handle' style={{top: '25%', left: '50%'}}
-                        isConnectable={isConnectable} position={"top"} />
+                        isConnectable={isConnectable} position={Position.Top} />
                 <Handle type="source" id="right" className='junction_handle' style={{top: '50%', right: '25%'}}
-                        isConnectable={isConnectable} position={"right"} />
+                        isConnectable={isConnectable} position={Position.Right} />
                 <Handle type="source" id="bottom" className='junction_handle' style={{bottom: '25%', left: '50%'}}
-                        isConnectable={isConnectable} position={"bottom"} />
+                        isConnectable={isConnectable} position={Position.Bottom} />
                 <Handle type="source" id="left" className='junction_handle' style={{top: '50%', left: '25%'}}
-                        isConnectable={isConnectable} position={"left"}/>
+                        isConnectable={isConnectable} position={Position.Left}/>
 
                 {/*<Handle type="source" id="z" className='junction_handle' style={{top: '50%', left: '50%'}}*/}
                 {/*        isConnectable={isConnectable}/>*/}
