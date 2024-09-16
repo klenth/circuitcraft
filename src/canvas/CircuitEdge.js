@@ -41,7 +41,7 @@ const CircuitEdge = ({
         270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
         180: { source: { x: -5.5, y: 1.5 }, target: { x: 5.5, y: 1.5 } },
         90: { source: { x: -5.5, y: 13 }, target: { x: -5.5, y: 1 } },
-        0: { source: { x: 6, y: 1.5 }, target: { x: -6, y: 1.5 } },
+        0: { source: { x: 0, y: 0 }, target: { x: 0, y: 0 } },
     };
 
 
@@ -53,7 +53,8 @@ const CircuitEdge = ({
         const targetAdjustment = rotationAdjustments[targetRotation] || { x: 0, y: 0 };
 
         if (sourceGateType === 'input'){
-            sourceAdjustment.source.y = 1.75;
+            sourceAdjustment.source.y = 1.7;
+            sourceAdjustment.source.x = 5.5;
         }
         if (sourceGateType === 'JunctionGateNode'){
             sourceAdjustment.source.x = 0;

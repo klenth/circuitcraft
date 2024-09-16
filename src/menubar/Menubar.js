@@ -23,10 +23,10 @@ export default function Menubar(props) {
                                 exportPng = {props.exportPng}
                             />
                         }
-                        <li className='bar_edit' onClick={() => setEditDropdown(!editDropdown)}>Edit</li>
+                        {/* <li className='bar_edit' onClick={() => setEditDropdown(!editDropdown)}>Edit</li>
                         {editDropdown &&
                             <EditDropdown/>
-                        }
+                        } */}
                     </div>
                     <li className='bar_name'>CircuitCraft</li>
                     <li className='help_icon'>

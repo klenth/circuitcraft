@@ -10,15 +10,37 @@
     display: none;
 }
 
-.problem ol li img {
-	width: 90%;
-	height: auto;
+.margin-top {
 	margin-top: 20px;
 }
 
-.problem ol li img.height {
-	width: 30%;
+.problem ol li img {
+	width: 90%;
 	height: auto;
+}
+
+.problem ol li img.height {
+	width: 18%;
+	height: auto;
+}
+
+.problem ol li img.canvas_img {
+	width: 70%;
+}
+
+.indented ol li img {
+	width: 22%;
+}
+
+.zoom {
+	display: flex;
+	position: relative;
+}
+
+.zoom video {
+	position: absolute;
+	top: -500%;
+	right: 5%;
 }
 
 .indented {

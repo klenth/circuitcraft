@@ -2,7 +2,7 @@
 <html lang="en" class="fancy">
 <head>
     <meta charset="UTF-8">
-    <title>WebARM: documentation</title>
+    <title>CircuitCraft]: documentation</title>
     <link rel="stylesheet" href="helppage_style.css">
     <link rel="stylesheet" href="helppage_highlighting.css">
 
@@ -79,75 +79,60 @@
                     In CircuitCraft, the page consists of three different areas:
                 </p>
                 <ol>
-                    <li>Menubar: Purple area at the top of the page<br>
-                        <img src="assests/menubar.png">
+                    <li><i>Menubar</i>: The <i>purple area</i> located at the very top of the page. It provides easy access to File operations and contains the link to CircuitCraft's help documentation page.<br><br>
+                        To interact with the dropdown menu: Click 'File' to open the menu. Click 'File' again to close the menu.<br>
+                        <img class="margin-top" src="assests/menubar.png" alt="Image of Menubar">
                     </li>
-                    <li>Canvas: Blue area to the left under the menubar<br>
-                        <img src="assests/canvas.png">
+                    <li><i>Canvas</i>: The <i>blue area</i> located directly beneath the MenuBar and to the left side of the screen.
+                        This is where you will draw your diagram. It supports interactive features such as moving and connecting elements to create circuits.<br>
+                        <img class="canvas_img margin-top" src="assests/canvas.png" alt="Image of the Canvas">
+
+                        <h4>Navigating around the Canvas</h4>
+                        <ul>
+                            <li>To move around the Canvas, click and drag on the canvas.<br>
+                                <video width="340" height="260" controls>
+                                    <source src="assests/move_canvas.mp4" type="video/mp4">
+                                </video>
+                            </li>
+                            <div class="zoom">
+                                <li class="margin-top">To zoom in and out of the Canvas, scroll up or down on mouse or pinch in and out on trackpads.
+                                </li>
+                                <video width="180" height="310" controls>
+                                    <source src="assests/zoom.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </ul>
                     </li>
-                    <li>Toolbox: Yellow area to the right under the menubar<br>
-                        <img class="height" src="assests/toolbox.png">
+                    <li><i>Toolbox</i>: The <i>yellow area</i> located to the right of the screen, directly beneath the Menubar. 
+                        It contains a variety of interactable objects, including gates, junctions, inputs, outputs, and labels. <br><br>
+                        To interact with the Toolbox: Click on these elements to load them onto the Canvas to design and build your circuit diagrams.
+                        <br>
+                        <img class="height margin-top" src="assests/toolbox.png">
                     </li>
                 </ol>
 
-                <h3>Menubar</h3>
-                <p>
-                    Contains dropdown menu for 'File' and a link to the help page.
-                </p>
-
-                <p>
-                    To interact with the dropdown menu: Click 'File' to open the menu. Click 'File' again to close the menu.
-                </p>
-
-                <h3>Canvas</h3>
-                <p>
-                    This is where you will draw your diagram.
-                </p>
-
-                <h4>Navigating Around the Canvas</h4>
-                <ul>
-                    <li>To move around the Canvas: click and drag on the canvas<br>
-                        <video width="320" height="240" controls>
-                            <source src="assests/move_canvas.mp4" type="video/mp4">
-                        </video>
-                    </li>
-                    <li>To zoom in and out of the Canvas: scroll up or down on mouse or pinch in and out on trackpads
-                        <video width="220" height="320" controls>
-                            <source src="assests/zoom.mp4" type="video/mp4">
-                        </video>
-                    </li>
-                </ul>
-
-                <h3>Toolbox</h3>
-                <p>
-                    This contains interactable objects that are in the form of gates, junctions, inputs, outputs, and labels.
-                </p>
-
                 <div class="indented">
-                    <h4>Gates</h4>
-                    <p>
-                        <img src="assests/gates.png">
-                    </p>
-
-                    <h4>Junction</h4>
-                    <p>
-                        <img src="assests/junction.png">
-                    </p>
-
-                    <h4>Inputs, Outputs, and Labels</h4>
-                    <p>
-                        <img src="assests/editable_nodes.png">
-                    </p>
+                    <ol type="a">
+                        <li><i>Gates</i><br>
+                            <img class="margin-top" src="assests/gates.png">
+                        </li>
+                        <li><i>Junction</i><br>
+                            <img class="margin-top" src="assests/junction.png">
+                        </li>
+                        <li style="text-align: left;"><i>Inputs, Outputs, and Labels</i><br>
+                            <img class="margin-top" src="assests/editable_nodes.png">
+                        </li>
+                    </ol>
                 </div>
             </div>
 
             <div class="problem">
-                <div class="title">Adding and Removing from the Canvas</div>
+                <div class="title">Adding and removing canvas elements</div>
 
                 <h3>Adding</h3>
                 <p>
-                    To add objects to the canvas, click the object you want to add: gates, junctions, inputs, outputs, and labels from the toolbox. They will then add to the canvas, if you add multiple objects at a single time, they will overlap and hide behind each other.<br>
-                    <video width="320" height="240" controls>
+                    To add objects to the canvas, click on the item you want to add, such as gates, junctions, inputs, outputs, and labels from the toolbox. The selected object will then appear on the Canvas. Note that if you add multiple objects simultaneously, they will overlap, as they will stack on top of each other.<br>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/adding.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -155,7 +140,7 @@
                 <h3>Removing</h3>
                 <p>
                     All objects on the canvas can be removed by selecting the object so that a rectangular outline appears around the object. Hit the 'backspace' or 'delete' key.<br>
-                    <video width="320" height="240" controls>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/remove.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -166,7 +151,7 @@
 
                 <p>
                     Double click the default name such as "Input 1", "Output 1", "Label 1" and a textbox will surround the default text. To save the changes, simply click off the input, output, or label.<br>
-                    <video width="320" height="240" controls>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/rename.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -177,7 +162,7 @@
 
                 <p>
                     All gates, inputs, and outputs have a black rectangle, clicking the end will begin the creation of a wire to connect the objects.<br>
-                    <video width="320" height="240" controls>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/connecting.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -188,14 +173,14 @@
 
                 <p>
                     Objects: Click and drag the object. This can be more difficult with the junction due to it's size.<br>
-                    <video width="220" height="320" controls>
+                    <video class="margin-top" width="220" height="320" controls>
                         <source src="assests/move_object.mp4" type="video/mp4">
                     </video>
                 </p>
 
                 <p>
                     Wires: Click a wire (turning it dark grey) then click and drag to move the edge around.<br>
-                    <video width="320" height="240" controls>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/move_wire.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -206,7 +191,7 @@
 
                 <p>
                     Selecting a gate will reveal the blue outline, click and drag the blue squares to make the object bigger or smaller. When a gate is placed on the canvas, it cannot be any smaller.<br>
-                    <video width="320" height="240" controls>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/resize.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -217,7 +202,7 @@
 
                 <p>
                     Hovering over a gate or selecting a gate will reveal a purple handle, click the purple object to rotate the gate.<br>
-                    <video width="320" height="240" controls>
+                    <video class="margin-top" width="320" height="240" controls>
                         <source src="assests/rotate.mp4" type="video/mp4">
                     </video>
                 </p>
@@ -234,7 +219,7 @@
                     'Export PNG' will download a png which can be used to submit on canvas.
                 </p>
 
-                <video width="320" height="240" controls>
+                <video class="margin-top" width="320" height="240" controls>
                     <source src="assests/save_export.mp4" type="video/mp4">
                 </video>
             </div>
@@ -246,7 +231,7 @@
                     Under 'File' there is 'Open' which will allow you to upload a previously saved json file of the circuit diagram.
                 </p>
 
-                <video width="320" height="240" controls>
+                <video class="margin-top" width="320" height="240" controls>
                     <source src="assests/save_export.mp4" type="video/mp4">
                 </video>
             </div>
