@@ -40,8 +40,13 @@
 .zoom video {
 	position: absolute;
 	top: -500%;
-	right: 5%;
+	right: 4%;
 }
+
+#help-video {
+	width: 35%;
+	height: auto;
+  }
 
 .indented {
     margin-left: 64px;
