@@ -1,7 +1,7 @@
 import './Menubar.css';
 import React, {useState} from 'react';
 import { FileDropdown, EditDropdown } from './Dropdown';
-import csLogo from "./cs.w.twotone.transparent.png";
+import csLogo from "./cs.w.white.png";
 
 export default function Menubar(props) {
     const [fileDropdown, setFileDropdown] = useState(false);
