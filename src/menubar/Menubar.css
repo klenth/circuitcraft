@@ -88,12 +88,18 @@
     font-size: 16pt;
 }
 
+
+.bar_file_open {
+    background-color: #693fa3;
+    border-bottom: 2px solid var(--snow)!important;
+}
+
 /* File drop down styling */
 .file_dropdown {
     width: 6rem;
     position: absolute;
-    top: 10%; /* Adjust to be just below the parent li */
-    left: 17%; /* Align with the left edge of the parent li */
+    top: 100%; /* Adjust to be just below the parent li */
+    left: 13%; /* Align with the left edge of the parent li */
     list-style: none;
     text-align: start;
     z-index: 100;

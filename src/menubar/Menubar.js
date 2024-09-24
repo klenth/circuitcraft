@@ -5,9 +5,13 @@ import csLogo from "./cs.w.white.png";
 
 export default function Menubar(props) {
     const [fileDropdown, setFileDropdown] = useState(false);
-    const [editDropdown, setEditDropdown] = useState(false);
+    // const [editDropdown, setEditDropdown] = useState(false);
     const openHelpPage = () => {
         window.open('/helppage/helppage.html', '_blank');
+    };
+    // Function to close dropdown when an item is clicked
+    const closeDropdown = () => {
+        setFileDropdown(false);
     };
     return (
         <>
@@ -15,14 +19,17 @@ export default function Menubar(props) {
                 <ul className='bar_items'>
                     <img src={csLogo} alt="CS department logo"/>
                     <div>
-                        <li className='bar_file' onClick={() => setFileDropdown(!fileDropdown)}>File</li>
+                        <li onClick={() => setFileDropdown(!fileDropdown)} className={fileDropdown ? 'bar_file_open' : 'bar_file'}>File &nbsp;
+                        <i className={`fas ${fileDropdown ? 'fa-caret-up' : 'fa-caret-down'}`}></i></li>
                         {fileDropdown &&
                             <FileDropdown
                                 onSave={props.onSave}
                                 onOpen={props.onOpen}
-                                exportPng = {props.exportPng}
+                                exportPng ={props.exportPng}
+                                closeDropdown= {closeDropdown}
                             />
                         }
+                        {console.log('file '+fileDropdown)}
                         {/* <li className='bar_edit' onClick={() => setEditDropdown(!editDropdown)}>Edit</li>
                         {editDropdown &&
                             <EditDropdown/>
