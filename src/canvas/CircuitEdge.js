@@ -32,40 +32,38 @@ const CircuitEdge = ({
 
     // const rotationAdjustments = {
     //     270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
-    //     180: { source: { x: -5.5, y: 1.2 }, target: { x: 5.5, y: 1.2 } },
-    //     90: { source: { x: -5.5, y: 13 }, target: { x: -5.7, y: 1 } },
-    //     0: { source: { x: 6, y: 1.6 }, target: { x: -6, y: 1.6 } },
-    // };
-
-    const rotationAdjustments = {
-        270: { source: { x: -5.5, y: 0 }, target: { x: -5.5, y: 13 } },
-        180: { source: { x: -5.5, y: 1.5 }, target: { x: 5.5, y: 1.5 } },
-        90: { source: { x: -5.5, y: 13 }, target: { x: -5.5, y: 1 } },
-        0: { source: { x: 0, y: 0 }, target: { x: 0, y: 0 } },
-    };
-
+    //     180: { source: { x: -5.5, y: 1.5 }, target: { x: 5.5, y: 1.5 } },
+    //     90: { source: { x: -5.5, y: 13 }, target: { x: -5.5, y: 1 } },
+    //     0: { source: { x: 0, y: 0 }, target: { x: 0, y: 0 } },
+    // }; //No need for this because x and y are 0 for most gates for all the rotations
 
     //for fine-tuning later. It gives an error sometimes saying the following:
     //Uncaught TypeError: Cannot destructure property 'sourceX' of 'getHandleConnectionPoint(...)' as it is undefined.
 
-    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY, sourceRotation, targetRotation) {
-        const sourceAdjustment = rotationAdjustments[sourceRotation] || { x: 0, y: 0 };
-        const targetAdjustment = rotationAdjustments[targetRotation] || { x: 0, y: 0 };
+    function getHandleConnectionPoint(sourceX, sourceY, targetX, targetY) {
+        //const sourceAdjustment = rotationAdjustments[sourceRotation] || { x: 0, y: 0 };
+        const sourceAdjustment = { x: 0, y: 0 };
+        const targetAdjustment = { x: 0, y: 0 };
 
         if (sourceGateType === 'input'){
-            sourceAdjustment.source.y = 1.7;
-            sourceAdjustment.source.x = 5.5;
+            sourceAdjustment.y = 1.7;
+            sourceAdjustment.x = 5.5;
         }
         if (sourceGateType === 'JunctionGateNode'){
-            sourceAdjustment.source.x = 0;
-            sourceAdjustment.source.y = -1;
+            sourceAdjustment.x = 0;
+            sourceAdjustment.y = -4;
+        }
+
+        if (targetAdjustment === 'JunctionGateNode'){
+            targetAdjustment.x = 1;
+            targetAdjustment.y = 1;
         }
 
         return {
-            sourceX: sourceX + sourceAdjustment.source.x,
-            sourceY: sourceY + sourceAdjustment.source.y,
-            targetX: targetX + targetAdjustment.target.x,
-            targetY: targetY + targetAdjustment.target.y,
+            sourceX: sourceX + sourceAdjustment.x,
+            sourceY: sourceY + sourceAdjustment.y,
+            targetX: targetX + targetAdjustment.x,
+            targetY: targetY + targetAdjustment.y,
         };
     }
 
