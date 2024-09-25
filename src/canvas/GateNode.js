@@ -27,7 +27,7 @@ const rotatePosition = (position, angle) => positions[(positions.indexOf(positio
 // generates two <Handle>s: one that is invisible (transparent background) that's on top, that edges actually connect
 // to, and a second one displayed behind the gate (z-index of -1) that can't be connected to. This ensures that handles
 // show as behind/under the component (so their edges don't lay on top) while still making the handles interactable.
-function inputHandles({ position=Position.Left, count=5, isConnectable=true }) {
+function inputHandles({ position=Position.Left, count=2, isConnectable=true }) {
     // Calculate the y-coordinates for the handles
     const tops = Array(count).fill(0).map((_, i) => `calc(${100 * (i + 1) / (count + 1)}% - 1.5px)`);
 
@@ -133,7 +133,7 @@ export function ANDGateNode ({ id, isConnectable, data }) {
                     {/*        position={inputPosition}/>*/}
                     {/*<Handle type="source" id="b-display" style={{top: 'calc(70% - 1.5px)', left: '0', right: 'auto', width: '15%', transform: 'none', zIndex: -1}} isConnectable={false}*/}
                     {/*        position={inputPosition}/>*/}
-                    {inputHandles({ position: inputPosition, count: 5, isConnectable })}
+                    {inputHandles({ position: inputPosition, count: 2, isConnectable })}
                     <div>
                         <svg  width={size.width} height={size.height}>
                             <AndGate key="and"
@@ -197,7 +197,7 @@ export function ORGateNode({ id, isConnectable }) {
                 <div>
                     {/*<Handle type="source" id="a" style={{top: '30%', left: '19%'}} isConnectable={isConnectable} position={Position.Left}/>*/}
                     {/*<Handle type="source" id="b" style={{top: '70%', left: '19%'}} isConnectable={isConnectable} position={Position.Left}/>*/}
-                    {inputHandles({ count: 3, position: inputPosition, isConnectable: isConnectable })}
+                    {inputHandles({ count: 2, position: inputPosition, isConnectable: isConnectable })}
 
                     <div>
                         <svg  width={size.width} height={size.height}>
