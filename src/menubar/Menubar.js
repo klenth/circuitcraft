@@ -7,7 +7,7 @@ export default function Menubar(props) {
     const [fileDropdown, setFileDropdown] = useState(false);
     // const [editDropdown, setEditDropdown] = useState(false);
     const openHelpPage = () => {
-        window.open('/helppage/helppage.html', '_blank');
+        window.open('helppage/helppage.html', '_blank');
     };
     // Function to close dropdown when an item is clicked
     const closeDropdown = () => {
